@@ -1,0 +1,10 @@
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuabassStroi_Project\Kuzbass_Project\bin\Debug\Kuzbass_Project.exe.config
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuabassStroi_Project\Kuzbass_Project\bin\Debug\Kuzbass_Project.exe
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuabassStroi_Project\Kuzbass_Project\bin\Debug\Kuzbass_Project.pdb
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuabassStroi_Project\Kuzbass_Project\obj\Debug\Kuzbass_Project.csprojAssemblyReference.cache
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuabassStroi_Project\Kuzbass_Project\obj\Debug\Kuzbass_Project.Form1.resources
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuabassStroi_Project\Kuzbass_Project\obj\Debug\Kuzbass_Project.Properties.Resources.resources
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuabassStroi_Project\Kuzbass_Project\obj\Debug\Kuzbass_Project.csproj.GenerateResource.cache
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuabassStroi_Project\Kuzbass_Project\obj\Debug\Kuzbass_Project.csproj.CoreCompileInputs.cache
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuabassStroi_Project\Kuzbass_Project\obj\Debug\Kuzbass_Project.exe
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuabassStroi_Project\Kuzbass_Project\obj\Debug\Kuzbass_Project.pdb

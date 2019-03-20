@@ -59,6 +59,13 @@ namespace Kuzbass_Project
             ClearResultSpisok_B.Enabled = false;
         }
 
+        private void ClearField()
+        {
+            Spisok_LB.Items.Clear();
+            ResultSpisok_TB.Items.Clear();
+            Status_TB.Clear();
+        }
+
         private void Users_CB_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(Users_CB.SelectedIndex == 0)
@@ -69,6 +76,9 @@ namespace Kuzbass_Project
                 ConfirmALL_B.Enabled = false;
                 RefreshSpisok_B.Enabled = false;
                 ClearResultSpisok_B.Enabled = false;
+
+                //Очистка
+                ClearField();
             }
             else if(Users_CB.SelectedIndex == 1)
             {
@@ -78,17 +88,9 @@ namespace Kuzbass_Project
                 RefreshSpisok_B.Enabled = false;
                 ClearResultSpisok_B.Enabled = false;
                 OpenDocument_B.Enabled = true;
-            }
-            else if (Users_CB.SelectedIndex == 4)
-            {
-                //Блокироване и анлок кнопок
-                OpenDocument_B.Enabled = true;
-                Confirm_B.Enabled = true;
-                ConfirmALL_B.Enabled = true;
-                RefreshSpisok_B.Enabled = true;
-                ClearResultSpisok_B.Enabled = true;
-                OpenDocument_B.Enabled = true;
-                MessageBox.Show("Пошел нахуй, Пёс", "Спецом для долбоёбика", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                //Очистка
+                ClearField();
             }
             else
             {
@@ -99,6 +101,9 @@ namespace Kuzbass_Project
                 RefreshSpisok_B.Enabled = true;
                 ClearResultSpisok_B.Enabled = false;
                 OpenDocument_B.Enabled = false;
+
+                //Очистка
+                ClearField();
             }
         }
     }

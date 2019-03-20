@@ -32,15 +32,15 @@
             this.Spisok_LB = new System.Windows.Forms.ListBox();
             this.Confirm_B = new System.Windows.Forms.Button();
             this.Spisok_GB = new System.Windows.Forms.GroupBox();
-            this.ResultSpisok_GB = new System.Windows.Forms.GroupBox();
-            this.ResultSpisok_TB = new System.Windows.Forms.ListBox();
-            this.Operation_GB = new System.Windows.Forms.GroupBox();
-            this.ClearResultSpisok_B = new System.Windows.Forms.Button();
             this.RefreshSpisok_B = new System.Windows.Forms.Button();
+            this.ResultSpisok_GB = new System.Windows.Forms.GroupBox();
+            this.ClearResultSpisok_B = new System.Windows.Forms.Button();
+            this.ResultSpisok_LB = new System.Windows.Forms.ListBox();
+            this.Operation_GB = new System.Windows.Forms.GroupBox();
+            this.OpenDocument_B = new System.Windows.Forms.Button();
             this.ConfirmALL_B = new System.Windows.Forms.Button();
             this.Status_TB = new System.Windows.Forms.TextBox();
             this.Status_GB = new System.Windows.Forms.GroupBox();
-            this.OpenDocument_B = new System.Windows.Forms.Button();
             this.Users_CB = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Spisok_GB.SuspendLayout();
@@ -62,7 +62,7 @@
             // 
             this.Confirm_B.Location = new System.Drawing.Point(6, 21);
             this.Confirm_B.Name = "Confirm_B";
-            this.Confirm_B.Size = new System.Drawing.Size(192, 30);
+            this.Confirm_B.Size = new System.Drawing.Size(216, 30);
             this.Confirm_B.TabIndex = 3;
             this.Confirm_B.Text = "Подтвердить";
             this.Confirm_B.UseVisualStyleBackColor = true;
@@ -79,37 +79,26 @@
             this.Spisok_GB.TabStop = false;
             this.Spisok_GB.Text = "Документы в режиме ожидания";
             // 
+            // RefreshSpisok_B
+            // 
+            this.RefreshSpisok_B.Location = new System.Drawing.Point(6, 383);
+            this.RefreshSpisok_B.Name = "RefreshSpisok_B";
+            this.RefreshSpisok_B.Size = new System.Drawing.Size(339, 30);
+            this.RefreshSpisok_B.TabIndex = 2;
+            this.RefreshSpisok_B.Text = "Обновить список";
+            this.RefreshSpisok_B.UseVisualStyleBackColor = true;
+            this.RefreshSpisok_B.Click += new System.EventHandler(this.RefreshSpisok_B_Click);
+            // 
             // ResultSpisok_GB
             // 
             this.ResultSpisok_GB.Controls.Add(this.ClearResultSpisok_B);
-            this.ResultSpisok_GB.Controls.Add(this.ResultSpisok_TB);
+            this.ResultSpisok_GB.Controls.Add(this.ResultSpisok_LB);
             this.ResultSpisok_GB.Location = new System.Drawing.Point(368, 42);
             this.ResultSpisok_GB.Name = "ResultSpisok_GB";
             this.ResultSpisok_GB.Size = new System.Drawing.Size(351, 422);
             this.ResultSpisok_GB.TabIndex = 5;
             this.ResultSpisok_GB.TabStop = false;
             this.ResultSpisok_GB.Text = "Обработанные документы";
-            // 
-            // ResultSpisok_TB
-            // 
-            this.ResultSpisok_TB.FormattingEnabled = true;
-            this.ResultSpisok_TB.ItemHeight = 16;
-            this.ResultSpisok_TB.Location = new System.Drawing.Point(6, 21);
-            this.ResultSpisok_TB.Name = "ResultSpisok_TB";
-            this.ResultSpisok_TB.Size = new System.Drawing.Size(339, 356);
-            this.ResultSpisok_TB.TabIndex = 0;
-            // 
-            // Operation_GB
-            // 
-            this.Operation_GB.Controls.Add(this.OpenDocument_B);
-            this.Operation_GB.Controls.Add(this.ConfirmALL_B);
-            this.Operation_GB.Controls.Add(this.Confirm_B);
-            this.Operation_GB.Location = new System.Drawing.Point(726, 42);
-            this.Operation_GB.Name = "Operation_GB";
-            this.Operation_GB.Size = new System.Drawing.Size(206, 136);
-            this.Operation_GB.TabIndex = 6;
-            this.Operation_GB.TabStop = false;
-            this.Operation_GB.Text = "Операции";
             // 
             // ClearResultSpisok_B
             // 
@@ -119,21 +108,44 @@
             this.ClearResultSpisok_B.TabIndex = 4;
             this.ClearResultSpisok_B.Text = "Очистить список";
             this.ClearResultSpisok_B.UseVisualStyleBackColor = true;
+            this.ClearResultSpisok_B.Click += new System.EventHandler(this.ClearResultSpisok_B_Click);
             // 
-            // RefreshSpisok_B
+            // ResultSpisok_LB
             // 
-            this.RefreshSpisok_B.Location = new System.Drawing.Point(6, 383);
-            this.RefreshSpisok_B.Name = "RefreshSpisok_B";
-            this.RefreshSpisok_B.Size = new System.Drawing.Size(339, 30);
-            this.RefreshSpisok_B.TabIndex = 2;
-            this.RefreshSpisok_B.Text = "Обновить список";
-            this.RefreshSpisok_B.UseVisualStyleBackColor = true;
+            this.ResultSpisok_LB.FormattingEnabled = true;
+            this.ResultSpisok_LB.ItemHeight = 16;
+            this.ResultSpisok_LB.Location = new System.Drawing.Point(6, 21);
+            this.ResultSpisok_LB.Name = "ResultSpisok_LB";
+            this.ResultSpisok_LB.Size = new System.Drawing.Size(339, 356);
+            this.ResultSpisok_LB.TabIndex = 0;
+            // 
+            // Operation_GB
+            // 
+            this.Operation_GB.Controls.Add(this.OpenDocument_B);
+            this.Operation_GB.Controls.Add(this.ConfirmALL_B);
+            this.Operation_GB.Controls.Add(this.Confirm_B);
+            this.Operation_GB.Location = new System.Drawing.Point(725, 42);
+            this.Operation_GB.Name = "Operation_GB";
+            this.Operation_GB.Size = new System.Drawing.Size(228, 134);
+            this.Operation_GB.TabIndex = 6;
+            this.Operation_GB.TabStop = false;
+            this.Operation_GB.Text = "Операции";
+            // 
+            // OpenDocument_B
+            // 
+            this.OpenDocument_B.Location = new System.Drawing.Point(6, 93);
+            this.OpenDocument_B.Name = "OpenDocument_B";
+            this.OpenDocument_B.Size = new System.Drawing.Size(216, 30);
+            this.OpenDocument_B.TabIndex = 6;
+            this.OpenDocument_B.Text = "Добавить";
+            this.OpenDocument_B.UseVisualStyleBackColor = true;
+            this.OpenDocument_B.Click += new System.EventHandler(this.OpenDocument_B_Click);
             // 
             // ConfirmALL_B
             // 
             this.ConfirmALL_B.Location = new System.Drawing.Point(6, 57);
             this.ConfirmALL_B.Name = "ConfirmALL_B";
-            this.ConfirmALL_B.Size = new System.Drawing.Size(192, 30);
+            this.ConfirmALL_B.Size = new System.Drawing.Size(216, 30);
             this.ConfirmALL_B.TabIndex = 5;
             this.ConfirmALL_B.Text = "Подтвердить все";
             this.ConfirmALL_B.UseVisualStyleBackColor = true;
@@ -146,28 +158,18 @@
             this.Status_TB.Name = "Status_TB";
             this.Status_TB.ReadOnly = true;
             this.Status_TB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Status_TB.Size = new System.Drawing.Size(192, 250);
+            this.Status_TB.Size = new System.Drawing.Size(695, 134);
             this.Status_TB.TabIndex = 7;
             // 
             // Status_GB
             // 
             this.Status_GB.Controls.Add(this.Status_TB);
-            this.Status_GB.Location = new System.Drawing.Point(726, 184);
+            this.Status_GB.Location = new System.Drawing.Point(12, 470);
             this.Status_GB.Name = "Status_GB";
-            this.Status_GB.Size = new System.Drawing.Size(206, 280);
+            this.Status_GB.Size = new System.Drawing.Size(707, 161);
             this.Status_GB.TabIndex = 8;
             this.Status_GB.TabStop = false;
             this.Status_GB.Text = "Статус операции";
-            // 
-            // OpenDocument_B
-            // 
-            this.OpenDocument_B.Location = new System.Drawing.Point(6, 93);
-            this.OpenDocument_B.Name = "OpenDocument_B";
-            this.OpenDocument_B.Size = new System.Drawing.Size(192, 30);
-            this.OpenDocument_B.TabIndex = 6;
-            this.OpenDocument_B.Text = "Открыть";
-            this.OpenDocument_B.UseVisualStyleBackColor = true;
-            this.OpenDocument_B.Click += new System.EventHandler(this.OpenDocument_B_Click);
             // 
             // Users_CB
             // 
@@ -175,7 +177,7 @@
             this.Users_CB.FormattingEnabled = true;
             this.Users_CB.Location = new System.Drawing.Point(191, 12);
             this.Users_CB.Name = "Users_CB";
-            this.Users_CB.Size = new System.Drawing.Size(733, 24);
+            this.Users_CB.Size = new System.Drawing.Size(761, 24);
             this.Users_CB.TabIndex = 1;
             this.Users_CB.SelectedIndexChanged += new System.EventHandler(this.Users_CB_SelectedIndexChanged);
             // 
@@ -192,11 +194,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(944, 474);
+            this.ClientSize = new System.Drawing.Size(963, 645);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Users_CB);
-            this.Controls.Add(this.Status_GB);
             this.Controls.Add(this.Operation_GB);
+            this.Controls.Add(this.Status_GB);
             this.Controls.Add(this.ResultSpisok_GB);
             this.Controls.Add(this.Spisok_GB);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -222,7 +224,7 @@
         private System.Windows.Forms.Button RefreshSpisok_B;
         private System.Windows.Forms.GroupBox ResultSpisok_GB;
         private System.Windows.Forms.Button ClearResultSpisok_B;
-        private System.Windows.Forms.ListBox ResultSpisok_TB;
+        private System.Windows.Forms.ListBox ResultSpisok_LB;
         private System.Windows.Forms.GroupBox Operation_GB;
         private System.Windows.Forms.Button ConfirmALL_B;
         private System.Windows.Forms.TextBox Status_TB;

@@ -1,4 +1,5 @@
 ﻿using System;
+using Npgsql;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -76,7 +77,5 @@ namespace Kuzbass_Project
         //Метод для отображения в ResultSpisok_LB
         public String ToStringSuccessfully() => $"Документ {_Name} QR: {_QR} подтвержден";
 
-        //Взаимодействие с БД
-        //...
     }
 }

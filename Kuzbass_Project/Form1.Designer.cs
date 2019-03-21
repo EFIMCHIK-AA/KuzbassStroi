@@ -43,10 +43,14 @@
             this.Status_GB = new System.Windows.Forms.GroupBox();
             this.Users_CB = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.NumberDoc_TB = new System.Windows.Forms.TextBox();
+            this.NumberDoc_GB = new System.Windows.Forms.GroupBox();
             this.Spisok_GB.SuspendLayout();
             this.ResultSpisok_GB.SuspendLayout();
             this.Operation_GB.SuspendLayout();
             this.Status_GB.SuspendLayout();
+            this.NumberDoc_GB.SuspendLayout();
             this.SuspendLayout();
             // 
             // Spisok_LB
@@ -190,11 +194,39 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Выберите пользователя";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(102, 17);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Номер бланка";
+            // 
+            // NumberDoc_TB
+            // 
+            this.NumberDoc_TB.Location = new System.Drawing.Point(114, 24);
+            this.NumberDoc_TB.Name = "NumberDoc_TB";
+            this.NumberDoc_TB.Size = new System.Drawing.Size(108, 22);
+            this.NumberDoc_TB.TabIndex = 12;
+            // 
+            // NumberDoc_GB
+            // 
+            this.NumberDoc_GB.Controls.Add(this.NumberDoc_TB);
+            this.NumberDoc_GB.Controls.Add(this.label2);
+            this.NumberDoc_GB.Location = new System.Drawing.Point(724, 182);
+            this.NumberDoc_GB.Name = "NumberDoc_GB";
+            this.NumberDoc_GB.Size = new System.Drawing.Size(228, 56);
+            this.NumberDoc_GB.TabIndex = 13;
+            this.NumberDoc_GB.TabStop = false;
+            this.NumberDoc_GB.Text = "Номер документа";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(963, 645);
+            this.Controls.Add(this.NumberDoc_GB);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Users_CB);
             this.Controls.Add(this.Operation_GB);
@@ -211,6 +243,8 @@
             this.Operation_GB.ResumeLayout(false);
             this.Status_GB.ResumeLayout(false);
             this.Status_GB.PerformLayout();
+            this.NumberDoc_GB.ResumeLayout(false);
+            this.NumberDoc_GB.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,6 +266,9 @@
         private System.Windows.Forms.Button OpenDocument_B;
         private System.Windows.Forms.ComboBox Users_CB;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox NumberDoc_TB;
+        private System.Windows.Forms.GroupBox NumberDoc_GB;
     }
 }
 

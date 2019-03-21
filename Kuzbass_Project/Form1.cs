@@ -87,8 +87,56 @@ namespace Kuzbass_Project
         {
             //очистка
             Status_TB.Clear();
-            //Изменение статуса объекта <- МОЁ
+            //Изменение статуса объекта
+            for(Int32 i = Spisok_LB.Items.Count-1; i >= 0; i--)
+            {
+                Document Document = Spisok_LB.Items[i] as Document;
+                Document.Status = "Соси член";//Тест
+
+                //Запись нового статуса объекта в бд
+                //Провверка на ошибки
+                try
+                {
+                    //Строка подлючения
+                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+
+                    using (var connect = new NpgsqlConnection(connString))
+                    {
+                        //Открытие потока
+                        connect.Open();
+
+                        //Добавление
+                        using (var cmd = new NpgsqlCommand())
+                        {
+                            cmd.Connection = connect;
+                            cmd.CommandText = $"UPDATE \"Orders\" SET \"Status_Order\" = '{Document.Status}' WHERE \"Number_Order\" = '{Document.Number}'";
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        //Закрытие потока
+                        connect.Close();
+                    }
+
+                    //Вывод в компонент сообщения об удачном добавлении
+                    Status_TB.AppendText($"Документ {Document.Name} QR: {Document.QR} получил статус {Document.Status}" + Environment.NewLine);
+
+                    ResultSpisok_LB.Items.Add(Spisok_LB.Items[i]); //добавляем элемент в список обработанных данных
+                    Spisok_LB.Items.RemoveAt(i);//Удаляем из старого LB
+
+                    //Активируем кнопку
+                    if (Spisok_LB.Items.Count > 0)
+                    {
+                        ClearResultSpisok_B.Enabled = true;
+                    }
+                }
+                catch (Exception Npgsql)
+                {
+                    MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
+
+        //Перечисления <-Твое
 
         private void OpenDocument_B_Click(object sender, EventArgs e)
         {
@@ -129,6 +177,8 @@ namespace Kuzbass_Project
 
                 //Вывод в компонент сообщения об удачном добавлении
                 Status_TB.AppendText($"Документ {Temp.Name} QR: {Temp.QR} успешно добавлен в обработку" + Environment.NewLine);
+                //Вывод сообщения
+                MessageBox.Show($"Файл {Temp.Name} QR {Temp.QR} успешно добавлен", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception Npgsql)
             {

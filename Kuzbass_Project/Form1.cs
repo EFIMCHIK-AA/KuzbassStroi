@@ -57,12 +57,13 @@ namespace Kuzbass_Project
                             {
                                 if(NumberDoc_TB.Text.Trim() != "")
                                 {
+                                    //Присваивание номера документа
+                                    Item.NumberDoc = NumberDoc_TB.Text;
+
+                                    //Запись в бд
                                     cmd.CommandText = $"UPDATE \"Orders\" SET \"Status_Order\" = '{Item.Status}', \"NumberDoc_Order\" = '{Item.NumberDoc}'" +
                                                       $" WHERE \"Number_Order\" = '{Item.Number}'";
                                     cmd.ExecuteNonQuery();
-
-                                    //Присваивание номера документа
-                                    Item.NumberDoc = NumberDoc_TB.Text;
                                     //Вывод в компонент сообщения об удачном добавлении
                                     Status_TB.AppendText($"Документ {Item.Name} QR: {Item.QR} получил статус {Item.Status} и номер бланка {Item.NumberDoc}" + Environment.NewLine);
 
@@ -72,7 +73,7 @@ namespace Kuzbass_Project
                                 else
                                 {
                                     NumberDoc_TB.Focus();
-                                    MessageBox.Show("необходимо ввести номер бланка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    MessageBox.Show("Необходимо ввести номер бланка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     Status_TB.AppendText($"Документ {Item.Name} QR: {Item.QR} неудачная попытка получения статуса и номера бланка" + Environment.NewLine);
                                 }
                             }
@@ -94,7 +95,7 @@ namespace Kuzbass_Project
                     }
 
                     //Активируем кнопку
-                    if(Spisok_LB.Items.Count > 0)
+                    if(ResultSpisok_LB.Items.Count > 0)
                     {
                         ClearResultSpisok_B.Enabled = true;
                     }

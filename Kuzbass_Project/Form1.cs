@@ -51,19 +51,47 @@ namespace Kuzbass_Project
                         using (var cmd = new NpgsqlCommand())
                         {
                             cmd.Connection = connect;
-                            cmd.CommandText = $"UPDATE \"Orders\" SET \"Status_Order\" = '{Item.Status}' WHERE \"Number_Order\" = '{Item.Number}'";
-                            cmd.ExecuteNonQuery();
+
+                            //Добавление бланка
+                            if(Users_CB.SelectedItem.ToString() == "Должность 2 тест")
+                            {
+                                if(NumberDoc_TB.Text.Trim() != "")
+                                {
+                                    cmd.CommandText = $"UPDATE \"Orders\" SET \"Status_Order\" = '{Item.Status}', \"NumberDoc_Order\" = '{Item.NumberDoc}'" +
+                                                      $" WHERE \"Number_Order\" = '{Item.Number}'";
+                                    cmd.ExecuteNonQuery();
+
+                                    //Присваивание номера документа
+                                    Item.NumberDoc = NumberDoc_TB.Text;
+                                    //Вывод в компонент сообщения об удачном добавлении
+                                    Status_TB.AppendText($"Документ {Item.Name} QR: {Item.QR} получил статус {Item.Status} и номер бланка {Item.NumberDoc}" + Environment.NewLine);
+
+                                    ResultSpisok_LB.Items.Add(Spisok_LB.Items[Spisok_LB.SelectedIndex]); //добавляем элемент в список обработанных данных
+                                    Spisok_LB.Items.RemoveAt(Spisok_LB.SelectedIndex);//Удаляем из старого LB
+                                }
+                                else
+                                {
+                                    NumberDoc_TB.Focus();
+                                    MessageBox.Show("необходимо ввести номер бланка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    Status_TB.AppendText($"Документ {Item.Name} QR: {Item.QR} неудачная попытка получения статуса и номера бланка" + Environment.NewLine);
+                                }
+                            }
+                            else
+                            {
+                                cmd.CommandText = $"UPDATE \"Orders\" SET \"Status_Order\" = '{Item.Status}' WHERE \"Number_Order\" = '{Item.Number}'";
+                                cmd.ExecuteNonQuery();
+
+                                //Вывод в компонент сообщения об удачном добавлении
+                                Status_TB.AppendText($"Документ {Item.Name} QR: {Item.QR} получил статус {Item.Status}" + Environment.NewLine);
+
+                                ResultSpisok_LB.Items.Add(Spisok_LB.Items[Spisok_LB.SelectedIndex]); //добавляем элемент в список обработанных данных
+                                Spisok_LB.Items.RemoveAt(Spisok_LB.SelectedIndex);//Удаляем из старого LB
+                            }
                         }
 
                         //Закрытие потока
                         connect.Close();
                     }
-
-                    //Вывод в компонент сообщения об удачном добавлении
-                    Status_TB.AppendText($"Документ {Item.Name} QR: {Item.QR} получил статус {Item.Status}" + Environment.NewLine);
-
-                    ResultSpisok_LB.Items.Add(Spisok_LB.Items[Spisok_LB.SelectedIndex]); //добавляем элемент в список обработанных данных
-                    Spisok_LB.Items.RemoveAt(Spisok_LB.SelectedIndex);//Удаляем из старого LB
 
                     //Активируем кнопку
                     if(Spisok_LB.Items.Count > 0)
@@ -199,6 +227,7 @@ namespace Kuzbass_Project
             ConfirmALL_B.Enabled = false;
             RefreshSpisok_B.Enabled = false;
             ClearResultSpisok_B.Enabled = false;
+            NumberDoc_TB.Enabled = false;
 
             //Загрузка пользователей с таблицы должностей в Users_CB
             //Провверка на ошибки
@@ -237,7 +266,7 @@ namespace Kuzbass_Project
 
         private void Users_CB_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(Users_CB.SelectedIndex == 0)
+            if(Users_CB.SelectedItem.ToString() == "Не задано")
             {
                 //Блокироване и анлок кнопок
                 OpenDocument_B.Enabled = false;
@@ -245,11 +274,12 @@ namespace Kuzbass_Project
                 ConfirmALL_B.Enabled = false;
                 RefreshSpisok_B.Enabled = false;
                 ClearResultSpisok_B.Enabled = false;
+                NumberDoc_TB.Enabled = false;
 
                 //Очистка
                 ClearField();
             }
-            else if(Users_CB.SelectedIndex == 1)
+            else if(Users_CB.SelectedItem.ToString() == "Должность 1 тест")
             {
                 //Блокироване и анлок кнопок
                 Confirm_B.Enabled = false;
@@ -257,6 +287,20 @@ namespace Kuzbass_Project
                 RefreshSpisok_B.Enabled = false;
                 ClearResultSpisok_B.Enabled = false;
                 OpenDocument_B.Enabled = true;
+                NumberDoc_TB.Enabled = false;
+
+                //Очистка
+                ClearField();
+            }
+            else if (Users_CB.SelectedItem.ToString() == "Должность 2 тест")
+            {
+                //Блокироване и анлок кнопок
+                Confirm_B.Enabled = false;
+                ConfirmALL_B.Enabled = false;
+                RefreshSpisok_B.Enabled = true;
+                ClearResultSpisok_B.Enabled = false;
+                OpenDocument_B.Enabled = false;
+                NumberDoc_TB.Enabled = true;
 
                 //Очистка
                 ClearField();
@@ -270,6 +314,7 @@ namespace Kuzbass_Project
                 RefreshSpisok_B.Enabled = true;
                 ClearResultSpisok_B.Enabled = false;
                 OpenDocument_B.Enabled = false;
+                NumberDoc_TB.Enabled = false;
 
                 //Очистка
                 ClearField();
@@ -318,10 +363,14 @@ namespace Kuzbass_Project
             }
 
             //Разблокировка кнопок
-            if(Spisok_LB.Items.Count > 0)
+            if(Spisok_LB.Items.Count > 0 && Users_CB.SelectedItem.ToString() != "Должность 2 тест")
             {
                 Confirm_B.Enabled = true;
                 ConfirmALL_B.Enabled = true;
+            }
+            else
+            {
+                Confirm_B.Enabled = true;
             }
         }
 

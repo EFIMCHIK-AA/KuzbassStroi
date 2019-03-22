@@ -10,12 +10,12 @@ namespace Kuzbass_Project
     class Document
     {
         //Поля
-        private String _Name, _Number,_Status, _QR;
+        private String _Name, _Number,_Status, _QR, _NumberDoc;
 
         //Конструкторы
         public Document() : this("Не задано", "Нет номера", "Нет статуса", "Нет QR") { }
         public Document(String _Name, String _Number, String _Status, String _QR)
-        {
+        {   
             this._Name = _Name.Trim() != "" ? _Name.Trim() : "Не задано";
             this._Number = _Number.Trim() != "" ? _Number.Trim() : "Нет номера";
             this._Status = _Status.Trim() != "" ? _Status.Trim() : "Нет статуса";
@@ -44,6 +44,18 @@ namespace Kuzbass_Project
             set
             {
                 _Number = value;
+            }
+        }
+
+        public String NumberDoc
+        {
+            get
+            {
+                return _NumberDoc;
+            }
+            set
+            {
+                _NumberDoc = value;
             }
         }
 

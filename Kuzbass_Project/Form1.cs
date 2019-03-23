@@ -13,9 +13,16 @@ namespace Kuzbass_Project
 {
     public partial class Form1 : Form
     {
+        private string[,] values = null;
+        private string[] Number_Order = new string[100];
+        private string[] Name_Order = new string[100];
+        private string[] QR_Order = new string[100];
+        private string[] NumberDoc_Order = new string[100];
         public Form1()
         {
             InitializeComponent();
+            openFileDialog1.Filter = "CSV файл (*.csv)|*.csv";
+            openFileDialog1.FileName = "";
         }
 
         private void ClearField()
@@ -29,18 +36,32 @@ namespace Kuzbass_Project
         {
             //очистка
             Status_TB.Clear();
-            //Изменение статуса объекта <- МОЁ
+            //Изменение статуса объекта
             if(Spisok_LB.SelectedIndex >= 0)
             {
                 Document Item = Spisok_LB.Items[Spisok_LB.SelectedIndex] as Document;
-                //Item.Status = ...изменяешь статус...
+                //Принадлежность статуса к должности
+                if (Users_CB.SelectedItem.ToString() == "Должность 2")
+                    Item.Status = "Введен номер бланка";
+                if (Users_CB.SelectedItem.ToString() == "Должность 3")
+                    Item.Status = "В обработке";
+                if (Users_CB.SelectedItem.ToString() == "Должность 3")
+                    Item.Status = "В обработке";
+                if (Users_CB.SelectedItem.ToString() == "Должность 3")
+                    Item.Status = "В обработке";
+                if (Users_CB.SelectedItem.ToString() == "Должность 3")
+                    Item.Status = "В обработке";
+                if (Users_CB.SelectedItem.ToString() == "Должность 3")
+                    Item.Status = "В обработке";
+                if (Users_CB.SelectedItem.ToString() == "Должность 3")
+                    Item.Status = "В обработке";
 
                 //Запись нового статуса объекта в бд
                 //Провверка на ошибки
                 try
                 {
                     //Строка подлючения
-                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
 
                     using (var connect = new NpgsqlConnection(connString))
                     {
@@ -53,7 +74,7 @@ namespace Kuzbass_Project
                             cmd.Connection = connect;
 
                             //Добавление бланка
-                            if(Users_CB.SelectedItem.ToString() == "Должность 2 тест")
+                            if(Users_CB.SelectedItem.ToString() == "Должность 2")
                             {
                                 if(NumberDoc_TB.Text.Trim() != "")
                                 {
@@ -115,19 +136,103 @@ namespace Kuzbass_Project
         private void ConfirmALL_B_Click(object sender, EventArgs e)
         {
             //очистка
+            string status="";
             Status_TB.Clear();
             //Изменение статуса объекта
-            for(Int32 i = Spisok_LB.Items.Count-1; i >= 0; i--)
+            for (Int32 i = Spisok_LB.Items.Count - 1; i >= 0; i--)
             {
-                Document Document = Spisok_LB.Items[i] as Document;
-                Document.Status = "Соси член";//Тест
+                //Зависимость статуса от должности
+                if (Users_CB.SelectedItem.ToString() == "Должность 3")
+                    status = "В обработке";
+                if(Users_CB.SelectedItem.ToString() == "Должность 4")
+                    status = "В работе";
+                if (Users_CB.SelectedItem.ToString() == "Должность 5")
+                    status = "В работе";
+                if (Users_CB.SelectedItem.ToString() == "Должность 6")
+                    status = "В работе";
+                if (Users_CB.SelectedItem.ToString() == "Должность 7")
+                    status = "В работе";
+                if (Users_CB.SelectedItem.ToString() == "Должность 8")
+                    status = "В работе";
+                    Document Document = Spisok_LB.Items[i] as Document;
+                    Document.Status = status;//Тест
 
-                //Запись нового статуса объекта в бд
+                    //Запись нового статуса объекта в бд
+                    //Провверка на ошибки
+                    try
+                    {
+                        //Строка подлючения
+                        String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
+
+                        using (var connect = new NpgsqlConnection(connString))
+                        {
+                            //Открытие потока
+                            connect.Open();
+
+                            //Добавление
+                            using (var cmd = new NpgsqlCommand())
+                            {
+                                cmd.Connection = connect;
+                                cmd.CommandText = $"UPDATE \"Orders\" SET \"Status_Order\" = '{Document.Status}' WHERE \"Number_Order\" = '{Document.Number}'";
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            //Закрытие потока
+                            connect.Close();
+                        }
+
+                        //Вывод в компонент сообщения об удачном добавлении
+                        Status_TB.AppendText($"Документ {Document.Name} QR: {Document.QR} получил статус {Document.Status}" + Environment.NewLine);
+
+                        ResultSpisok_LB.Items.Add(Spisok_LB.Items[i]); //добавляем элемент в список обработанных данных
+                        Spisok_LB.Items.RemoveAt(i);//Удаляем из старого LB
+
+                        //Активируем кнопку
+                        if (Spisok_LB.Items.Count > 0)
+                        {
+                            ClearResultSpisok_B.Enabled = true;
+                        }
+                    }
+                
+                catch (Exception Npgsql)
+                {
+                    MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            
+        }
+
+        //Перечисления
+
+        private void OpenDocument_B_Click(object sender, EventArgs e)
+        {
+            //очистка
+            Status_TB.Clear();
+
+            //Выбирается файл, достаются с него все необходимые данные, преобразуется если необходимо <- ТВОЁ
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            string filename = openFileDialog1.FileName;
+
+            GetValues(filename);
+            for (int i = 1; i < values.Length / 7; i++)
+            {
+                //Создается объект класса Document и работаем дальше с ним
+                //Разделение данных QR кода на составляющие
+                Number_Order[i] = values[i, 0].Remove(values[i, 0].IndexOf(" "), values[i, 0].Length - values[i, 0].IndexOf(" "));
+                values[i, 0] = values[i, 0].Remove(0, values[i, 0].IndexOf(" ") + 1);
+                Name_Order[i] = values[i, 0].Remove(values[i, 0].IndexOf(" "), values[i, 0].Length - values[i, 0].IndexOf(" "));
+                values[i, 0] = values[i, 0].Remove(0, values[i, 0].IndexOf(" ") + 1);
+                QR_Order[i] = values[i, 0];
+                //Объект, его и используй при дальнейшей работе 
+                Document Temp = new Document(Name_Order[i], Name_Order[i],"Файл загружен",QR_Order[i]);
+
+                //Добавление данных в таблицу Orders
                 //Провверка на ошибки
                 try
                 {
                     //Строка подлючения
-                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
 
                     using (var connect = new NpgsqlConnection(connString))
                     {
@@ -138,7 +243,8 @@ namespace Kuzbass_Project
                         using (var cmd = new NpgsqlCommand())
                         {
                             cmd.Connection = connect;
-                            cmd.CommandText = $"UPDATE \"Orders\" SET \"Status_Order\" = '{Document.Status}' WHERE \"Number_Order\" = '{Document.Number}'";
+                            cmd.CommandText = $"INSERT INTO \"Orders\" (\"Number_Order\",\"Name_Order\",\"Status_Order\",\"QR_Order\")" +
+                                              $" VALUES ('{Temp.Number}','{Temp.Name}','{Temp.Status}','{Temp.QR}')";
                             cmd.ExecuteNonQuery();
                         }
 
@@ -147,71 +253,15 @@ namespace Kuzbass_Project
                     }
 
                     //Вывод в компонент сообщения об удачном добавлении
-                    Status_TB.AppendText($"Документ {Document.Name} QR: {Document.QR} получил статус {Document.Status}" + Environment.NewLine);
-
-                    ResultSpisok_LB.Items.Add(Spisok_LB.Items[i]); //добавляем элемент в список обработанных данных
-                    Spisok_LB.Items.RemoveAt(i);//Удаляем из старого LB
-
-                    //Активируем кнопку
-                    if (Spisok_LB.Items.Count > 0)
-                    {
-                        ClearResultSpisok_B.Enabled = true;
-                    }
+                    Status_TB.AppendText($"Документ {Temp.Name} QR: {Temp.QR} успешно добавлен в обработку" + Environment.NewLine);
+                    //Вывод сообщения
+                    MessageBox.Show($"Файл {Temp.Name} QR {Temp.QR} успешно добавлен", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception Npgsql)
                 {
                     MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-            }
-        }
 
-        //Перечисления <-Твое
-
-        private void OpenDocument_B_Click(object sender, EventArgs e)
-        {
-            //очистка
-            Status_TB.Clear();
-
-            //Выбирается файл, достаются с него все необходимые данные, преобразуется если необходимо <- ТВОЁ
-
-            //Создается объект класса Document и работаем дальше с ним <- ТВОЁ
-
-            //Объект, его и используй при дальнейшей работе 
-            Document Temp = new Document();
-
-            //Добавление данных в таблицу Orders
-            //Провверка на ошибки
-            try
-            {
-                //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
-
-                using (var connect = new NpgsqlConnection(connString))
-                {
-                    //Открытие потока
-                    connect.Open();
-
-                    //Добавление
-                    using (var cmd = new NpgsqlCommand())
-                    {
-                        cmd.Connection = connect;
-                        cmd.CommandText = $"INSERT INTO \"Orders\" (\"Number_Order\",\"Name_Order\",\"Status_Order\",\"QR_Order\")" +
-                                          $" VALUES ('{Temp.Number}','{Temp.Name}','{Temp.Status}','{Temp.QR}')";
-                        cmd.ExecuteNonQuery();
-                    }
-
-                     //Закрытие потока
-                     connect.Close();
-                }
-
-                //Вывод в компонент сообщения об удачном добавлении
-                Status_TB.AppendText($"Документ {Temp.Name} QR: {Temp.QR} успешно добавлен в обработку" + Environment.NewLine);
-                //Вывод сообщения
-                MessageBox.Show($"Файл {Temp.Name} QR {Temp.QR} успешно добавлен", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception Npgsql)
-            {
-                MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -235,7 +285,7 @@ namespace Kuzbass_Project
             try
             {
                 //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
 
                 using (var connect = new NpgsqlConnection(connString))
                 {
@@ -280,7 +330,7 @@ namespace Kuzbass_Project
                 //Очистка
                 ClearField();
             }
-            else if(Users_CB.SelectedItem.ToString() == "Должность 1 тест")
+            else if(Users_CB.SelectedItem.ToString() == "Должность 1")
             {
                 //Блокироване и анлок кнопок
                 Confirm_B.Enabled = false;
@@ -293,7 +343,7 @@ namespace Kuzbass_Project
                 //Очистка
                 ClearField();
             }
-            else if (Users_CB.SelectedItem.ToString() == "Должность 2 тест")
+            else if (Users_CB.SelectedItem.ToString() == "Должность 2")
             {
                 //Блокироване и анлок кнопок
                 Confirm_B.Enabled = false;
@@ -332,7 +382,7 @@ namespace Kuzbass_Project
             try
             {
                 //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
 
                 using (var connect = new NpgsqlConnection(connString))
                 {
@@ -364,7 +414,7 @@ namespace Kuzbass_Project
             }
 
             //Разблокировка кнопок
-            if(Spisok_LB.Items.Count > 0 && Users_CB.SelectedItem.ToString() != "Должность 2 тест")
+            if(Spisok_LB.Items.Count > 0 && Users_CB.SelectedItem.ToString() != "Должность 2")
             {
                 Confirm_B.Enabled = true;
                 ConfirmALL_B.Enabled = true;
@@ -388,6 +438,19 @@ namespace Kuzbass_Project
                     ClearResultSpisok_B.Enabled = false;
                 }
             } 
+        }
+        private void GetValues(string path)
+        {
+
+            values = CSV.GetStringsFromFile(path, 7);
+            for (int i = 1; i < values.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < values.GetLength(1); j++)
+                {
+                    values[i, j] = values[i, j].Replace(@"""", string.Empty);
+                }
+            }
         }
     }
 }

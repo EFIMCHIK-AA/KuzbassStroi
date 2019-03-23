@@ -14,6 +14,7 @@ namespace Kuzbass_Project
 
         //Конструкторы
         public Document() : this("Не задано", "Нет номера", "Нет статуса", "Нет QR") { }
+
         public Document(String _Name, String _Number, String _Status, String _QR)
         {   
             this._Name = _Name.Trim() != "" ? _Name.Trim() : "Не задано";
@@ -31,7 +32,7 @@ namespace Kuzbass_Project
             }
             set
             {
-                _Name = value;
+                _Name = value.Trim() != "" ? value.Trim() : "Не задано";
             }
         }
 
@@ -43,7 +44,7 @@ namespace Kuzbass_Project
             }
             set
             {
-                _Number = value;
+                _Number = value.Trim() != "" ? value.Trim() : "Нет номера"; ;
             }
         }
 
@@ -67,7 +68,7 @@ namespace Kuzbass_Project
             }
             set
             {
-                _Status = value;
+                _Status = value.Trim() != "" ? value.Trim() : "Нет статуса";
             }
         }
 
@@ -79,7 +80,7 @@ namespace Kuzbass_Project
             }
             set
             {
-                _QR = value;
+                _QR = value.Trim() != "" ? value.Trim() : "Нет QR"; ;
             }
         }
 

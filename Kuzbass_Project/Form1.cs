@@ -18,6 +18,7 @@ namespace Kuzbass_Project
         private string[] Name_Order = new string[100];
         private string[] QR_Order = new string[100];
         private string[] NumberDoc_Order = new string[100];
+
         public Form1()
         {
             InitializeComponent();
@@ -37,9 +38,11 @@ namespace Kuzbass_Project
             //очистка
             Status_TB.Clear();
             //Изменение статуса объекта
+
             if(Spisok_LB.SelectedIndex >= 0)
             {
                 Document Item = Spisok_LB.Items[Spisok_LB.SelectedIndex] as Document;
+
                 //Принадлежность статуса к должности
                 if (Users_CB.SelectedItem.ToString() == "Должность 2")
                     Item.Status = "Введен номер бланка";
@@ -138,6 +141,7 @@ namespace Kuzbass_Project
             //очистка
             string status="";
             Status_TB.Clear();
+
             //Изменение статуса объекта
             for (Int32 i = Spisok_LB.Items.Count - 1; i >= 0; i--)
             {
@@ -155,7 +159,7 @@ namespace Kuzbass_Project
                 if (Users_CB.SelectedItem.ToString() == "Должность 8")
                     status = "В работе";
                     Document Document = Spisok_LB.Items[i] as Document;
-                    Document.Status = status;//Тест
+                    Document.Status = status;
 
                     //Запись нового статуса объекта в бд
                     //Провверка на ошибки
@@ -202,7 +206,6 @@ namespace Kuzbass_Project
             
         }
 
-        //Перечисления
 
         private void OpenDocument_B_Click(object sender, EventArgs e)
         {
@@ -215,6 +218,7 @@ namespace Kuzbass_Project
             string filename = openFileDialog1.FileName;
 
             GetValues(filename);
+
             for (int i = 1; i < values.Length / 7; i++)
             {
                 //Создается объект класса Document и работаем дальше с ним

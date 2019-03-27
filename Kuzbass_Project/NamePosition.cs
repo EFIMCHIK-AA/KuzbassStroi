@@ -35,5 +35,19 @@ namespace Kuzbass_Project
                 connect.Close();
             }
         }
+
+        //Получение пароля по текущему режиму работы
+        public static String GetHashPass(String NamePosition) // <- Передаем пароль
+        {
+            foreach(Position Temp in Positions)
+            {
+                if(Temp.Name == NamePosition)
+                {
+                    return Temp.HashPass;
+                }
+            }
+
+            return "Заданной должности не существует";
+        }
     }
 }

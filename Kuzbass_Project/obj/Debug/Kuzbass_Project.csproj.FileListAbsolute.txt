@@ -88,3 +88,4 @@ C:\Users\Админ-Пк\Desktop\GitHub\KuzbassStroi\Kuzbass_Project\obj\Debug\K
 C:\Users\Админ-Пк\Desktop\GitHub\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.csproj.CopyComplete
 C:\Users\Админ-Пк\Desktop\GitHub\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.exe
 C:\Users\Админ-Пк\Desktop\GitHub\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.pdb
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.PassForm.resources

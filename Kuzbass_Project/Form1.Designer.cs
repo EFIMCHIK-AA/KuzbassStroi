@@ -47,6 +47,8 @@
             this.NumberDoc_GB = new System.Windows.Forms.GroupBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.Enter_B = new System.Windows.Forms.Button();
+            this.Exit_B = new System.Windows.Forms.Button();
             this.Spisok_GB.SuspendLayout();
             this.ResultSpisok_GB.SuspendLayout();
             this.Operation_GB.SuspendLayout();
@@ -69,7 +71,7 @@
             this.Confirm_B.Location = new System.Drawing.Point(5, 21);
             this.Confirm_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Confirm_B.Name = "Confirm_B";
-            this.Confirm_B.Size = new System.Drawing.Size(216, 30);
+            this.Confirm_B.Size = new System.Drawing.Size(238, 30);
             this.Confirm_B.TabIndex = 3;
             this.Confirm_B.Text = "Подтвердить";
             this.Confirm_B.UseVisualStyleBackColor = true;
@@ -141,7 +143,7 @@
             this.Operation_GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Operation_GB.Name = "Operation_GB";
             this.Operation_GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Operation_GB.Size = new System.Drawing.Size(228, 95);
+            this.Operation_GB.Size = new System.Drawing.Size(250, 95);
             this.Operation_GB.TabIndex = 6;
             this.Operation_GB.TabStop = false;
             this.Operation_GB.Text = "Операции";
@@ -151,7 +153,7 @@
             this.OpenDocument_B.Location = new System.Drawing.Point(6, 55);
             this.OpenDocument_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.OpenDocument_B.Name = "OpenDocument_B";
-            this.OpenDocument_B.Size = new System.Drawing.Size(216, 30);
+            this.OpenDocument_B.Size = new System.Drawing.Size(238, 30);
             this.OpenDocument_B.TabIndex = 6;
             this.OpenDocument_B.Text = "Добавить";
             this.OpenDocument_B.UseVisualStyleBackColor = true;
@@ -187,7 +189,7 @@
             this.Users_CB.Location = new System.Drawing.Point(191, 12);
             this.Users_CB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Users_CB.Name = "Users_CB";
-            this.Users_CB.Size = new System.Drawing.Size(761, 24);
+            this.Users_CB.Size = new System.Drawing.Size(528, 24);
             this.Users_CB.TabIndex = 1;
             this.Users_CB.SelectedIndexChanged += new System.EventHandler(this.Users_CB_SelectedIndexChanged);
             // 
@@ -214,7 +216,7 @@
             this.NumberDoc_TB.Location = new System.Drawing.Point(115, 25);
             this.NumberDoc_TB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NumberDoc_TB.Name = "NumberDoc_TB";
-            this.NumberDoc_TB.Size = new System.Drawing.Size(108, 22);
+            this.NumberDoc_TB.Size = new System.Drawing.Size(128, 22);
             this.NumberDoc_TB.TabIndex = 12;
             // 
             // NumberDoc_GB
@@ -225,7 +227,7 @@
             this.NumberDoc_GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NumberDoc_GB.Name = "NumberDoc_GB";
             this.NumberDoc_GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.NumberDoc_GB.Size = new System.Drawing.Size(228, 57);
+            this.NumberDoc_GB.Size = new System.Drawing.Size(250, 57);
             this.NumberDoc_GB.TabIndex = 13;
             this.NumberDoc_GB.TabStop = false;
             this.NumberDoc_GB.Text = "Номер документа";
@@ -234,11 +236,35 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // Enter_B
+            // 
+            this.Enter_B.Location = new System.Drawing.Point(725, 11);
+            this.Enter_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Enter_B.Name = "Enter_B";
+            this.Enter_B.Size = new System.Drawing.Size(122, 30);
+            this.Enter_B.TabIndex = 14;
+            this.Enter_B.Text = "Войти";
+            this.Enter_B.UseVisualStyleBackColor = true;
+            this.Enter_B.Click += new System.EventHandler(this.Enter_B_Click);
+            // 
+            // Exit_B
+            // 
+            this.Exit_B.Location = new System.Drawing.Point(853, 11);
+            this.Exit_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Exit_B.Name = "Exit_B";
+            this.Exit_B.Size = new System.Drawing.Size(122, 30);
+            this.Exit_B.TabIndex = 15;
+            this.Exit_B.Text = "Выйти";
+            this.Exit_B.UseVisualStyleBackColor = true;
+            this.Exit_B.Click += new System.EventHandler(this.Exit_B_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(963, 645);
+            this.ClientSize = new System.Drawing.Size(987, 645);
+            this.Controls.Add(this.Exit_B);
+            this.Controls.Add(this.Enter_B);
             this.Controls.Add(this.NumberDoc_GB);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Users_CB);
@@ -246,8 +272,10 @@
             this.Controls.Add(this.Status_GB);
             this.Controls.Add(this.ResultSpisok_GB);
             this.Controls.Add(this.Spisok_GB);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Управление этапами документа";
@@ -284,6 +312,8 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         public System.Windows.Forms.ComboBox Users_CB;
+        private System.Windows.Forms.Button Enter_B;
+        private System.Windows.Forms.Button Exit_B;
     }
 }
 

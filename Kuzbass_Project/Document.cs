@@ -10,17 +10,21 @@ namespace Kuzbass_Project
     class Document
     {
         //Поля
-        private String _Name, _Number,_Status, _QR, _NumberDoc;
+        private String _Name, _Number,_Status, _QR, _NumberDoc, _Executor,_List,_Lenght,_Weight; //name - марка
 
         //Конструкторы
-        public Document() : this("Не задано", "Нет номера", "Нет статуса", "Нет QR") { }
+        public Document() : this("Не задано", "Нет номера", "Нет статуса", "Нет QR", "Нет длины", "Нет веса", "Нет листа","Нет исполнителя" ) { }
 
-        public Document(String _Name, String _Number, String _Status, String _QR)
+        public Document(String _Name, String _Number, String _Status, String _QR, String _Lenght, String _Weight, String _List, String _Executor)
         {   
-            this._Name = _Name.Trim() != "" ? _Name.Trim() : "Не задано";
+            this._Name = _Name.Trim() != "" ? _Name.Trim() : "Нет марки";
             this._Number = _Number.Trim() != "" ? _Number.Trim() : "Нет номера";
             this._Status = _Status.Trim() != "" ? _Status.Trim() : "Нет статуса";
             this._QR = _QR.Trim() != "" ? _QR.Trim() : "Нет QR";
+            this._Lenght = _Lenght.Trim() != "" ? _Lenght.Trim() : "Нет длины";
+            this._Weight = _Weight.Trim() != "" ? _Weight.Trim() : "Нет веса";
+            this._List = _List.Trim() != "" ? _List.Trim() : "Нет листа";
+            this._Executor = _Executor.Trim() != "" ? _Executor.Trim() : "Нет исполнителя";
         }
 
         //Свойства
@@ -32,7 +36,70 @@ namespace Kuzbass_Project
             }
             set
             {
-                _Name = value.Trim() != "" ? value.Trim() : "Не задано";
+                if (value.Trim() != "")
+                {
+                    _Name = value.Trim();
+                }
+            }
+        }
+
+        public String Executor
+        {
+            get
+            {
+                return _Executor;
+            }
+            set
+            {
+                if(value.Trim() != "")
+                {
+                    _Executor = value.Trim();
+                }
+            }
+        }
+
+        public String List
+        {
+            get
+            {
+                return _List;
+            }
+            set
+            {
+                if (value.Trim() != "")
+                {
+                    _List = value.Trim();
+                }
+            }
+        }
+
+        public String Lenght
+        {
+            get
+            {
+                return _Lenght;
+            }
+            set
+            {
+                if (value.Trim() != "")
+                {
+                    _Lenght = value.Trim();
+                }
+            }
+        }
+
+        public String Weight
+        {
+            get
+            {
+                return _Weight;
+            }
+            set
+            {
+                if (value.Trim() != "")
+                {
+                    _Weight = value.Trim();
+                }
             }
         }
 
@@ -44,7 +111,10 @@ namespace Kuzbass_Project
             }
             set
             {
-                _Number = value.Trim() != "" ? value.Trim() : "Нет номера"; ;
+                if (value.Trim() != "")
+                {
+                    _Number = value.Trim();
+                }
             }
         }
 
@@ -68,7 +138,10 @@ namespace Kuzbass_Project
             }
             set
             {
-                _Status = value.Trim() != "" ? value.Trim() : "Нет статуса";
+                if (value.Trim() != "")
+                {
+                    _Status = value.Trim();
+                }
             }
         }
 
@@ -80,15 +153,18 @@ namespace Kuzbass_Project
             }
             set
             {
-                _QR = value.Trim() != "" ? value.Trim() : "Нет QR"; ;
+                if (value.Trim() != "")
+                {
+                    _QR = value.Trim();
+                }
             }
         }
 
         //Перегрузка ToString для отображения в Spisok_LB
-        public override String ToString() => $"Документ {_Name} QR: {_QR}";
+        public override String ToString() => $"Номер заказа {_Number} Марка: {_Name} Лист: {_List}";
 
         //Метод для отображения в ResultSpisok_LB
-        public String ToStringSuccessfully() => $"Документ {_Name} QR: {_QR} подтвержден";
+        public String ToStringSuccessfully() => $"Номер заказа {_Number} Марка: {_Name} Лист: {_List} подтвержден";
 
     }
 }

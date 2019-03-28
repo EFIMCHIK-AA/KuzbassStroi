@@ -8,6 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using OfficeOpenXml.Drawing;
+using OfficeOpenXml.Table;
 
 namespace Kuzbass_Project
 {
@@ -43,7 +47,7 @@ namespace Kuzbass_Project
                 try
                 {
                     //Строка подлючения
-                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
 
                     using (var connect = new NpgsqlConnection(connString))
                     {
@@ -71,8 +75,7 @@ namespace Kuzbass_Project
 
                                     //Запись в бд
                                     cmd.CommandText = $"UPDATE \"Orders\" SET \"status_order\" = '{Temp.Status}' WHERE \"QR_order\" = '{Temp.QR}';" +
-                                                      $"UPDATE \"Doc\" SET \"number_doc\" = '{Temp.NumberDoc}' FROM \"Orders\"" +
-                                                      $"WHERE \"Doc\".\"QR_order\" = \"Orders\".\"QR_order\" AND \"Doc\".\"QR_order\" = '{Temp.QR}'";
+                                                      $"Insert into \"Doc\"(\"QR_order\",\"number_doc\") values('{Temp.QR}', '{Temp.NumberDoc}')";
                                     ;
                                     cmd.ExecuteNonQuery();
 
@@ -144,48 +147,99 @@ namespace Kuzbass_Project
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return;
             string filename = openFileDialog1.FileName;
-
-            GetValues(filename);
-
             //Объект, дальше работай с ним
             Document Temp = new Document();// <- Передашь данные сюда
+            Excel value = new Excel();
+            value.GetValues(filename);
+            value.CreateHeaderReg();
+            
 
             //Добвение статуса
-            Temp.Status = "Чертеж передан в ПДО";
-
-            //Провверка на ошибки
-            try
+            Temp.Status = @"""Чертеж передан в ПДО""";
+            ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(@"C:\Users\Админ-Пк\Desktop\Реестр\Реестр.xlsx"));
+            ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
+            var rowCnt = ws1.Dimension.End.Row;
+            int b = value.GetLeight();
+            string date = DateTime.Now.ToString();
+            date = date.Replace(".", "_");
+            date = date.Replace(":", "_");
+            saveFileDialog1.FileName = "Акт " + date;
+            saveFileDialog1.Filter = "Microsoft Excel Worksheet (*.xlsx)|*.xlsx";
+            System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"C:\Users\Админ-Пк\Desktop\Акты\Шаблон.xlsx");
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
-
-                using (var connect = new NpgsqlConnection(connString))
+                System.IO.FileInfo file = new System.IO.FileInfo(saveFileDialog1.FileName);
+                try
                 {
-                    //Открытие потока
-                    connect.Open();
-
-                    //Добавление
-                    using (var cmd = new NpgsqlCommand())
-                    {
-                        cmd.Connection = connect;
-                        cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_order\",\"executor_order\"," +
-                                          $"\"status_order\", \"number_order\",\"list_order\",\"mark_order\",\"lenght_order\", \"weight_order\") " +
-                                          $"VALUES('{Temp.QR}','{Temp.Executor}','{Temp.Status}','{Temp.QR}','{Temp.Number}','{Temp.List}','{Temp.Name}','{Temp.Lenght}','{Temp.Weight})'";
-                    }
-
-                    //Закрытие потока
-                    connect.Close();
+                    var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
+                }
+                catch
+                {
+                    System.IO.File.Delete(saveFileDialog1.FileName);
+                    var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
+                }
+            }
+            ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName));
+            ExcelWorksheet ws2 = workbook1.Workbook.Worksheets[1];
+            var rowCntAct = ws2.Dimension.End.Row;
+            //Проверка на ошибки
+            for (int i = 1; i + rowCnt < b + rowCnt; i++)
+            {
+                value.WriteReg(Temp,i,rowCnt);
+                if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
+                {
+                    
+                    ws2.Cells[i + rowCntAct, 1].Value = Temp.Number;
+                    ws2.Cells[i + rowCntAct, 2].Value = Temp.List;
+                    ws2.Cells[i + rowCntAct, 3].Value = Temp.Name;
+                    ws2.Cells[i + rowCntAct, 4].Value = Temp.Executor;
+                    ws2.Cells[i + rowCntAct, 5].Value = Temp.Lenght;
+                    ws2.Cells[i + rowCntAct, 6].Value = Temp.Weight;
                 }
 
-                //Вывод в компонент сообщения об удачном добавлении
-                Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List}" + Environment.NewLine);
-                //Вывод сообщения
-                MessageBox.Show($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List}", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    //Строка подлючения
+                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
+
+                    using (var connect = new NpgsqlConnection(connString))
+                    {
+                        //Открытие потока
+                        connect.Open();
+
+                        //Добавление
+                        using (var cmd = new NpgsqlCommand())
+                        {
+                            cmd.Connection = connect;
+                            cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_order\",\"executor_order\"," +
+                                              $"\"status_order\", \"number_order\",\"list_order\",\"mark_order\",\"lenght_order\", \"weight_order\") " +
+                                              $"VALUES('{Temp.QR}','{Temp.Executor}','{Temp.Status}','{Temp.Number}','{Temp.List}','{Temp.Name}','{Temp.Lenght}','{Temp.Weight}')";
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        //Закрытие потока
+                        connect.Close();
+                    }
+
+                    //Вывод в компонент сообщения об удачном добавлении
+                    Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List}" + Environment.NewLine);
+                    //Вывод сообщения
+                    
+                }
+                catch (Exception Npgsql)
+                {
+                    MessageBox.Show($"QR { Temp.QR} загружен не корректно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            catch (Exception Npgsql)
-            {
-                MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            int last = ws2.Dimension.End.Row;
+            ws2.Cells[last + 2, 4].Value = "Принял";
+            ws2.Cells[last + 3, 4].Value = "Сдал";
+            ws2.Cells[last + 2, 6].Value = "______________";
+            ws2.Cells[last + 3, 6].Value = "______________";
+            ws2.Cells[last + 2, 7].Value = "Линник О.В.";
+            ws2.Cells[last + 3, 7].Value = "/______________/";
+            workbook1.Save();
+            MessageBox.Show($"Чертежи успешно добавлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -249,7 +303,7 @@ namespace Kuzbass_Project
             try
             {
                 //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
 
                 using (var connect = new NpgsqlConnection(connString))
                 {

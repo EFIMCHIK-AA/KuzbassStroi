@@ -15,7 +15,7 @@ namespace Kuzbass_Project
         //Запись с бд в массив
         static public void SetPosition()
         {
-            String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+            String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
 
             using (var connect = new NpgsqlConnection(connString))
             {

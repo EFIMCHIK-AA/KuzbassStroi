@@ -89,3 +89,9 @@ C:\Users\Админ-Пк\Desktop\GitHub\KuzbassStroi\Kuzbass_Project\obj\Debug\K
 C:\Users\Админ-Пк\Desktop\GitHub\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.exe
 C:\Users\Админ-Пк\Desktop\GitHub\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.pdb
 C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.PassForm.resources
+C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.dll
+C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.xml
+C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.PassForm.resources
+C:\Users\Админ-Пк\Desktop\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.dll
+C:\Users\Админ-Пк\Desktop\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.xml
+C:\Users\Админ-Пк\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.PassForm.resources

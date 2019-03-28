@@ -16,17 +16,17 @@ namespace Kuzbass_Project
             string[,] cells = null;
 
             int rowSize = rows.Length;
-            int colSize = rows[0].Split('_').Length;
+            int colSize = rows[0].Split('^').Length;
 
             cells = new string[rowSize, colSize];
 
             for (int i = 0; i < rowSize; i++)
             {
-                colSize = rows[i].Split('_').Length;
+                colSize = rows[i].Split('^').Length;
 
                 for (int j = 0; j < colSize; j++)
                 {
-                    cells[i, j] = rows[i].Split('_')[j];
+                    cells[i, j] = rows[i].Split('^')[j];
                 }
             }
 
@@ -49,13 +49,13 @@ namespace Kuzbass_Project
 
                 for (int j = 0; j < colSize; j++)
                 {
-                    if (j >= rows[i].Split('_').Length)
+                    if (j >= rows[i].Split('^').Length)
                     {
                         cells[i, j] = "";
                     }
                     else
                     {
-                        cells[i, j] = rows[i].Split('_')[j];
+                        cells[i, j] = rows[i].Split('^')[j];
                     }
                 }
             }

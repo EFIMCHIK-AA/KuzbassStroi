@@ -95,3 +95,8 @@ C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.P
 C:\Users\Админ-Пк\Desktop\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.dll
 C:\Users\Админ-Пк\Desktop\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.xml
 C:\Users\Админ-Пк\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.PassForm.resources
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.dll
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.xml
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.OperationForFiles.resources
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.Change.resources
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.AddDocument.resources

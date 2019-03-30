@@ -47,7 +47,7 @@ namespace Kuzbass_Project
                 try
                 {
                     //Строка подлючения
-                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
+                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
 
                     using (var connect = new NpgsqlConnection(connString))
                     {
@@ -63,7 +63,11 @@ namespace Kuzbass_Project
                             Document Temp = Temp = Spisok_LB.Items[Spisok_LB.SelectedIndex] as Document;
 
                             //Запросы на подтверждение
-                            if (Users_CB.SelectedItem.ToString() == "Сотрудник ПДО")
+                            if(Users_CB.SelectedItem.ToString() == "Архивариус")
+                            {
+                                Temp.Status = "\"Передан в ПДО\"";
+                            }
+                            else if(Users_CB.SelectedItem.ToString() == "Сотрудник ПДО")
                             {
                                 Temp.Status = "\"Выдан в работу\"";
 
@@ -143,102 +147,116 @@ namespace Kuzbass_Project
         {
             Status_TB.Clear();
 
-            //Выбирается файл, достаются с него все необходимые данные, преобразуется если необходимо <- ТВОЁ
-            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
-                return;
-            string filename = openFileDialog1.FileName;
-            //Объект, дальше работай с ним
-            Document Temp = new Document();// <- Передашь данные сюда
-            Excel value = new Excel();
-            value.GetValues(filename);
-            value.CreateHeaderReg();
-            
+            ////Выбирается файл, достаются с него все необходимые данные, преобразуется если необходимо <- ТВОЁ
+            //if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            //    return;
+            //string filename = openFileDialog1.FileName;
+            ////Объект, дальше работай с ним
+            Document Temp = new Document();
+            //Excel value = new Excel();
+            //value.GetValues(filename);
+            //value.CreateHeaderReg();            
 
-            //Добвение статуса
-            Temp.Status = @"""Чертеж передан в ПДО""";
-            ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(@"C:\Users\Админ-Пк\Desktop\Реестр\Реестр.xlsx"));
-            ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
-            var rowCnt = ws1.Dimension.End.Row;
-            int b = value.GetLeight();
-            string date = DateTime.Now.ToString();
-            date = date.Replace(".", "_");
-            date = date.Replace(":", "_");
-            saveFileDialog1.FileName = "Акт " + date;
-            saveFileDialog1.Filter = "Microsoft Excel Worksheet (*.xlsx)|*.xlsx";
-            System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"C:\Users\Админ-Пк\Desktop\Акты\Шаблон.xlsx");
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            ////Добвение статуса
+            //ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(@"C:\Users\Админ-Пк\Desktop\Реестр\Реестр.xlsx"));
+            //ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
+            //var rowCnt = ws1.Dimension.End.Row;
+            //int b = value.GetLeight();
+            //string date = DateTime.Now.ToString();
+            //date = date.Replace(".", "_");
+            //date = date.Replace(":", "_");
+            //saveFileDialog1.FileName = "Акт " + date;
+            //saveFileDialog1.Filter = "Microsoft Excel Worksheet (*.xlsx)|*.xlsx";
+            //System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"C:\Users\Админ-Пк\Desktop\Акты\Шаблон.xlsx");
+            //if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            //{
+            //    System.IO.FileInfo file = new System.IO.FileInfo(saveFileDialog1.FileName);
+            //    try
+            //    {
+            //        var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
+            //    }
+            //    catch
+            //    {
+            //        System.IO.File.Delete(saveFileDialog1.FileName);
+            //        var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
+            //    }
+            //}
+            //ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName));
+            //ExcelWorksheet ws2 = workbook1.Workbook.Worksheets[1];
+            //var rowCntAct = ws2.Dimension.End.Row;
+
+            //for (int i = 1; i + rowCnt < b + rowCnt; i++)
+            //{
+            //    value.WriteReg(Temp,i,rowCnt);
+            //    if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
+            //    {
+
+            //        ws2.Cells[i + rowCntAct, 1].Value = Temp.Number;
+            //        ws2.Cells[i + rowCntAct, 2].Value = Temp.List;
+            //        ws2.Cells[i + rowCntAct, 3].Value = Temp.Name;
+            //        ws2.Cells[i + rowCntAct, 4].Value = Temp.Executor;
+            //        ws2.Cells[i + rowCntAct, 5].Value = Temp.Lenght;
+            //        ws2.Cells[i + rowCntAct, 6].Value = Temp.Weight;
+            //    }
+
+            //Список для хранения просканированных QR
+            List<String> QR_Documents = new List<String>(); //< - РАБОТАТЬ С НИМ
+
+            //Вызываем форму
+            AddDocument Dialog = new AddDocument();
+            
+            if(Dialog.ShowDialog() == DialogResult.OK)
             {
-                System.IO.FileInfo file = new System.IO.FileInfo(saveFileDialog1.FileName);
-                try
+                for(Int32 i = 0; i < Dialog.Spisok_LB.Items.Count; i++)
                 {
-                    var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
-                }
-                catch
-                {
-                    System.IO.File.Delete(saveFileDialog1.FileName);
-                    var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
+                    QR_Documents.Add(Dialog.Spisok_LB.Items[i] as String);
                 }
             }
-            ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName));
-            ExcelWorksheet ws2 = workbook1.Workbook.Worksheets[1];
-            var rowCntAct = ws2.Dimension.End.Row;
-            //Проверка на ошибки
-            for (int i = 1; i + rowCnt < b + rowCnt; i++)
+
+            try
             {
-                value.WriteReg(Temp,i,rowCnt);
-                if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
-                {
-                    
-                    ws2.Cells[i + rowCntAct, 1].Value = Temp.Number;
-                    ws2.Cells[i + rowCntAct, 2].Value = Temp.List;
-                    ws2.Cells[i + rowCntAct, 3].Value = Temp.Name;
-                    ws2.Cells[i + rowCntAct, 4].Value = Temp.Executor;
-                    ws2.Cells[i + rowCntAct, 5].Value = Temp.Lenght;
-                    ws2.Cells[i + rowCntAct, 6].Value = Temp.Weight;
-                }
+                //Строка подлючения
+                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
 
-                try
+                using (var connect = new NpgsqlConnection(connString))
                 {
-                    //Строка подлючения
-                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
+                    //Открытие потока
+                    connect.Open();
 
-                    using (var connect = new NpgsqlConnection(connString))
+                    //Добавление
+                    using (var cmd = new NpgsqlCommand())
                     {
-                        //Открытие потока
-                        connect.Open();
-
-                        //Добавление
-                        using (var cmd = new NpgsqlCommand())
-                        {
-                            cmd.Connection = connect;
-                            cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_order\",\"executor_order\"," +
-                                              $"\"status_order\", \"number_order\",\"list_order\",\"mark_order\",\"lenght_order\", \"weight_order\") " +
-                                              $"VALUES('{Temp.QR}','{Temp.Executor}','{Temp.Status}','{Temp.Number}','{Temp.List}','{Temp.Name}','{Temp.Lenght}','{Temp.Weight}')";
-                            cmd.ExecuteNonQuery();
-                        }
-
-                        //Закрытие потока
-                        connect.Close();
+                        cmd.Connection = connect;
+                        cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_order\",\"executor_order\"," +
+                                          $"\"status_order\", \"number_order\",\"list_order\",\"mark_order\",\"lenght_order\", \"weight_order\") " +
+                                          $"VALUES('{Temp.QR}','{Temp.Executor}','{Temp.Status}','{Temp.Number}','{Temp.List}','{Temp.Name}','{Temp.Lenght}','{Temp.Weight}')";
+                        cmd.ExecuteNonQuery();
                     }
 
-                    //Вывод в компонент сообщения об удачном добавлении
-                    Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List}" + Environment.NewLine);
-                    //Вывод сообщения
-                    
+                    //Закрытие потока
+                    connect.Close();
                 }
-                catch (Exception Npgsql)
-                {
-                    MessageBox.Show($"QR { Temp.QR} загружен не корректно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+
+                //Вывод в компонент сообщения об удачном добавлении
+                Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} добавлен в базу трекинга" + Environment.NewLine);
+
+                //Обновляем данные
+                RefreshSpisok_B.PerformClick();
             }
-            int last = ws2.Dimension.End.Row;
-            ws2.Cells[last + 2, 4].Value = "Принял";
-            ws2.Cells[last + 3, 4].Value = "Сдал";
-            ws2.Cells[last + 2, 6].Value = "______________";
-            ws2.Cells[last + 3, 6].Value = "______________";
-            ws2.Cells[last + 2, 7].Value = "Линник О.В.";
-            ws2.Cells[last + 3, 7].Value = "/______________/";
-            workbook1.Save();
+            catch (Exception)
+            {
+                MessageBox.Show($"QR { Temp.QR} загружен не корректно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            //}
+
+            //int last = ws2.Dimension.End.Row;
+            //ws2.Cells[last + 2, 4].Value = "Принял";
+            //ws2.Cells[last + 3, 4].Value = "Сдал";
+            //ws2.Cells[last + 2, 6].Value = "______________";
+            //ws2.Cells[last + 3, 6].Value = "______________";
+            //ws2.Cells[last + 2, 7].Value = "Линник О.В.";
+            //ws2.Cells[last + 3, 7].Value = "/______________/";
+            //workbook1.Save();
             MessageBox.Show($"Чертежи успешно добавлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -256,6 +274,7 @@ namespace Kuzbass_Project
             ClearResultSpisok_B.Enabled = false;
             NumberDoc_TB.Enabled = false;
             Exit_B.Enabled = false;
+            Operations_B.Enabled = false;
 
             try
             {
@@ -303,14 +322,30 @@ namespace Kuzbass_Project
             try
             {
                 //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = askede12; Database = KuzbassTest_DB;";
+                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
 
                 using (var connect = new NpgsqlConnection(connString))
                 {
                     //Открытие потока
                     connect.Open();
 
-                    if(Users_CB.SelectedItem.ToString() == "Сотрудник ПДО")
+                    if(Users_CB.SelectedItem.ToString() == "Архивариус")
+                    {
+                        //Чтение
+                        using (var cmd = new NpgsqlCommand("Зарос для архивариуса", connect))
+                        {
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                //Вывод в компонент
+                                while (reader.Read())
+                                {
+                                    Documents.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(2), reader.GetString(0),
+                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1), "Нет даты"));
+                                }
+                            }
+                        }
+                    }
+                    else if(Users_CB.SelectedItem.ToString() == "Сотрудник ПДО")
                     {
                         //Чтение
                         using (var cmd = new NpgsqlCommand($"Select \"QR_order\",\"executor_order\",\"status_order\", \"number_order\"," +
@@ -323,7 +358,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     Documents.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(2), reader.GetString(0),
-                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1)));
+                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1), "Нет даты"));
                                 }
                             }
                         }
@@ -341,7 +376,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     Documents.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(2), reader.GetString(0),
-                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1)));
+                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1), "Нет даты"));
                                 }
                             }
                         }
@@ -359,7 +394,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     Documents.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(2), reader.GetString(0),
-                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1)));
+                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1), "Нет даты"));
                                 }
                             }
                         }
@@ -377,7 +412,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     Documents.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(2), reader.GetString(0),
-                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1)));
+                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1), "Нет даты"));
                                 }
                             }
                         }
@@ -479,11 +514,12 @@ namespace Kuzbass_Project
                         //Блокироване и анлок кнопок
                         OpenDocument_B.Enabled = true;
                         Confirm_B.Enabled = false;
-                        RefreshSpisok_B.Enabled = false;
+                        RefreshSpisok_B.Enabled = true;
                         ClearResultSpisok_B.Enabled = false;
                         NumberDoc_TB.Enabled = false;
                         Enter_B.Enabled = false;
                         Exit_B.Enabled = true;
+                        Operations_B.Enabled = true;
 
                         //Очистка
                         ClearField();
@@ -498,6 +534,7 @@ namespace Kuzbass_Project
                         NumberDoc_TB.Enabled = true;
                         Enter_B.Enabled = false;
                         Exit_B.Enabled = true;
+                        Operations_B.Enabled = true;
 
                         //Очистка
                         ClearField();
@@ -513,12 +550,19 @@ namespace Kuzbass_Project
                         NumberDoc_TB.Enabled = false;
                         Enter_B.Enabled = false;
                         Exit_B.Enabled = true;
+                        Operations_B.Enabled = true;
 
                         //Очистка
                         ClearField();
                     }
                 }
             }
+        }
+
+        private void Operations_B_Click(object sender, EventArgs e)
+        {
+            OperationForFiles Dialog = new OperationForFiles(Users_CB.SelectedItem.ToString());
+            if (Dialog.ShowDialog() == DialogResult.OK) { }
         }
     }
 }

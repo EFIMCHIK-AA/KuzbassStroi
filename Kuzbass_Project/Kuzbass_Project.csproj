@@ -64,6 +64,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddDocument.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddDocument.Designer.cs">
+      <DependentUpon>AddDocument.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Change.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Change.Designer.cs">
+      <DependentUpon>Change.cs</DependentUpon>
+    </Compile>
     <Compile Include="CSV.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="Excel.cs" />
@@ -73,7 +85,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GetSpisok.cs" />
     <Compile Include="NamePosition.cs" />
+    <Compile Include="OperationForFiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OperationForFiles.Designer.cs">
+      <DependentUpon>OperationForFiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="PassForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,8 +102,17 @@
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddDocument.resx">
+      <DependentUpon>AddDocument.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Change.resx">
+      <DependentUpon>Change.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OperationForFiles.resx">
+      <DependentUpon>OperationForFiles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PassForm.resx">
       <DependentUpon>PassForm.cs</DependentUpon>

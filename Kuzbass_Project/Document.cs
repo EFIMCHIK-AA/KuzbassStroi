@@ -10,21 +10,22 @@ namespace Kuzbass_Project
     class Document
     {
         //Поля
-        private String _Name, _Number,_Status, _QR, _NumberDoc, _Executor,_List,_Lenght,_Weight; //name - марка
+        private String _Name, _Number,_Status, _QR, _NumberDoc, _Executor,_List,_Lenght,_Weight, _DateCreate; //name - марка
 
         //Конструкторы
-        public Document() : this("Не задано", "Нет номера", "Нет статуса", "Нет QR", "Нет длины", "Нет веса", "Нет листа","Нет исполнителя" ) { }
+        public Document() : this("Не задано", "Нет номера", "\"Нет статуса\"", "Нет QR", "Нет длины", "Нет веса", "Нет листа","Нет исполнителя","Нет даты") { }
 
-        public Document(String _Name, String _Number, String _Status, String _QR, String _Lenght, String _Weight, String _List, String _Executor)
+        public Document(String _Name, String _Number, String _Status, String _QR, String _Lenght, String _Weight, String _List, String _Executor, String _DateCreate)
         {   
             this._Name = _Name.Trim() != "" ? _Name.Trim() : "Нет марки";
             this._Number = _Number.Trim() != "" ? _Number.Trim() : "Нет номера";
-            this._Status = _Status.Trim() != "" ? _Status.Trim() : "Нет статуса";
+            this._Status = _Status.Trim() != "" ? _Status.Trim() : "\"Нет статуса\"";
             this._QR = _QR.Trim() != "" ? _QR.Trim() : "Нет QR";
             this._Lenght = _Lenght.Trim() != "" ? _Lenght.Trim() : "Нет длины";
             this._Weight = _Weight.Trim() != "" ? _Weight.Trim() : "Нет веса";
             this._List = _List.Trim() != "" ? _List.Trim() : "Нет листа";
             this._Executor = _Executor.Trim() != "" ? _Executor.Trim() : "Нет исполнителя";
+            this._DateCreate = _DateCreate.Trim() != "" ? _DateCreate.Trim() : "Нет даты";
         }
 
         //Свойства
@@ -160,11 +161,29 @@ namespace Kuzbass_Project
             }
         }
 
+        public String DateCreate
+        {
+            get
+            {
+                return _DateCreate;
+            }
+            set
+            {
+                if(value.Trim() != "")
+                {
+                    _DateCreate = value.Trim();
+                }
+            }
+        }
+
         //Перегрузка ToString для отображения в Spisok_LB
         public override String ToString() => $"Номер заказа {_Number} Марка: {_Name} Лист: {_List}";
 
         //Метод для отображения в ResultSpisok_LB
         public String ToStringSuccessfully() => $"Номер заказа {_Number} Марка: {_Name} Лист: {_List} подтвержден";
+
+        //Метод для отображения в ResultSpisok_LB
+        public String ToStringSAdd() => $"Номер заказа {_Number} Марка: {_Name} Лист: {_List} добавлен";
 
     }
 }

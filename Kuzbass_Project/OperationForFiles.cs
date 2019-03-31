@@ -41,11 +41,11 @@ namespace Kuzbass_Project
                 //Разблокировка кнопок
                 if (Spisok_LB.Items.Count > 0)
                 {
-                    Delete_B.Enabled = true;
                     ClearSpisok_B.Enabled = true;
                 }
                 else
                 {
+                    ClearSpisok_B.Enabled = false;
                     MessageBox.Show("Документы не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -55,12 +55,11 @@ namespace Kuzbass_Project
                 Spisok_LB.Items.Clear();
 
                 //Заполняем список
-                GetSpisok.GetSpisokItemsNO(Spisok_LB, Mode);
+                GetSpisok.GetSpisokItemsYES(Spisok_LB, Mode);
 
                 //Разблокировка кнопок
                 if (Spisok_LB.Items.Count > 0)
                 {
-                    Delete_B.Enabled = true;
                     ClearSpisok_B.Enabled = true;
                 }
                 else
@@ -89,21 +88,25 @@ namespace Kuzbass_Project
                 RefreshSpisok_B.Enabled = false;
                 Spisok_LB.Enabled = false;
                 ClearSpisok_B.Enabled = false;
+                Spisok_LB.Items.Clear();
             }
             else if(Mode_CB.SelectedItem.ToString() == "Не подтвержденные документы")
             {
                 RefreshSpisok_B.Enabled = true;
                 Spisok_LB.Enabled = true;
+                Spisok_LB.Items.Clear();
             }
             else if (Mode_CB.SelectedItem.ToString() == "Подтвержденные документы")
             {
                 RefreshSpisok_B.Enabled = true;
                 Spisok_LB.Enabled = true;
+                Spisok_LB.Items.Clear();
             }
             else
             {
                 Mode_CB.Focus();
                 MessageBox.Show("Неизвестный режим отображения списка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Spisok_LB.Items.Clear();
             }
         }
 
@@ -116,7 +119,22 @@ namespace Kuzbass_Project
                 {
                     Document Temp = Spisok_LB.Items[Spisok_LB.SelectedIndex] as Document;
 
-                    //Запрос на удаление объекта из базы данных <- Сделать
+                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+
+                    using (var connect = new NpgsqlConnection(connString))
+                    {
+                        connect.Open();
+
+                        using (var cmd = new NpgsqlCommand())
+                        {
+                            cmd.Connection = connect;
+                            cmd.CommandText = $"DELETE FROM \"StatusOrders\" WHERE((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}')= \"id_Order\");" +
+                                              $"DELETE FROM \"NumberDocOrders\" WHERE((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}') = \"id_Order\");" +
+                                              $"DELETE FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}';";
+                            cmd.ExecuteNonQuery();
+                        }
+                        connect.Close();
+                    }
 
                     //Удаляем из списка
                     Spisok_LB.Items.RemoveAt(Spisok_LB.SelectedIndex);
@@ -138,19 +156,63 @@ namespace Kuzbass_Project
                 Dialog.QR_TB.Text = Temp.QR;
                 Dialog.NumberDoc_TB.Text = Temp.NumberDoc;
 
-                if(Dialog.DialogResult == DialogResult.OK)
+                if (Dialog.ShowDialog() == DialogResult.OK)
                 {
-                    Temp.NumberDoc = Dialog.NumberDoc_TB.Text;
-                    Temp.Status = Dialog.Status_CB.SelectedItem.ToString();
+                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
-                    //Запрос на обновление данных в БД <- Написать
+                    using (var connect = new NpgsqlConnection(connString))
+                    {
+                        connect.Open();
 
+                        using (var cmd = new NpgsqlCommand())
+                        {
+                            if (Mode == "Сотрудник ПДО")
+                            {
+                                Temp.NumberDoc = Dialog.NumberDoc_TB.Text;
+                                cmd.Connection = connect;
+                                cmd.CommandText = $"UPDATE \"NumberDocOrders\" SET \"NumberDoc\" = '{Temp.NumberDoc}'" +
+                                                  $"WHERE((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}') = \"id_Order\")";
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            Temp.Status = Dialog.Status_CB.SelectedItem.ToString();
+                            cmd.Connection = connect;
+                            cmd.CommandText = $"UPDATE \"StatusOrders\" SET \"Status_Order\" = '{Temp.Status}'" +
+                                              $"WHERE((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}') = \"id_Order\")";
+                            cmd.ExecuteNonQuery();
+                        }
+                        connect.Close();
+                    }
+
+                    //Обновляем
                     RefreshSpisok_B.PerformClick();
                 }
             }
             else
             {
                 MessageBox.Show("Необходимо выбрать элемент", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void Spisok_LB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(Spisok_LB.SelectedIndex >= 0)
+            {
+                Change_B.Enabled = true;
+                Delete_B.Enabled = true;
+            }
+            else
+            {
+                ClearSpisok_B.Enabled = false;
+            }
+        }
+
+        private void ClearSpisok_B_Click(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Вы действительно хотите очистить список?", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)==DialogResult.OK)
+            {
+                Spisok_LB.Items.Clear();
+                ClearSpisok_B.Enabled = false;
             }
         }
     }

@@ -33,8 +33,9 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Create_B = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.Cancel_B = new System.Windows.Forms.Button();
             this.OK_B = new System.Windows.Forms.Button();
+            this.Cancel_B = new System.Windows.Forms.Button();
+            this.Delete_B = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -48,13 +49,15 @@
             this.Spisok_LB.Name = "Spisok_LB";
             this.Spisok_LB.Size = new System.Drawing.Size(340, 276);
             this.Spisok_LB.TabIndex = 0;
+            this.Spisok_LB.SelectedIndexChanged += new System.EventHandler(this.Spisok_LB_SelectedIndexChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Delete_B);
             this.groupBox1.Controls.Add(this.Spisok_LB);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(354, 309);
+            this.groupBox1.Size = new System.Drawing.Size(354, 342);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Полученные документы";
@@ -83,12 +86,23 @@
             // 
             this.groupBox3.Controls.Add(this.OK_B);
             this.groupBox3.Controls.Add(this.Cancel_B);
-            this.groupBox3.Location = new System.Drawing.Point(372, 221);
+            this.groupBox3.Location = new System.Drawing.Point(372, 254);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(200, 100);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Завершение";
+            this.groupBox3.Text = "Действия";
+            // 
+            // OK_B
+            // 
+            this.OK_B.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.OK_B.Location = new System.Drawing.Point(6, 20);
+            this.OK_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.OK_B.Name = "OK_B";
+            this.OK_B.Size = new System.Drawing.Size(188, 30);
+            this.OK_B.TabIndex = 5;
+            this.OK_B.Text = "Добавить";
+            this.OK_B.UseVisualStyleBackColor = true;
             // 
             // Cancel_B
             // 
@@ -101,22 +115,22 @@
             this.Cancel_B.Text = "Отмена";
             this.Cancel_B.UseVisualStyleBackColor = true;
             // 
-            // OK_B
+            // Delete_B
             // 
-            this.OK_B.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OK_B.Location = new System.Drawing.Point(6, 20);
-            this.OK_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.OK_B.Name = "OK_B";
-            this.OK_B.Size = new System.Drawing.Size(188, 30);
-            this.OK_B.TabIndex = 5;
-            this.OK_B.Text = "OK";
-            this.OK_B.UseVisualStyleBackColor = true;
+            this.Delete_B.Location = new System.Drawing.Point(6, 302);
+            this.Delete_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Delete_B.Name = "Delete_B";
+            this.Delete_B.Size = new System.Drawing.Size(340, 30);
+            this.Delete_B.TabIndex = 5;
+            this.Delete_B.Text = "Удалить документ";
+            this.Delete_B.UseVisualStyleBackColor = true;
+            this.Delete_B.Click += new System.EventHandler(this.Delete_B_Click);
             // 
             // AddDocument
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 331);
+            this.ClientSize = new System.Drawing.Size(582, 365);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -143,5 +157,6 @@
         private System.Windows.Forms.Button OK_B;
         private System.Windows.Forms.Button Cancel_B;
         public System.Windows.Forms.ListBox Spisok_LB;
+        public System.Windows.Forms.Button Delete_B;
     }
 }

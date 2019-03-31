@@ -37,14 +37,14 @@
             this.ClearResultSpisok_B = new System.Windows.Forms.Button();
             this.ResultSpisok_LB = new System.Windows.Forms.ListBox();
             this.Operation_GB = new System.Windows.Forms.GroupBox();
-            this.Operations_B = new System.Windows.Forms.Button();
+            this.NumberDoc_TB = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.OpenDocument_B = new System.Windows.Forms.Button();
+            this.Operations_B = new System.Windows.Forms.Button();
             this.Status_TB = new System.Windows.Forms.TextBox();
             this.Status_GB = new System.Windows.Forms.GroupBox();
             this.Users_CB = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.NumberDoc_TB = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.Enter_B = new System.Windows.Forms.Button();
@@ -68,6 +68,7 @@
             this.Spisok_LB.Name = "Spisok_LB";
             this.Spisok_LB.Size = new System.Drawing.Size(424, 356);
             this.Spisok_LB.TabIndex = 0;
+            this.Spisok_LB.SelectedIndexChanged += new System.EventHandler(this.Spisok_LB_SelectedIndexChanged);
             // 
             // Confirm_B
             // 
@@ -153,16 +154,22 @@
             this.Operation_GB.TabStop = false;
             this.Operation_GB.Text = "Модификация файлов";
             // 
-            // Operations_B
+            // NumberDoc_TB
             // 
-            this.Operations_B.Location = new System.Drawing.Point(6, 56);
-            this.Operations_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Operations_B.Name = "Operations_B";
-            this.Operations_B.Size = new System.Drawing.Size(250, 30);
-            this.Operations_B.TabIndex = 7;
-            this.Operations_B.Text = "Изменить файлы";
-            this.Operations_B.UseVisualStyleBackColor = true;
-            this.Operations_B.Click += new System.EventHandler(this.Operations_B_Click);
+            this.NumberDoc_TB.Location = new System.Drawing.Point(114, 90);
+            this.NumberDoc_TB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.NumberDoc_TB.Name = "NumberDoc_TB";
+            this.NumberDoc_TB.Size = new System.Drawing.Size(142, 22);
+            this.NumberDoc_TB.TabIndex = 12;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 93);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(102, 17);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Номер бланка";
             // 
             // OpenDocument_B
             // 
@@ -175,6 +182,17 @@
             this.OpenDocument_B.Text = "Добавить";
             this.OpenDocument_B.UseVisualStyleBackColor = false;
             this.OpenDocument_B.Click += new System.EventHandler(this.OpenDocument_B_Click);
+            // 
+            // Operations_B
+            // 
+            this.Operations_B.Location = new System.Drawing.Point(6, 56);
+            this.Operations_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Operations_B.Name = "Operations_B";
+            this.Operations_B.Size = new System.Drawing.Size(250, 30);
+            this.Operations_B.TabIndex = 7;
+            this.Operations_B.Text = "Изменить файлы";
+            this.Operations_B.UseVisualStyleBackColor = true;
+            this.Operations_B.Click += new System.EventHandler(this.Operations_B_Click);
             // 
             // Status_TB
             // 
@@ -219,33 +237,16 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Выберите пользователя";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 93);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(102, 17);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Номер бланка";
-            // 
-            // NumberDoc_TB
-            // 
-            this.NumberDoc_TB.Location = new System.Drawing.Point(114, 90);
-            this.NumberDoc_TB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.NumberDoc_TB.Name = "NumberDoc_TB";
-            this.NumberDoc_TB.Size = new System.Drawing.Size(142, 22);
-            this.NumberDoc_TB.TabIndex = 12;
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // Enter_B
             // 
-            this.Enter_B.Location = new System.Drawing.Point(818, 16);
+            this.Enter_B.Location = new System.Drawing.Point(818, 20);
             this.Enter_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Enter_B.Name = "Enter_B";
-            this.Enter_B.Size = new System.Drawing.Size(157, 30);
+            this.Enter_B.Size = new System.Drawing.Size(157, 24);
             this.Enter_B.TabIndex = 14;
             this.Enter_B.Text = "Войти";
             this.Enter_B.UseVisualStyleBackColor = true;
@@ -253,10 +254,10 @@
             // 
             // Exit_B
             // 
-            this.Exit_B.Location = new System.Drawing.Point(981, 16);
+            this.Exit_B.Location = new System.Drawing.Point(981, 20);
             this.Exit_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Exit_B.Name = "Exit_B";
-            this.Exit_B.Size = new System.Drawing.Size(157, 30);
+            this.Exit_B.Size = new System.Drawing.Size(157, 24);
             this.Exit_B.TabIndex = 15;
             this.Exit_B.Text = "Выйти";
             this.Exit_B.UseVisualStyleBackColor = true;
@@ -280,7 +281,7 @@
             this.groupBox2.Controls.Add(this.Enter_B);
             this.groupBox2.Location = new System.Drawing.Point(9, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1144, 57);
+            this.groupBox2.Size = new System.Drawing.Size(1144, 56);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Инициализация";

@@ -15,13 +15,13 @@ namespace Kuzbass_Project
         //Запись с бд в массив
         static public void SetPosition()
         {
-            String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+            String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
             using (var connect = new NpgsqlConnection(connString))
             {
                 connect.Open();
 
-                using (var cmd = new NpgsqlCommand($"Select \"name_position\",\"hashPass_postion\" from \"Positions\";", connect))
+                using (var cmd = new NpgsqlCommand($"SELECT \"Name_Position\",\"HashPass_Position\" FROM \"Positions\";", connect))
                 {
                     using (var reader = cmd.ExecuteReader())
                     {

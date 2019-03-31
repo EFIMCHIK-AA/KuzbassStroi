@@ -33,7 +33,7 @@ namespace Kuzbass_Project
             Status_TB.Clear();
         }
 
-        //Списко для хранение документов
+        //Темповый лист для работы
         List<Document> Documents = new List<Document>();
 
         private void Confirm_B_Click(object sender, EventArgs e)
@@ -47,7 +47,7 @@ namespace Kuzbass_Project
                 try
                 {
                     //Строка подлючения
-                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                     using (var connect = new NpgsqlConnection(connString))
                     {
@@ -65,11 +65,11 @@ namespace Kuzbass_Project
                             //Запросы на подтверждение
                             if(Users_CB.SelectedItem.ToString() == "Архивариус")
                             {
-                                Temp.Status = "\"Передан в ПДО\"";
+                                Temp.Status = "Передан в ПДО";
                             }
                             else if(Users_CB.SelectedItem.ToString() == "Сотрудник ПДО")
                             {
-                                Temp.Status = "\"Выдан в работу\"";
+                                Temp.Status = "Выдан в работу";
 
                                 //Берем номер бланка
                                 if (NumberDoc_TB.Text.Trim() != "")
@@ -78,12 +78,13 @@ namespace Kuzbass_Project
                                     Temp.NumberDoc = NumberDoc_TB.Text.Trim();
 
                                     //Запись в бд
-                                    cmd.CommandText = $"UPDATE \"Orders\" SET \"status_order\" = '{Temp.Status}' WHERE \"QR_order\" = '{Temp.QR}';" +
-                                                      $"Insert into \"Doc\"(\"QR_order\",\"number_doc\") values('{Temp.QR}', '{Temp.NumberDoc}')";
-                                    ;
+                                    cmd.CommandText = $"UPDATE \"StatusOrders\" SET \"Status_Order\" = '{Temp.Status}'" +
+                                                      $"WHERE((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}') = \"id_Order\");" +
+                                                      $"UPDATE \"NumberDocOrders\" SET \"NumberDoc\" = '{Temp.NumberDoc}'" +
+                                                      $"WHERE((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}') = \"id_Order\"); ";
                                     cmd.ExecuteNonQuery();
 
-                                    Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} получил статус {Temp.Status} и номер бланка {Temp.NumberDoc}" + Environment.NewLine);
+                                    Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} получил статус \"{Temp.Status}\" и номер бланка \"{Temp.NumberDoc}\"" + Environment.NewLine);
                                 }
                                 else
                                 {
@@ -96,25 +97,26 @@ namespace Kuzbass_Project
                             }
                             else if (Users_CB.SelectedItem.ToString() == "Разработка МК")
                             {
-                                Temp.Status = "\"МК разработаны\"";
+                                Temp.Status = "МК разработаны";
                             }
                             else if (Users_CB.SelectedItem.ToString() == "Формирование сдельного наряда")
                             {
-                                Temp.Status = "\"Сдельный наряд создан\"";
+                                Temp.Status = "Сдельный наряд создан";
                             }
                             else if (Users_CB.SelectedItem.ToString() == "Раскрой")
                             {
-                                Temp.Status = "\"Раскрой создан\"";
+                                Temp.Status = "Раскрой создан";
                             }
 
                             //Вывод в компонент сообщения об удачном добавлении
-                            if(Temp.Status != "\"Выдан в работу\"")
+                            if(Temp.Status != "Выдан в работу")
                             {
                                 //Запись в бд
-                                cmd.CommandText = $"UPDATE \"Orders\" SET \"status_order\" = '{Temp.Status}' WHERE \"QR_order\" = '{Temp.QR}';";
+                                cmd.CommandText = $"UPDATE \"StatusOrders\" SET \"Status_Order\" = '{Temp.Status}'" +
+                                                  $"WHERE((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}') = \"id_Order\")";
                                 cmd.ExecuteNonQuery();
 
-                                Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} получил статус {Temp.Status}" + Environment.NewLine);
+                                Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} получил статус \"{Temp.Status}\"" + Environment.NewLine);
                             }
                             
                             //Добавляем элемент в список обработанных данных
@@ -199,24 +201,18 @@ namespace Kuzbass_Project
             //        ws2.Cells[i + rowCntAct, 6].Value = Temp.Weight;
             //    }
 
-            //Список для хранения просканированных QR
-            List<String> QR_Documents = new List<String>(); //< - РАБОТАТЬ С НИМ
-
             //Вызываем форму
             AddDocument Dialog = new AddDocument();
             
             if(Dialog.ShowDialog() == DialogResult.OK)
             {
-                for(Int32 i = 0; i < Dialog.Spisok_LB.Items.Count; i++)
-                {
-                    QR_Documents.Add(Dialog.Spisok_LB.Items[i] as String);
-                }
+                //ХЗ ЧТО ДЕЛАТЬ
             }
 
             try
             {
                 //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                 using (var connect = new NpgsqlConnection(connString))
                 {
@@ -227,9 +223,13 @@ namespace Kuzbass_Project
                     using (var cmd = new NpgsqlCommand())
                     {
                         cmd.Connection = connect;
-                        cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_order\",\"executor_order\"," +
-                                          $"\"status_order\", \"number_order\",\"list_order\",\"mark_order\",\"lenght_order\", \"weight_order\") " +
-                                          $"VALUES('{Temp.QR}','{Temp.Executor}','{Temp.Status}','{Temp.Number}','{Temp.List}','{Temp.Name}','{Temp.Lenght}','{Temp.Weight}')";
+                        cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_Order\", \"Executor_Order\", \"Number_Order\", \"List_Order\", \"Mark_Order\"," +
+                                          $"\"Lenght_Order\",\"Weight_Order\",\"DateCreate_Order\")" +
+                                          $"VALUES('{Temp.QR}', '{Temp.Executor}', '{Temp.Number}', '{Temp.List}', '{Temp.Name}', '{Temp.Lenght}', '{Temp.Weight}', '{Temp.DateCreate}');" +
+                                          $"INSERT INTO \"StatusOrders\"(\"id_Order\", \"Status_Order\")" +
+                                          $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.Status}');" +
+                                          $"INSERT INTO \"NumberDocOrder\"(\"id_Order\", \"NumberDoc\")" +
+                                          $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.NumberDoc}');";
                         cmd.ExecuteNonQuery();
                     }
 
@@ -245,7 +245,7 @@ namespace Kuzbass_Project
             }
             catch (Exception)
             {
-                MessageBox.Show($"QR { Temp.QR} загружен не корректно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"QR { Temp.QR} загружен некорректно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             //}
 
@@ -322,7 +322,7 @@ namespace Kuzbass_Project
             try
             {
                 //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = KuzbassTest_DB;";
+                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                 using (var connect = new NpgsqlConnection(connString))
                 {
@@ -332,15 +332,20 @@ namespace Kuzbass_Project
                     if(Users_CB.SelectedItem.ToString() == "Архивариус")
                     {
                         //Чтение
-                        using (var cmd = new NpgsqlCommand("Зарос для архивариуса", connect))
+                        using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\",\"Orders\".\"Executor_Order\",\"Orders\".\"Number_Order\"," +
+                                                           $"\"Orders\".\"List_Order\",\"Orders\".\"Mark_Order\",\"Orders\".\"Lenght_Order\", \"Orders\".\"Weight_Order\"," +
+                                                           $"\"Orders\".\"DateCreate_Order\", \"StatusOrders\".\"Status_Order\", \"NumberDocOrders\".\"NumberDoc\" FROM \"Orders\"," +
+                                                           $" \"NumberDocOrders\", \"StatusOrders\"" +
+                                                           $"WHERE(\"Orders\".\"id_Order\" = \"NumberDocOrders\".\"id_Order\" AND \"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\")" +
+                                                           $" AND \"StatusOrders\".\"Status_Order\" = 'Нет статуса'", connect))
                         {
                             using (var reader = cmd.ExecuteReader())
                             {
                                 //Вывод в компонент
                                 while (reader.Read())
                                 {
-                                    Documents.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(2), reader.GetString(0),
-                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1), "Нет даты"));
+                                    Documents.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7),reader.GetString(9)));
                                 }
                             }
                         }
@@ -348,17 +353,20 @@ namespace Kuzbass_Project
                     else if(Users_CB.SelectedItem.ToString() == "Сотрудник ПДО")
                     {
                         //Чтение
-                        using (var cmd = new NpgsqlCommand($"Select \"QR_order\",\"executor_order\",\"status_order\", \"number_order\"," +
-                                                           $"\"list_order\", \"mark_order\", \"lenght_order\", \"weight_order\"" +
-                                                           $"from \"Orders\" where \"status_order\" = '\"Чертеж передан в ПДО\"'; ", connect))
+                        using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\",\"Orders\".\"Executor_Order\",\"Orders\".\"Number_Order\"," +
+                                                           $"\"Orders\".\"List_Order\",\"Orders\".\"Mark_Order\",\"Orders\".\"Lenght_Order\", \"Orders\".\"Weight_Order\"," +
+                                                           $"\"Orders\".\"DateCreate_Order\", \"StatusOrders\".\"Status_Order\", \"NumberDocOrders\".\"NumberDoc\" FROM \"Orders\"," +
+                                                           $" \"NumberDocOrders\", \"StatusOrders\"" +
+                                                           $"WHERE(\"Orders\".\"id_Order\" = \"NumberDocOrders\".\"id_Order\" AND \"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\")" +
+                                                           $" AND \"StatusOrders\".\"Status_Order\" = 'Передан в ПДО'", connect))
                         {
                             using (var reader = cmd.ExecuteReader())
                             {
                                 //Вывод в компонент
                                 while (reader.Read())
                                 {
-                                    Documents.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(2), reader.GetString(0),
-                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1), "Нет даты"));
+                                    Documents.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -366,17 +374,20 @@ namespace Kuzbass_Project
                     else if(Users_CB.SelectedItem.ToString() == "Разработка МК")
                     {
                         //Чтение
-                        using (var cmd = new NpgsqlCommand($"Select \"QR_order\",\"executor_order\",\"status_order\", \"number_order\"," +
-                                                           $"\"list_order\", \"mark_order\", \"lenght_order\", \"weight_order\"" +
-                                                           $"from \"Orders\" where \"status_order\" = '\"Выдан в работу\"'; ", connect))
+                        using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\",\"Orders\".\"Executor_Order\",\"Orders\".\"Number_Order\"," +
+                                                           $"\"Orders\".\"List_Order\",\"Orders\".\"Mark_Order\",\"Orders\".\"Lenght_Order\", \"Orders\".\"Weight_Order\"," +
+                                                           $"\"Orders\".\"DateCreate_Order\", \"StatusOrders\".\"Status_Order\", \"NumberDocOrders\".\"NumberDoc\" FROM \"Orders\"," +
+                                                           $" \"NumberDocOrders\", \"StatusOrders\"" +
+                                                           $"WHERE(\"Orders\".\"id_Order\" = \"NumberDocOrders\".\"id_Order\" AND \"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\")" +
+                                                           $" AND \"StatusOrders\".\"Status_Order\" = 'Выдан в работу'", connect))
                         {
                             using (var reader = cmd.ExecuteReader())
                             {
                                 //Вывод в компонент
                                 while (reader.Read())
                                 {
-                                    Documents.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(2), reader.GetString(0),
-                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1), "Нет даты"));
+                                    Documents.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -384,17 +395,20 @@ namespace Kuzbass_Project
                     else if (Users_CB.SelectedItem.ToString() == "Формирование сдельного наряда")
                     {
                         //Чтение
-                        using (var cmd = new NpgsqlCommand($"Select \"QR_order\",\"executor_order\",\"status_order\", \"number_order\"," +
-                                                           $"\"list_order\", \"mark_order\", \"lenght_order\", \"weight_order\"" +
-                                                           $"from \"Orders\" where \"status_order\" = '\"МК разработаны\"'; ", connect))
+                        using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\",\"Orders\".\"Executor_Order\",\"Orders\".\"Number_Order\"," +
+                                                           $"\"Orders\".\"List_Order\",\"Orders\".\"Mark_Order\",\"Orders\".\"Lenght_Order\", \"Orders\".\"Weight_Order\"," +
+                                                           $"\"Orders\".\"DateCreate_Order\", \"StatusOrders\".\"Status_Order\", \"NumberDocOrders\".\"NumberDoc\" FROM \"Orders\"," +
+                                                           $" \"NumberDocOrders\", \"StatusOrders\"" +
+                                                           $"WHERE(\"Orders\".\"id_Order\" = \"NumberDocOrders\".\"id_Order\" AND \"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\")" +
+                                                           $" AND \"StatusOrders\".\"Status_Order\" = 'МК разработаны'", connect))
                         {
                             using (var reader = cmd.ExecuteReader())
                             {
                                 //Вывод в компонент
                                 while (reader.Read())
                                 {
-                                    Documents.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(2), reader.GetString(0),
-                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1), "Нет даты"));
+                                    Documents.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -402,17 +416,20 @@ namespace Kuzbass_Project
                     else if (Users_CB.SelectedItem.ToString() == "Раскрой")
                     {
                         //Чтение
-                        using (var cmd = new NpgsqlCommand($"Select \"QR_order\",\"executor_order\",\"status_order\", \"number_order\"," +
-                                                           $"\"list_order\", \"mark_order\", \"lenght_order\", \"weight_order\"" +
-                                                           $"from \"Orders\" where \"status_order\" = '\"Сдельный наряд создан\"'; ", connect))
+                        using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\",\"Orders\".\"Executor_Order\",\"Orders\".\"Number_Order\"," +
+                                                           $"\"Orders\".\"List_Order\",\"Orders\".\"Mark_Order\",\"Orders\".\"Lenght_Order\", \"Orders\".\"Weight_Order\"," +
+                                                           $"\"Orders\".\"DateCreate_Order\", \"StatusOrders\".\"Status_Order\", \"NumberDocOrders\".\"NumberDoc\" FROM \"Orders\"," +
+                                                           $" \"NumberDocOrders\", \"StatusOrders\"" +
+                                                           $"WHERE(\"Orders\".\"id_Order\" = \"NumberDocOrders\".\"id_Order\" AND \"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\")" +
+                                                           $" AND \"StatusOrders\".\"Status_Order\" = 'Сдельный наряд создан'", connect))
                         {
                             using (var reader = cmd.ExecuteReader())
                             {
                                 //Вывод в компонент
                                 while (reader.Read())
                                 {
-                                    Documents.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(2), reader.GetString(0),
-                                                                     reader.GetString(6), reader.GetString(7), reader.GetString(4), reader.GetString(1), "Нет даты"));
+                                    Documents.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -438,12 +455,6 @@ namespace Kuzbass_Project
             catch (Exception Npgsql)
             {
                 MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-            //Разблокировка кнопок
-            if(Spisok_LB.Items.Count > 0)
-            {
-                Confirm_B.Enabled = true;
             }
         }
 
@@ -492,6 +503,7 @@ namespace Kuzbass_Project
                 NumberDoc_TB.Enabled = false;
                 Enter_B.Enabled = true;
                 Exit_B.Enabled = false;
+                Operations_B.Enabled = false;
             }
         }
 
@@ -512,8 +524,8 @@ namespace Kuzbass_Project
                     if (login == "Архивариус")
                     {
                         //Блокироване и анлок кнопок
-                        OpenDocument_B.Enabled = true;
                         Confirm_B.Enabled = false;
+                        OpenDocument_B.Enabled = true;
                         RefreshSpisok_B.Enabled = true;
                         ClearResultSpisok_B.Enabled = false;
                         NumberDoc_TB.Enabled = false;
@@ -562,7 +574,22 @@ namespace Kuzbass_Project
         private void Operations_B_Click(object sender, EventArgs e)
         {
             OperationForFiles Dialog = new OperationForFiles(Users_CB.SelectedItem.ToString());
-            if (Dialog.ShowDialog() == DialogResult.OK) { }
+            if (Dialog.ShowDialog() == DialogResult.OK)
+            {
+                RefreshSpisok_B.PerformClick();
+            }
+        }
+
+        private void Spisok_LB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(Spisok_LB.SelectedIndex >= 0)
+            {
+                Confirm_B.Enabled = true;
+            }
+            else
+            {
+                Confirm_B.Enabled = false;
+            }
         }
     }
 }

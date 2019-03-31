@@ -45,19 +45,11 @@ namespace Kuzbass_Project
                         throw new Exception("Необходимо ввести номер бланка");
                     }
 
-                    Int32 temp = Convert.ToInt32(NumberDoc_TB.Text);
-
                     if (Status_CB.SelectedItem.ToString() == "Не задано")
                     {
                         Status_CB.Focus();
                         throw new Exception("Необходимо выбрать статус");
                     }
-                }
-                catch(FormatException)
-                {
-                    NumberDoc_TB.Focus();
-                    MessageBox.Show("В поле должно быть числовое значение", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    e.Cancel = true;
                 }
                 catch(Exception E)
                 {
@@ -71,27 +63,36 @@ namespace Kuzbass_Project
         {
             Status_CB.Items.Add("Не задано");
             Status_CB.SelectedIndex = 0;
-            QR_TB.Enabled = false;
+            QR_TB.ReadOnly = true;
+
+            if(Mode != "Сотрудник ПДО")
+            {
+                NumberDoc_TB.ReadOnly = true;
+            }
 
             if(Mode == "Архивариус")
             {
-                Status_CB.Items.AddRange(new String[] {"\"Нет статуса\"", "\"Передан в ПДО\""});
+                Status_CB.Items.AddRange(new String[] {"Нет статуса", "Передан в ПДО"});
+                NumberDoc_TB.ReadOnly = true;
             }
             else if(Mode == "Сотрудник ПДО")
             {
-                Status_CB.Items.AddRange(new String[] {"\"Передан в ПДО\"", "\"Выдан в работу\""});
+                Status_CB.Items.AddRange(new String[] {"Передан в ПДО", "Выдан в работу"});
             }
             else if(Mode == "Разработка МК")
             {
-                Status_CB.Items.AddRange(new String[] {"\"Выдан в работу\"", "\"МК разработаны\""});
+                Status_CB.Items.AddRange(new String[] {"Выдан в работу", "МК разработаны"});
+                NumberDoc_TB.ReadOnly = true;
             }
             else if(Mode == "Формирование сдельного наряда")
             {
-                Status_CB.Items.AddRange(new String[] {"\"МК разработаны\"", "\"Сдельный наряд создан\""});
+                Status_CB.Items.AddRange(new String[] {"МК разработаны", "Сдельный наряд создан"});
+                NumberDoc_TB.ReadOnly = true;
             }
             else if(Mode == "Раскрой")
             {
-                Status_CB.Items.AddRange(new String[] {"\"Сдельный наряд создан\"", "\"Раскрой создан\""});
+                Status_CB.Items.AddRange(new String[] {"Сдельный наряд создан", "Раскрой создан"});
+                NumberDoc_TB.ReadOnly = true;
             }
             else
             {

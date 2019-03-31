@@ -39,7 +39,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.OK_B = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.Cancel_B = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.ResultSpisok_GB.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -90,6 +89,7 @@
             this.ClearSpisok_B.TabIndex = 7;
             this.ClearSpisok_B.Text = "Очистить список";
             this.ClearSpisok_B.UseVisualStyleBackColor = true;
+            this.ClearSpisok_B.Click += new System.EventHandler(this.ClearSpisok_B_Click);
             // 
             // RefreshSpisok_B
             // 
@@ -123,6 +123,7 @@
             this.Spisok_LB.Name = "Spisok_LB";
             this.Spisok_LB.Size = new System.Drawing.Size(424, 452);
             this.Spisok_LB.TabIndex = 0;
+            this.Spisok_LB.SelectedIndexChanged += new System.EventHandler(this.Spisok_LB_SelectedIndexChanged);
             // 
             // Mode_CB
             // 
@@ -136,11 +137,10 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.Cancel_B);
             this.groupBox2.Controls.Add(this.OK_B);
-            this.groupBox2.Location = new System.Drawing.Point(453, 394);
+            this.groupBox2.Location = new System.Drawing.Point(453, 434);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(286, 95);
+            this.groupBox2.Size = new System.Drawing.Size(286, 58);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Завершение модификации";
@@ -148,7 +148,7 @@
             // OK_B
             // 
             this.OK_B.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OK_B.Location = new System.Drawing.Point(7, 20);
+            this.OK_B.Location = new System.Drawing.Point(6, 20);
             this.OK_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.OK_B.Name = "OK_B";
             this.OK_B.Size = new System.Drawing.Size(274, 30);
@@ -166,23 +166,11 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Режим отображения";
             // 
-            // Cancel_B
-            // 
-            this.Cancel_B.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel_B.Location = new System.Drawing.Point(6, 54);
-            this.Cancel_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Cancel_B.Name = "Cancel_B";
-            this.Cancel_B.Size = new System.Drawing.Size(274, 30);
-            this.Cancel_B.TabIndex = 5;
-            this.Cancel_B.Text = "Отмена";
-            this.Cancel_B.UseVisualStyleBackColor = true;
-            // 
             // OperationForFiles
             // 
             this.AcceptButton = this.OK_B;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.Cancel_B;
             this.ClientSize = new System.Drawing.Size(746, 501);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -217,6 +205,5 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button OK_B;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button Cancel_B;
     }
 }

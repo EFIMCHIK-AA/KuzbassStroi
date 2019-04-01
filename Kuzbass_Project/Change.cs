@@ -22,11 +22,6 @@ namespace Kuzbass_Project
         String Status;
         String Mode;
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-             
-        }
-
         private void Change_FormClosing(object sender, FormClosingEventArgs e)
         {
             if(DialogResult == DialogResult.OK)
@@ -49,6 +44,21 @@ namespace Kuzbass_Project
                     {
                         Status_CB.Focus();
                         throw new Exception("Необходимо выбрать статус");
+                    }
+
+                    if(Mode == "Сотрудник ПДО")
+                    {
+                        if(Status_CB.SelectedItem.ToString() == "Выдан в работу")
+                        {
+                            if (NumberDoc_TB.Text.Trim() == "" || NumberDoc_TB.Text == "Нет номера бланка")
+                            {
+                                throw new Exception("Для присваивания статуса \"Выдан в работу\" необходимо ввести номер бланка");
+                            }
+                        }
+                        else
+                        {
+                            NumberDoc_TB.Text = "Нет номера бланка";
+                        }
                     }
                 }
                 catch(Exception E)
@@ -111,6 +121,14 @@ namespace Kuzbass_Project
             else
             {
                 MessageBox.Show("Обнаружен несуществующий статус документа", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void Status_CB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(Status_CB.SelectedItem.ToString() == "Передан в ПДО")
+            {
+                NumberDoc_TB.Text = "Нет номера бланка";
             }
         }
     }

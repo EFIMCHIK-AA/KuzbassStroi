@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Sockets;
 using Npgsql;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +20,7 @@ namespace Kuzbass_Project
     public partial class Form1 : Form
     {
         private String[,] values = null;
+        private String Mode;
 
         public Form1()
         {
@@ -63,11 +66,11 @@ namespace Kuzbass_Project
                             Document Temp = Temp = Spisok_LB.Items[Spisok_LB.SelectedIndex] as Document;
 
                             //Запросы на подтверждение
-                            if(Users_CB.SelectedItem.ToString() == "Архивариус")
+                            if(Mode == "Архивариус")
                             {
                                 Temp.Status = "Передан в ПДО";
                             }
-                            else if(Users_CB.SelectedItem.ToString() == "Сотрудник ПДО")
+                            else if(Mode == "Сотрудник ПДО")
                             {
                                 Temp.Status = "Выдан в работу";
 
@@ -95,15 +98,15 @@ namespace Kuzbass_Project
                                     return;
                                 }
                             }
-                            else if (Users_CB.SelectedItem.ToString() == "Разработка МК")
+                            else if (Mode == "Разработка МК")
                             {
                                 Temp.Status = "МК разработаны";
                             }
-                            else if (Users_CB.SelectedItem.ToString() == "Формирование сдельного наряда")
+                            else if (Mode == "Формирование сдельного наряда")
                             {
                                 Temp.Status = "Сдельный наряд создан";
                             }
-                            else if (Users_CB.SelectedItem.ToString() == "Раскрой")
+                            else if (Mode == "Раскрой")
                             {
                                 Temp.Status = "Раскрой создан";
                             }
@@ -148,13 +151,13 @@ namespace Kuzbass_Project
         private void OpenDocument_B_Click(object sender, EventArgs e)
         {
             Status_TB.Clear();
+            Documents.Clear();
 
             ////Выбирается файл, достаются с него все необходимые данные, преобразуется если необходимо <- ТВОЁ
             //if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
             //    return;
             //string filename = openFileDialog1.FileName;
             ////Объект, дальше работай с ним
-            Document Temp = new Document();
             //Excel value = new Excel();
             //value.GetValues(filename);
             //value.CreateHeaderReg();            
@@ -203,51 +206,62 @@ namespace Kuzbass_Project
 
             //Вызываем форму
             AddDocument Dialog = new AddDocument();
-            
-            if(Dialog.ShowDialog() == DialogResult.OK)
-            {
-                //ХЗ ЧТО ДЕЛАТЬ
-            }
 
-            try
-            {
-                //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+            if (Dialog.ShowDialog() == DialogResult.OK)
+            {             
+                //Документ для работы
+                Document Temp = new Document();
 
-                using (var connect = new NpgsqlConnection(connString))
+                //Добавляю в базу данных и вывожу статус
+                try
                 {
-                    //Открытие потока
-                    connect.Open();
+                    //Строка подлючения
+                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
-                    //Добавление
-                    using (var cmd = new NpgsqlCommand())
+                    using (var connect = new NpgsqlConnection(connString))
                     {
-                        cmd.Connection = connect;
-                        cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_Order\", \"Executor_Order\", \"Number_Order\", \"List_Order\", \"Mark_Order\"," +
-                                          $"\"Lenght_Order\",\"Weight_Order\",\"DateCreate_Order\")" +
-                                          $"VALUES('{Temp.QR}', '{Temp.Executor}', '{Temp.Number}', '{Temp.List}', '{Temp.Name}', '{Temp.Lenght}', '{Temp.Weight}', '{Temp.DateCreate}');" +
-                                          $"INSERT INTO \"StatusOrders\"(\"id_Order\", \"Status_Order\")" +
-                                          $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.Status}');" +
-                                          $"INSERT INTO \"NumberDocOrder\"(\"id_Order\", \"NumberDoc\")" +
-                                          $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.NumberDoc}');";
-                        cmd.ExecuteNonQuery();
+                        //Открытие потока
+                        connect.Open();
+
+                        //Считываем все QR
+                        for (Int32 i = 0; i < Dialog.Spisok_LB.Items.Count; i++)
+                        {
+                            //Вытаскиваешь данные с документа 
+                            //и записываешь в Temp <- Кирилл
+
+                            //Добавление
+                            using (var cmd = new NpgsqlCommand())
+                            {
+                                cmd.Connection = connect;
+                                cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_Order\", \"Executor_Order\", \"Number_Order\", \"List_Order\", \"Mark_Order\"," +
+                                                  $"\"Lenght_Order\",\"Weight_Order\",\"DateCreate_Order\")" +
+                                                  $"VALUES('{Temp.QR}', '{Temp.Executor}', '{Temp.Number}', '{Temp.List}', '{Temp.Name}', '{Temp.Lenght}', '{Temp.Weight}', '{Temp.DateCreate}');" +
+                                                  $"INSERT INTO \"StatusOrders\"(\"id_Order\", \"Status_Order\")" +
+                                                  $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.Status}');" +
+                                                  $"INSERT INTO \"NumberDocOrder\"(\"id_Order\", \"NumberDoc\")" +
+                                                  $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.NumberDoc}');";
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            //Вывод в компонент сообщения об удачном добавлении
+                            Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} добавлен в базу трекинга" + Environment.NewLine);
+                        }
+
+                        //Закрытие потока
+                        connect.Close();
                     }
 
-                    //Закрытие потока
-                    connect.Close();
+                    //Обновляем данные
+                    RefreshSpisok_B.PerformClick();
+
+                    //Вывод инорфмационного окна
+                    MessageBox.Show($"Чертежи успешно добавлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                //Вывод в компонент сообщения об удачном добавлении
-                Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} добавлен в базу трекинга" + Environment.NewLine);
-
-                //Обновляем данные
-                RefreshSpisok_B.PerformClick();
+                catch (Exception)
+                {
+                    MessageBox.Show($"Попытка добавление некорректного QR \"{Temp.QR}\" ", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
-            catch (Exception)
-            {
-                MessageBox.Show($"QR { Temp.QR} загружен некорректно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            //}
 
             //int last = ws2.Dimension.End.Row;
             //ws2.Cells[last + 2, 4].Value = "Принял";
@@ -257,17 +271,11 @@ namespace Kuzbass_Project
             //ws2.Cells[last + 2, 7].Value = "Линник О.В.";
             //ws2.Cells[last + 3, 7].Value = "/______________/";
             //workbook1.Save();
-            MessageBox.Show($"Чертежи успешно добавлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Добавляем по умолчанию
-            Users_CB.Items.Add("Не задано");
-            //Установка тестовых данных по умолчанию на "Не задано"
-            Users_CB.SelectedIndex = 0;
-
-            //Блокирование всех кнопок
+            //Блокирование всех компонентов
             OpenDocument_B.Enabled = false;
             Confirm_B.Enabled = false;
             RefreshSpisok_B.Enabled = false;
@@ -276,16 +284,24 @@ namespace Kuzbass_Project
             Exit_B.Enabled = false;
             Operations_B.Enabled = false;
 
+
+            PassForm Dialog = new PassForm();
+            //Добавляем по умолчанию
+            Dialog.Login_CB.Items.Add("Не задано");
+            //Установка тестовых данных по умолчанию на "Не задано"
+            Dialog.Login_CB.SelectedIndex = 0;
+
+            //Подгрузка должностей из БД
             try
             {
                 NamePosition.SetPosition();
 
-                if(NamePosition.Positions.Count != 0)
+                if (NamePosition.Positions.Count != 0)
                 {
-                    //Вывод всех позиций в Users_CB
+                    //Вывод всех позиций в Login_CB
                     foreach (Position Temp in NamePosition.Positions)
                     {
-                        Users_CB.Items.Add(Temp.Name);
+                        Dialog.Login_CB.Items.Add(Temp.Name);
                     }
                 }
                 else
@@ -293,21 +309,54 @@ namespace Kuzbass_Project
                     MessageBox.Show("Должности для интеграции не обнаружены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            catch(Exception Npgsql)
+            catch (Exception Npgsql)
             {
                 MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
 
-        private void Users_CB_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(Users_CB.SelectedItem.ToString() == "Не задано")
+            if (Dialog.ShowDialog() == DialogResult.OK)
             {
-                Enter_B.Enabled = false;
+                //Получение режима
+                Mode = Dialog.Login_CB.SelectedItem.ToString();
+
+                if (Mode == "Архивариус")
+                {
+                    //Блокироване и анлок кнопок
+                    Confirm_B.Enabled = false;
+                    OpenDocument_B.Enabled = true;
+                    RefreshSpisok_B.Enabled = true;
+                    ClearResultSpisok_B.Enabled = false;
+                    NumberDoc_TB.Enabled = false;
+                    Exit_B.Enabled = true;
+                    Operations_B.Enabled = true;
+                }
+                else if (Mode == "Сотрудник ПДО")
+                {
+                    //Блокироване и анлок кнопок
+                    Confirm_B.Enabled = false;
+                    RefreshSpisok_B.Enabled = true;
+                    ClearResultSpisok_B.Enabled = false;
+                    OpenDocument_B.Enabled = false;
+                    Exit_B.Enabled = true;
+                    Operations_B.Enabled = true;
+                    NumberDoc_TB.Enabled = false;
+                }
+                else
+                {
+                    //Блокироване и анлок кнопок
+                    OpenDocument_B.Enabled = false;
+                    Confirm_B.Enabled = false;
+                    RefreshSpisok_B.Enabled = true;
+                    ClearResultSpisok_B.Enabled = false;
+                    OpenDocument_B.Enabled = false;
+                    NumberDoc_TB.Enabled = false;
+                    Exit_B.Enabled = true;
+                    Operations_B.Enabled = true;
+                }
             }
             else
             {
-                Enter_B.Enabled = true;
+                Application.Exit();
             }
         }
 
@@ -329,7 +378,7 @@ namespace Kuzbass_Project
                     //Открытие потока
                     connect.Open();
 
-                    if(Users_CB.SelectedItem.ToString() == "Архивариус")
+                    if(Mode == "Архивариус")
                     {
                         //Чтение
                         using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\",\"Orders\".\"Executor_Order\",\"Orders\".\"Number_Order\"," +
@@ -350,7 +399,7 @@ namespace Kuzbass_Project
                             }
                         }
                     }
-                    else if(Users_CB.SelectedItem.ToString() == "Сотрудник ПДО")
+                    else if(Mode == "Сотрудник ПДО")
                     {
                         //Чтение
                         using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\",\"Orders\".\"Executor_Order\",\"Orders\".\"Number_Order\"," +
@@ -371,7 +420,7 @@ namespace Kuzbass_Project
                             }
                         }
                     }
-                    else if(Users_CB.SelectedItem.ToString() == "Разработка МК")
+                    else if(Mode == "Разработка МК")
                     {
                         //Чтение
                         using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\",\"Orders\".\"Executor_Order\",\"Orders\".\"Number_Order\"," +
@@ -392,7 +441,7 @@ namespace Kuzbass_Project
                             }
                         }
                     }
-                    else if (Users_CB.SelectedItem.ToString() == "Формирование сдельного наряда")
+                    else if (Mode == "Формирование сдельного наряда")
                     {
                         //Чтение
                         using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\",\"Orders\".\"Executor_Order\",\"Orders\".\"Number_Order\"," +
@@ -413,7 +462,7 @@ namespace Kuzbass_Project
                             }
                         }
                     }
-                    else if (Users_CB.SelectedItem.ToString() == "Раскрой")
+                    else if (Mode == "Раскрой")
                     {
                         //Чтение
                         using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\",\"Orders\".\"Executor_Order\",\"Orders\".\"Number_Order\"," +
@@ -449,7 +498,7 @@ namespace Kuzbass_Project
                 }
                 else
                 {
-                    MessageBox.Show("Документы не обнаружены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Документы для подтвердения не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception Npgsql)
@@ -491,89 +540,13 @@ namespace Kuzbass_Project
         {
             if (MessageBox.Show("Вы действительно хотите выйти?", "Информация", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
             {
-                Users_CB.Enabled = true;
-                ClearField();
-                NumberDoc_TB.Text = "";
-                NumberDoc_TB.Enabled = false;
-                OpenDocument_B.Enabled = false;
-                Confirm_B.Enabled = false;
-                RefreshSpisok_B.Enabled = false;
-                ClearResultSpisok_B.Enabled = false;
-                OpenDocument_B.Enabled = false;
-                NumberDoc_TB.Enabled = false;
-                Enter_B.Enabled = true;
-                Exit_B.Enabled = false;
-                Operations_B.Enabled = false;
-            }
-        }
-
-        private void Enter_B_Click(object sender, EventArgs e)
-        {
-            if (Users_CB.SelectedIndex != 0)
-            {
-                String login = Users_CB.SelectedItem.ToString();
-
-                PassForm Dialog = new PassForm();
-
-                Dialog.Login_TB.Text = login;
-
-                if (Dialog.ShowDialog() == DialogResult.OK)
-                {
-                    Users_CB.Enabled = false;
-
-                    if (login == "Архивариус")
-                    {
-                        //Блокироване и анлок кнопок
-                        Confirm_B.Enabled = false;
-                        OpenDocument_B.Enabled = true;
-                        RefreshSpisok_B.Enabled = true;
-                        ClearResultSpisok_B.Enabled = false;
-                        NumberDoc_TB.Enabled = false;
-                        Enter_B.Enabled = false;
-                        Exit_B.Enabled = true;
-                        Operations_B.Enabled = true;
-
-                        //Очистка
-                        ClearField();
-                    }
-                    else if (login == "Сотрудник ПДО")
-                    {
-                        //Блокироване и анлок кнопок
-                        Confirm_B.Enabled = false;
-                        RefreshSpisok_B.Enabled = true;
-                        ClearResultSpisok_B.Enabled = false;
-                        OpenDocument_B.Enabled = false;
-                        NumberDoc_TB.Enabled = true;
-                        Enter_B.Enabled = false;
-                        Exit_B.Enabled = true;
-                        Operations_B.Enabled = true;
-
-                        //Очистка
-                        ClearField();
-                    }
-                    else
-                    {
-                        //Блокироване и анлок кнопок
-                        OpenDocument_B.Enabled = false;
-                        Confirm_B.Enabled = false;
-                        RefreshSpisok_B.Enabled = true;
-                        ClearResultSpisok_B.Enabled = false;
-                        OpenDocument_B.Enabled = false;
-                        NumberDoc_TB.Enabled = false;
-                        Enter_B.Enabled = false;
-                        Exit_B.Enabled = true;
-                        Operations_B.Enabled = true;
-
-                        //Очистка
-                        ClearField();
-                    }
-                }
+                Application.Exit();
             }
         }
 
         private void Operations_B_Click(object sender, EventArgs e)
         {
-            OperationForFiles Dialog = new OperationForFiles(Users_CB.SelectedItem.ToString());
+            OperationForFiles Dialog = new OperationForFiles(Mode);
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
                 RefreshSpisok_B.PerformClick();
@@ -585,10 +558,15 @@ namespace Kuzbass_Project
             if(Spisok_LB.SelectedIndex >= 0)
             {
                 Confirm_B.Enabled = true;
+                if(Mode == "Сотрудник ПДО")
+                {
+                    NumberDoc_TB.Enabled = true;
+                }
             }
             else
             {
                 Confirm_B.Enabled = false;
+                NumberDoc_TB.Enabled = false;
             }
         }
     }

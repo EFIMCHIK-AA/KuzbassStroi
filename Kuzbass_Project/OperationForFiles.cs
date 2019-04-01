@@ -30,11 +30,11 @@ namespace Kuzbass_Project
 
         private void RefreshSpisok_B_Click(object sender, EventArgs e)
         {
-            if(Mode_CB.SelectedItem.ToString() == "Не подтвержденные документы")
-            {
-                //Очистка от старых данных
-                Spisok_LB.Items.Clear();
+            //Очистка от старых данных
+            Spisok_LB.Items.Clear();
 
+            if (Mode_CB.SelectedItem.ToString() == "Не подтвержденные документы")
+            {
                 //Заполняем список
                 GetSpisok.GetSpisokItemsNO(Spisok_LB, Mode);
 
@@ -46,14 +46,11 @@ namespace Kuzbass_Project
                 else
                 {
                     ClearSpisok_B.Enabled = false;
-                    MessageBox.Show("Документы не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Не подтвержденные документы не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else if (Mode_CB.SelectedItem.ToString() == "Подтвержденные документы")
             {
-                //Очистка от старых данных
-                Spisok_LB.Items.Clear();
-
                 //Заполняем список
                 GetSpisok.GetSpisokItemsYES(Spisok_LB, Mode);
 
@@ -64,7 +61,7 @@ namespace Kuzbass_Project
                 }
                 else
                 {
-                    MessageBox.Show("Документы не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Подтвержденные документы не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else if(Mode_CB.SelectedItem.ToString() == "Не задано")
@@ -95,12 +92,18 @@ namespace Kuzbass_Project
                 RefreshSpisok_B.Enabled = true;
                 Spisok_LB.Enabled = true;
                 Spisok_LB.Items.Clear();
+                ClearSpisok_B.Enabled = false;
+                Change_B.Enabled = false;
+                Delete_B.Enabled = false;
             }
             else if (Mode_CB.SelectedItem.ToString() == "Подтвержденные документы")
             {
                 RefreshSpisok_B.Enabled = true;
                 Spisok_LB.Enabled = true;
                 Spisok_LB.Items.Clear();
+                ClearSpisok_B.Enabled = false;
+                Change_B.Enabled = false;
+                Delete_B.Enabled = false;
             }
             else
             {
@@ -203,7 +206,8 @@ namespace Kuzbass_Project
             }
             else
             {
-                ClearSpisok_B.Enabled = false;
+                Change_B.Enabled = false;
+                Delete_B.Enabled = false;
             }
         }
 

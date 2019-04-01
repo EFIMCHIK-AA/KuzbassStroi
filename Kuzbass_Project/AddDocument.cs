@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Sockets;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -38,6 +40,16 @@ namespace Kuzbass_Project
             {
                 Spisok_LB.Items.RemoveAt(Spisok_LB.SelectedIndex);
             }
+        }
+
+        private void AddDocument_Shown(object sender, EventArgs e)
+        {           
+        }
+
+        private void StartScan_B_Click(object sender, EventArgs e)
+        {
+            StartScan_B.Enabled = false;
+            Server.Start(Spisok_LB, Status_TB);
         }
     }
 }

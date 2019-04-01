@@ -32,11 +32,11 @@
             this.Pass_TB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.Login_TB = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.CheckPass_CB = new System.Windows.Forms.CheckBox();
-            this.Enter_B = new System.Windows.Forms.Button();
+            this.Login_CB = new System.Windows.Forms.ComboBox();
             this.Cancel_B = new System.Windows.Forms.Button();
+            this.Enter_B = new System.Windows.Forms.Button();
+            this.CheckPass_CB = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,7 +44,7 @@
             // 
             this.Pass_TB.Location = new System.Drawing.Point(73, 49);
             this.Pass_TB.Name = "Pass_TB";
-            this.Pass_TB.Size = new System.Drawing.Size(202, 22);
+            this.Pass_TB.Size = new System.Drawing.Size(262, 22);
             this.Pass_TB.TabIndex = 0;
             // 
             // label1
@@ -65,29 +65,51 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Логин";
             // 
-            // Login_TB
-            // 
-            this.Login_TB.Location = new System.Drawing.Point(73, 21);
-            this.Login_TB.Name = "Login_TB";
-            this.Login_TB.ReadOnly = true;
-            this.Login_TB.Size = new System.Drawing.Size(202, 22);
-            this.Login_TB.TabIndex = 2;
-            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Login_CB);
             this.groupBox1.Controls.Add(this.Cancel_B);
             this.groupBox1.Controls.Add(this.Enter_B);
             this.groupBox1.Controls.Add(this.CheckPass_CB);
-            this.groupBox1.Controls.Add(this.Login_TB);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.Pass_TB);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(45, 32);
+            this.groupBox1.Location = new System.Drawing.Point(30, 22);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(284, 150);
+            this.groupBox1.Size = new System.Drawing.Size(349, 150);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Данные инициализации";
+            // 
+            // Login_CB
+            // 
+            this.Login_CB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Login_CB.FormattingEnabled = true;
+            this.Login_CB.Location = new System.Drawing.Point(73, 21);
+            this.Login_CB.Name = "Login_CB";
+            this.Login_CB.Size = new System.Drawing.Size(262, 24);
+            this.Login_CB.TabIndex = 9;
+            this.Login_CB.SelectedIndexChanged += new System.EventHandler(this.Login_CB_SelectedIndexChanged);
+            // 
+            // Cancel_B
+            // 
+            this.Cancel_B.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Cancel_B.Location = new System.Drawing.Point(182, 104);
+            this.Cancel_B.Name = "Cancel_B";
+            this.Cancel_B.Size = new System.Drawing.Size(153, 30);
+            this.Cancel_B.TabIndex = 8;
+            this.Cancel_B.Text = "Отмена";
+            this.Cancel_B.UseVisualStyleBackColor = true;
+            // 
+            // Enter_B
+            // 
+            this.Enter_B.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.Enter_B.Location = new System.Drawing.Point(13, 104);
+            this.Enter_B.Name = "Enter_B";
+            this.Enter_B.Size = new System.Drawing.Size(153, 30);
+            this.Enter_B.TabIndex = 7;
+            this.Enter_B.Text = "Войти";
+            this.Enter_B.UseVisualStyleBackColor = true;
             // 
             // CheckPass_CB
             // 
@@ -99,28 +121,6 @@
             this.CheckPass_CB.Text = "Показать пароль";
             this.CheckPass_CB.UseVisualStyleBackColor = true;
             this.CheckPass_CB.CheckedChanged += new System.EventHandler(this.CheckPass_CB_CheckedChanged);
-            this.CheckPass_CB.CheckStateChanged += new System.EventHandler(this.CheckPass_CB_CheckStateChanged);
-            // 
-            // Enter_B
-            // 
-            this.Enter_B.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.Enter_B.Location = new System.Drawing.Point(13, 104);
-            this.Enter_B.Name = "Enter_B";
-            this.Enter_B.Size = new System.Drawing.Size(125, 30);
-            this.Enter_B.TabIndex = 7;
-            this.Enter_B.Text = "Войти";
-            this.Enter_B.UseVisualStyleBackColor = true;
-            this.Enter_B.Click += new System.EventHandler(this.Enter_B_Click);
-            // 
-            // Cancel_B
-            // 
-            this.Cancel_B.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel_B.Location = new System.Drawing.Point(150, 104);
-            this.Cancel_B.Name = "Cancel_B";
-            this.Cancel_B.Size = new System.Drawing.Size(125, 30);
-            this.Cancel_B.TabIndex = 8;
-            this.Cancel_B.Text = "Отмена";
-            this.Cancel_B.UseVisualStyleBackColor = true;
             // 
             // PassForm
             // 
@@ -128,7 +128,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.Cancel_B;
-            this.ClientSize = new System.Drawing.Size(376, 211);
+            this.ClientSize = new System.Drawing.Size(410, 198);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -137,7 +137,7 @@
             this.Name = "PassForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Инициализация";
+            this.Text = "Инициализация пользователя";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PassForm_FormClosing);
             this.Load += new System.EventHandler(this.PassForm_Load);
             this.groupBox1.ResumeLayout(false);
@@ -154,6 +154,6 @@
         private System.Windows.Forms.Button Cancel_B;
         private System.Windows.Forms.Button Enter_B;
         public System.Windows.Forms.TextBox Pass_TB;
-        public System.Windows.Forms.TextBox Login_TB;
+        public System.Windows.Forms.ComboBox Login_CB;
     }
 }

@@ -25,33 +25,32 @@ namespace Kuzbass_Project
                 {
                     if (String.IsNullOrWhiteSpace(Pass_TB.Text))
                     {
+                        Pass_TB.Focus();
                         throw new Exception("В поле \"Пароль\" должно быть значение");
                     }
 
-                    if (String.IsNullOrWhiteSpace(Login_TB.Text))
+                    if (Login_CB.SelectedIndex == 0)
                     {
-                        throw new Exception("В поле \"Логин\" должно быть значение");
+                        Login_CB.Focus();
+                        throw new Exception("Необходимо выбрать пользователя");
                     }
 
-                    String login = Login_TB.Text;
-
-                    if (NamePosition.GetHashPass(login) != Pass_TB.Text)
+                    if (NamePosition.GetHashPass(Login_CB.SelectedItem.ToString()) != Pass_TB.Text)
                     {
+                        Pass_TB.Focus();
                         throw new Exception("Неправильно введен пароль");
                     }
                 }
                 catch (Exception E)
                 {
-                    Pass_TB.Focus();
                     MessageBox.Show(E.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     e.Cancel = true;
                 }
             }
-        }
-
-        private void Enter_B_Click(object sender, EventArgs e)
-        {
-            
+            else
+            {
+                Application.Exit();
+            }
         }
 
         private void PassForm_Load(object sender, EventArgs e)
@@ -61,18 +60,31 @@ namespace Kuzbass_Project
 
         private void CheckPass_CB_CheckedChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void CheckPass_CB_CheckStateChanged(object sender, EventArgs e)
-        {
-            if (CheckPass_CB.Enabled)
+            if (Pass_TB.UseSystemPasswordChar == true)
             {
                 Pass_TB.UseSystemPasswordChar = false;
             }
             else
             {
                 Pass_TB.UseSystemPasswordChar = true;
+            }
+        }
+
+
+        private void Login_CB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Login_CB.SelectedItem.ToString() == "Не задано")
+            {
+                Enter_B.Enabled = false;
+                CheckPass_CB.Enabled = false;
+                Pass_TB.Enabled = false;
+            }
+            else
+            {
+                Pass_TB.Clear();
+                Enter_B.Enabled = true;
+                CheckPass_CB.Enabled = true;
+                Pass_TB.Enabled = true;
             }
         }
     }

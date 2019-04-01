@@ -96,6 +96,7 @@
             this.Status_CB.Name = "Status_CB";
             this.Status_CB.Size = new System.Drawing.Size(325, 24);
             this.Status_CB.TabIndex = 5;
+            this.Status_CB.SelectedIndexChanged += new System.EventHandler(this.Status_CB_SelectedIndexChanged);
             // 
             // NumberDoc_TB
             // 
@@ -119,7 +120,6 @@
             this.QR_TB.Name = "QR_TB";
             this.QR_TB.Size = new System.Drawing.Size(325, 22);
             this.QR_TB.TabIndex = 1;
-            this.QR_TB.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
             // 

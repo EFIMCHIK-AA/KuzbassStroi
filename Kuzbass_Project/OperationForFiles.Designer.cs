@@ -73,7 +73,7 @@
             this.groupBox1.Controls.Add(this.Change_B);
             this.groupBox1.Controls.Add(this.Delete_B);
             this.groupBox1.Controls.Add(this.RefreshSpisok_B);
-            this.groupBox1.Location = new System.Drawing.Point(453, 72);
+            this.groupBox1.Location = new System.Drawing.Point(455, 70);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(286, 163);
             this.groupBox1.TabIndex = 6;
@@ -105,7 +105,7 @@
             // ResultSpisok_GB
             // 
             this.ResultSpisok_GB.Controls.Add(this.Spisok_LB);
-            this.ResultSpisok_GB.Location = new System.Drawing.Point(10, 11);
+            this.ResultSpisok_GB.Location = new System.Drawing.Point(12, 9);
             this.ResultSpisok_GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ResultSpisok_GB.Name = "ResultSpisok_GB";
             this.ResultSpisok_GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -138,7 +138,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.OK_B);
-            this.groupBox2.Location = new System.Drawing.Point(453, 434);
+            this.groupBox2.Location = new System.Drawing.Point(455, 432);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(286, 58);
             this.groupBox2.TabIndex = 9;
@@ -159,7 +159,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.Mode_CB);
-            this.groupBox3.Location = new System.Drawing.Point(453, 11);
+            this.groupBox3.Location = new System.Drawing.Point(455, 9);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(286, 55);
             this.groupBox3.TabIndex = 10;
@@ -171,7 +171,7 @@
             this.AcceptButton = this.OK_B;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(746, 501);
+            this.ClientSize = new System.Drawing.Size(753, 502);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.ResultSpisok_GB);

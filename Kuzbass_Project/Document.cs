@@ -26,7 +26,7 @@ namespace Kuzbass_Project
             this._List = _List.Trim() != "" ? _List.Trim() : "Нет листа";
             this._Executor = _Executor.Trim() != "" ? _Executor.Trim() : "Нет исполнителя";
             this._DateCreate = _DateCreate.Trim() != "" ? _DateCreate.Trim() : "Нет даты";
-            this._NumberDoc = "Нет номера бланка";
+            this._NumberDoc = _NumberDoc.Trim() != "" ? _NumberDoc.Trim() : "Нет номера бланка";
         }
 
         //Свойства

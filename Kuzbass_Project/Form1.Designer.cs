@@ -43,13 +43,10 @@
             this.Operations_B = new System.Windows.Forms.Button();
             this.Status_TB = new System.Windows.Forms.TextBox();
             this.Status_GB = new System.Windows.Forms.GroupBox();
-            this.Users_CB = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.Enter_B = new System.Windows.Forms.Button();
-            this.Exit_B = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Exit_B = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Spisok_GB.SuspendLayout();
             this.ResultSpisok_GB.SuspendLayout();
@@ -85,7 +82,7 @@
             // 
             this.Spisok_GB.Controls.Add(this.RefreshSpisok_B);
             this.Spisok_GB.Controls.Add(this.Spisok_LB);
-            this.Spisok_GB.Location = new System.Drawing.Point(9, 74);
+            this.Spisok_GB.Location = new System.Drawing.Point(12, 11);
             this.Spisok_GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Spisok_GB.Name = "Spisok_GB";
             this.Spisok_GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -109,7 +106,7 @@
             // 
             this.ResultSpisok_GB.Controls.Add(this.ClearResultSpisok_B);
             this.ResultSpisok_GB.Controls.Add(this.ResultSpisok_LB);
-            this.ResultSpisok_GB.Location = new System.Drawing.Point(718, 74);
+            this.ResultSpisok_GB.Location = new System.Drawing.Point(721, 11);
             this.ResultSpisok_GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ResultSpisok_GB.Name = "ResultSpisok_GB";
             this.ResultSpisok_GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -145,7 +142,7 @@
             this.Operation_GB.Controls.Add(this.label2);
             this.Operation_GB.Controls.Add(this.OpenDocument_B);
             this.Operation_GB.Controls.Add(this.Operations_B);
-            this.Operation_GB.Location = new System.Drawing.Point(450, 141);
+            this.Operation_GB.Location = new System.Drawing.Point(453, 78);
             this.Operation_GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Operation_GB.Name = "Operation_GB";
             this.Operation_GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -208,7 +205,7 @@
             // Status_GB
             // 
             this.Status_GB.Controls.Add(this.Status_TB);
-            this.Status_GB.Location = new System.Drawing.Point(10, 500);
+            this.Status_GB.Location = new System.Drawing.Point(13, 437);
             this.Status_GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Status_GB.Name = "Status_GB";
             this.Status_GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -217,80 +214,46 @@
             this.Status_GB.TabStop = false;
             this.Status_GB.Text = "Статус операции";
             // 
-            // Users_CB
-            // 
-            this.Users_CB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Users_CB.FormattingEnabled = true;
-            this.Users_CB.Location = new System.Drawing.Point(184, 20);
-            this.Users_CB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Users_CB.Name = "Users_CB";
-            this.Users_CB.Size = new System.Drawing.Size(628, 24);
-            this.Users_CB.TabIndex = 1;
-            this.Users_CB.SelectedIndexChanged += new System.EventHandler(this.Users_CB_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(170, 17);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Выберите пользователя";
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // Enter_B
-            // 
-            this.Enter_B.Location = new System.Drawing.Point(818, 20);
-            this.Enter_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Enter_B.Name = "Enter_B";
-            this.Enter_B.Size = new System.Drawing.Size(157, 24);
-            this.Enter_B.TabIndex = 14;
-            this.Enter_B.Text = "Войти";
-            this.Enter_B.UseVisualStyleBackColor = true;
-            this.Enter_B.Click += new System.EventHandler(this.Enter_B_Click);
-            // 
-            // Exit_B
-            // 
-            this.Exit_B.Location = new System.Drawing.Point(981, 20);
-            this.Exit_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Exit_B.Name = "Exit_B";
-            this.Exit_B.Size = new System.Drawing.Size(157, 24);
-            this.Exit_B.TabIndex = 15;
-            this.Exit_B.Text = "Выйти";
-            this.Exit_B.UseVisualStyleBackColor = true;
-            this.Exit_B.Click += new System.EventHandler(this.Exit_B_Click);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.Confirm_B);
-            this.groupBox1.Location = new System.Drawing.Point(450, 74);
+            this.groupBox1.Location = new System.Drawing.Point(453, 11);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(262, 62);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Операции с файлом из списка";
             // 
+            // Exit_B
+            // 
+            this.Exit_B.Location = new System.Drawing.Point(6, 20);
+            this.Exit_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Exit_B.Name = "Exit_B";
+            this.Exit_B.Size = new System.Drawing.Size(250, 30);
+            this.Exit_B.TabIndex = 15;
+            this.Exit_B.Text = "Выйти";
+            this.Exit_B.UseVisualStyleBackColor = true;
+            this.Exit_B.Click += new System.EventHandler(this.Exit_B_Click);
+            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.Users_CB);
-            this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.Exit_B);
-            this.groupBox2.Controls.Add(this.Enter_B);
-            this.groupBox2.Location = new System.Drawing.Point(9, 12);
+            this.groupBox2.Location = new System.Drawing.Point(453, 374);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1144, 56);
+            this.groupBox2.Size = new System.Drawing.Size(262, 58);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Инициализация";
+            this.groupBox2.Text = "Завершение работы";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1165, 673);
+            this.ClientSize = new System.Drawing.Size(1172, 613);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Operation_GB);
@@ -313,7 +276,6 @@
             this.Status_GB.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -331,16 +293,13 @@
         private System.Windows.Forms.TextBox Status_TB;
         private System.Windows.Forms.GroupBox Status_GB;
         private System.Windows.Forms.Button OpenDocument_B;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox NumberDoc_TB;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        public System.Windows.Forms.ComboBox Users_CB;
-        private System.Windows.Forms.Button Enter_B;
-        private System.Windows.Forms.Button Exit_B;
         private System.Windows.Forms.Button Operations_B;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button Exit_B;
         private System.Windows.Forms.GroupBox groupBox2;
     }
 }

@@ -37,14 +37,17 @@
             this.OK_B = new System.Windows.Forms.Button();
             this.Cancel_B = new System.Windows.Forms.Button();
             this.Status_GB = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.StartScan_B = new System.Windows.Forms.Button();
             this.Status_TB = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.Host_TB = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.Port_TB = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.Status_GB.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // Spisok_LB
@@ -82,7 +85,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.Create_B);
-            this.groupBox2.Location = new System.Drawing.Point(372, 12);
+            this.groupBox2.Location = new System.Drawing.Point(372, 96);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(205, 63);
             this.groupBox2.TabIndex = 2;
@@ -94,7 +97,7 @@
             this.Create_B.Location = new System.Drawing.Point(6, 21);
             this.Create_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Create_B.Name = "Create_B";
-            this.Create_B.Size = new System.Drawing.Size(191, 30);
+            this.Create_B.Size = new System.Drawing.Size(193, 30);
             this.Create_B.TabIndex = 4;
             this.Create_B.Text = "Сформировать";
             this.Create_B.UseVisualStyleBackColor = true;
@@ -116,10 +119,11 @@
             this.OK_B.Location = new System.Drawing.Point(6, 20);
             this.OK_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.OK_B.Name = "OK_B";
-            this.OK_B.Size = new System.Drawing.Size(191, 30);
+            this.OK_B.Size = new System.Drawing.Size(193, 30);
             this.OK_B.TabIndex = 5;
             this.OK_B.Text = "Добавить";
             this.OK_B.UseVisualStyleBackColor = true;
+            this.OK_B.Click += new System.EventHandler(this.OK_B_Click);
             // 
             // Cancel_B
             // 
@@ -127,10 +131,11 @@
             this.Cancel_B.Location = new System.Drawing.Point(6, 58);
             this.Cancel_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Cancel_B.Name = "Cancel_B";
-            this.Cancel_B.Size = new System.Drawing.Size(191, 30);
+            this.Cancel_B.Size = new System.Drawing.Size(193, 30);
             this.Cancel_B.TabIndex = 4;
             this.Cancel_B.Text = "Отмена";
             this.Cancel_B.UseVisualStyleBackColor = true;
+            this.Cancel_B.Click += new System.EventHandler(this.Cancel_B_Click);
             // 
             // Status_GB
             // 
@@ -142,27 +147,6 @@
             this.Status_GB.TabStop = false;
             this.Status_GB.Text = "Статус операции";
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.StartScan_B);
-            this.groupBox5.Location = new System.Drawing.Point(372, 81);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(205, 63);
-            this.groupBox5.TabIndex = 5;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Считывание QR";
-            // 
-            // StartScan_B
-            // 
-            this.StartScan_B.Location = new System.Drawing.Point(6, 21);
-            this.StartScan_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.StartScan_B.Name = "StartScan_B";
-            this.StartScan_B.Size = new System.Drawing.Size(191, 30);
-            this.StartScan_B.TabIndex = 4;
-            this.StartScan_B.Text = "Начать сканирование";
-            this.StartScan_B.UseVisualStyleBackColor = true;
-            this.StartScan_B.Click += new System.EventHandler(this.StartScan_B_Click);
-            // 
             // Status_TB
             // 
             this.Status_TB.Location = new System.Drawing.Point(6, 21);
@@ -173,12 +157,59 @@
             this.Status_TB.Size = new System.Drawing.Size(551, 113);
             this.Status_TB.TabIndex = 0;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.Port_TB);
+            this.groupBox4.Controls.Add(this.label1);
+            this.groupBox4.Controls.Add(this.Host_TB);
+            this.groupBox4.Location = new System.Drawing.Point(372, 12);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(205, 78);
+            this.groupBox4.TabIndex = 6;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Параметры подключения";
+            // 
+            // Host_TB
+            // 
+            this.Host_TB.Location = new System.Drawing.Point(51, 21);
+            this.Host_TB.Name = "Host_TB";
+            this.Host_TB.ReadOnly = true;
+            this.Host_TB.Size = new System.Drawing.Size(148, 22);
+            this.Host_TB.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(39, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Хост";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 52);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 17);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Порт";
+            // 
+            // Port_TB
+            // 
+            this.Port_TB.Location = new System.Drawing.Point(51, 49);
+            this.Port_TB.Name = "Port_TB";
+            this.Port_TB.ReadOnly = true;
+            this.Port_TB.Size = new System.Drawing.Size(148, 22);
+            this.Port_TB.TabIndex = 2;
+            // 
             // AddDocument
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(591, 518);
-            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.Status_GB);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -197,7 +228,8 @@
             this.groupBox3.ResumeLayout(false);
             this.Status_GB.ResumeLayout(false);
             this.Status_GB.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -212,8 +244,11 @@
         public System.Windows.Forms.ListBox Spisok_LB;
         public System.Windows.Forms.Button Delete_B;
         private System.Windows.Forms.GroupBox Status_GB;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Button StartScan_B;
         private System.Windows.Forms.TextBox Status_TB;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox Port_TB;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox Host_TB;
     }
 }

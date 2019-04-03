@@ -49,6 +49,9 @@
       <HintPath>bin\Debug\policy.2.0.Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="SimpleTCP, Version=1.0.24.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleTCP.1.0.24\lib\net45\SimpleTCP.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -85,6 +88,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GetPort.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GetPort.Designer.cs">
+      <DependentUpon>GetPort.cs</DependentUpon>
+    </Compile>
     <Compile Include="GetSpisok.cs" />
     <Compile Include="NamePosition.cs" />
     <Compile Include="OperationForFiles.cs">
@@ -102,7 +111,6 @@
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server.cs" />
     <EmbeddedResource Include="AddDocument.resx">
       <DependentUpon>AddDocument.cs</DependentUpon>
     </EmbeddedResource>
@@ -111,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GetPort.resx">
+      <DependentUpon>GetPort.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OperationForFiles.resx">
       <DependentUpon>OperationForFiles.cs</DependentUpon>

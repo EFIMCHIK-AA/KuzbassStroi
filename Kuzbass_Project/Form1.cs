@@ -32,7 +32,6 @@ namespace Kuzbass_Project
         private void ClearField()
         {
             Spisok_LB.Items.Clear();
-            ResultSpisok_LB.Items.Clear();
             Status_TB.Clear();
         }
 
@@ -122,19 +121,11 @@ namespace Kuzbass_Project
                                 Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} получил статус \"{Temp.Status}\"" + Environment.NewLine);
                             }
                             
-                            //Добавляем элемент в список обработанных данных
-                            ResultSpisok_LB.Items.Add(Spisok_LB.Items[Spisok_LB.SelectedIndex]); 
                             Spisok_LB.Items.RemoveAt(Spisok_LB.SelectedIndex);//Удаляем из старого LB
                         }
 
                         //Закрытие потока
                         connect.Close();
-                    }
-
-                    //Активируем кнопку
-                    if(ResultSpisok_LB.Items.Count > 0)
-                    {
-                        ClearResultSpisok_B.Enabled = true;
                     }
                 }
                 catch (Exception Npgsql)
@@ -279,7 +270,6 @@ namespace Kuzbass_Project
             OpenDocument_B.Enabled = false;
             Confirm_B.Enabled = false;
             RefreshSpisok_B.Enabled = false;
-            ClearResultSpisok_B.Enabled = false;
             NumberDoc_TB.Enabled = false;
             Exit_B.Enabled = false;
             Operations_B.Enabled = false;
@@ -325,7 +315,6 @@ namespace Kuzbass_Project
                     Confirm_B.Enabled = false;
                     OpenDocument_B.Enabled = true;
                     RefreshSpisok_B.Enabled = true;
-                    ClearResultSpisok_B.Enabled = false;
                     NumberDoc_TB.Enabled = false;
                     Exit_B.Enabled = true;
                     Operations_B.Enabled = true;
@@ -335,7 +324,6 @@ namespace Kuzbass_Project
                     //Блокироване и анлок кнопок
                     Confirm_B.Enabled = false;
                     RefreshSpisok_B.Enabled = true;
-                    ClearResultSpisok_B.Enabled = false;
                     OpenDocument_B.Enabled = false;
                     Exit_B.Enabled = true;
                     Operations_B.Enabled = true;
@@ -347,7 +335,6 @@ namespace Kuzbass_Project
                     OpenDocument_B.Enabled = false;
                     Confirm_B.Enabled = false;
                     RefreshSpisok_B.Enabled = true;
-                    ClearResultSpisok_B.Enabled = false;
                     OpenDocument_B.Enabled = false;
                     NumberDoc_TB.Enabled = false;
                     Exit_B.Enabled = true;
@@ -505,21 +492,6 @@ namespace Kuzbass_Project
             {
                 MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        private void ClearResultSpisok_B_Click(object sender, EventArgs e)
-        {
-            if(MessageBox.Show("Вы действительно хотите очистить список?", "Информация", MessageBoxButtons.OKCancel, MessageBoxIcon.Information)== DialogResult.OK)
-            {
-                if (ResultSpisok_LB.Items.Count > 0)
-                {
-                    //Очистка
-                    ClearField();
-                    ResultSpisok_LB.Items.Clear();
-                    //блок кнопки
-                    ClearResultSpisok_B.Enabled = false;
-                }
-            } 
         }
 
         private void GetValues(string path)

@@ -33,9 +33,6 @@
             this.Confirm_B = new System.Windows.Forms.Button();
             this.Spisok_GB = new System.Windows.Forms.GroupBox();
             this.RefreshSpisok_B = new System.Windows.Forms.Button();
-            this.ResultSpisok_GB = new System.Windows.Forms.GroupBox();
-            this.ClearResultSpisok_B = new System.Windows.Forms.Button();
-            this.ResultSpisok_LB = new System.Windows.Forms.ListBox();
             this.Operation_GB = new System.Windows.Forms.GroupBox();
             this.NumberDoc_TB = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -49,7 +46,6 @@
             this.Exit_B = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Spisok_GB.SuspendLayout();
-            this.ResultSpisok_GB.SuspendLayout();
             this.Operation_GB.SuspendLayout();
             this.Status_GB.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -101,40 +97,6 @@
             this.RefreshSpisok_B.Text = "Обновить список";
             this.RefreshSpisok_B.UseVisualStyleBackColor = true;
             this.RefreshSpisok_B.Click += new System.EventHandler(this.RefreshSpisok_B_Click);
-            // 
-            // ResultSpisok_GB
-            // 
-            this.ResultSpisok_GB.Controls.Add(this.ClearResultSpisok_B);
-            this.ResultSpisok_GB.Controls.Add(this.ResultSpisok_LB);
-            this.ResultSpisok_GB.Location = new System.Drawing.Point(721, 11);
-            this.ResultSpisok_GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ResultSpisok_GB.Name = "ResultSpisok_GB";
-            this.ResultSpisok_GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ResultSpisok_GB.Size = new System.Drawing.Size(435, 422);
-            this.ResultSpisok_GB.TabIndex = 5;
-            this.ResultSpisok_GB.TabStop = false;
-            this.ResultSpisok_GB.Text = "Обработанные документы";
-            // 
-            // ClearResultSpisok_B
-            // 
-            this.ClearResultSpisok_B.Location = new System.Drawing.Point(5, 383);
-            this.ClearResultSpisok_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ClearResultSpisok_B.Name = "ClearResultSpisok_B";
-            this.ClearResultSpisok_B.Size = new System.Drawing.Size(425, 30);
-            this.ClearResultSpisok_B.TabIndex = 4;
-            this.ClearResultSpisok_B.Text = "Очистить список";
-            this.ClearResultSpisok_B.UseVisualStyleBackColor = true;
-            this.ClearResultSpisok_B.Click += new System.EventHandler(this.ClearResultSpisok_B_Click);
-            // 
-            // ResultSpisok_LB
-            // 
-            this.ResultSpisok_LB.FormattingEnabled = true;
-            this.ResultSpisok_LB.ItemHeight = 16;
-            this.ResultSpisok_LB.Location = new System.Drawing.Point(5, 21);
-            this.ResultSpisok_LB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ResultSpisok_LB.Name = "ResultSpisok_LB";
-            this.ResultSpisok_LB.Size = new System.Drawing.Size(424, 356);
-            this.ResultSpisok_LB.TabIndex = 0;
             // 
             // Operation_GB
             // 
@@ -199,7 +161,7 @@
             this.Status_TB.Name = "Status_TB";
             this.Status_TB.ReadOnly = true;
             this.Status_TB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Status_TB.Size = new System.Drawing.Size(1132, 134);
+            this.Status_TB.Size = new System.Drawing.Size(691, 134);
             this.Status_TB.TabIndex = 7;
             // 
             // Status_GB
@@ -209,7 +171,7 @@
             this.Status_GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Status_GB.Name = "Status_GB";
             this.Status_GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Status_GB.Size = new System.Drawing.Size(1143, 161);
+            this.Status_GB.Size = new System.Drawing.Size(702, 161);
             this.Status_GB.TabIndex = 8;
             this.Status_GB.TabStop = false;
             this.Status_GB.Text = "Статус операции";
@@ -253,12 +215,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1172, 613);
+            this.ClientSize = new System.Drawing.Size(726, 613);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Operation_GB);
             this.Controls.Add(this.Status_GB);
-            this.Controls.Add(this.ResultSpisok_GB);
             this.Controls.Add(this.Spisok_GB);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -269,7 +230,6 @@
             this.Text = "Управление этапами документа";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Spisok_GB.ResumeLayout(false);
-            this.ResultSpisok_GB.ResumeLayout(false);
             this.Operation_GB.ResumeLayout(false);
             this.Operation_GB.PerformLayout();
             this.Status_GB.ResumeLayout(false);
@@ -286,9 +246,6 @@
         private System.Windows.Forms.Button Confirm_B;
         private System.Windows.Forms.GroupBox Spisok_GB;
         private System.Windows.Forms.Button RefreshSpisok_B;
-        private System.Windows.Forms.GroupBox ResultSpisok_GB;
-        private System.Windows.Forms.Button ClearResultSpisok_B;
-        private System.Windows.Forms.ListBox ResultSpisok_LB;
         private System.Windows.Forms.GroupBox Operation_GB;
         private System.Windows.Forms.TextBox Status_TB;
         private System.Windows.Forms.GroupBox Status_GB;

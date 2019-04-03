@@ -33,6 +33,9 @@ namespace Kuzbass_Project
             //Очистка от старых данных
             Spisok_LB.Items.Clear();
 
+            Change_B.Enabled = false;
+            Delete_B.Enabled = false;
+
             if (Mode_CB.SelectedItem.ToString() == "Не подтвержденные документы")
             {
                 //Заполняем список
@@ -115,7 +118,6 @@ namespace Kuzbass_Project
 
         private void Delete_B_Click(object sender, EventArgs e)
         {
-
             if(Spisok_LB.SelectedIndex >= 0)
             {
                 if (MessageBox.Show("Вы действительно хотите удалить документ?", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
@@ -141,6 +143,9 @@ namespace Kuzbass_Project
 
                     //Удаляем из списка
                     Spisok_LB.Items.RemoveAt(Spisok_LB.SelectedIndex);
+
+                    Change_B.Enabled = false;
+                    Delete_B.Enabled = false;
                 }
             }
             else
@@ -217,6 +222,8 @@ namespace Kuzbass_Project
             {
                 Spisok_LB.Items.Clear();
                 ClearSpisok_B.Enabled = false;
+                Change_B.Enabled = false;
+                Delete_B.Enabled = false;
             }
         }
     }

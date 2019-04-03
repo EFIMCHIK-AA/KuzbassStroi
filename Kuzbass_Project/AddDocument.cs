@@ -55,7 +55,7 @@ namespace Kuzbass_Project
                         isAvailable = false;
 
                         if (MessageBox.Show($"Порт {port}, установленный в качестве базового порта запуска, занят." +
-                                           $" Пожалуйста введите доступный порт для подлючения в программе и на устройстве для сканирования QR", "Внимание",
+                                           $" Пожалуйста введите доступный порт для подлючения в программе и на устройстве для считывания QR кода", "Внимание",
                                            MessageBoxButtons.OK, MessageBoxIcon.Warning) == DialogResult.OK)
                         {
                             GetPort Dialog = new GetPort();

@@ -485,7 +485,7 @@ namespace Kuzbass_Project
                 }
                 else
                 {
-                    MessageBox.Show("Документы для подтвердения не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Status_TB.AppendText("Документы для подтвердения не обнаружены" + Environment.NewLine);
                 }
             }
             catch (Exception Npgsql)
@@ -496,11 +496,10 @@ namespace Kuzbass_Project
 
         private void GetValues(string path)
         {
-
             values = CSV.GetStringsFromFile(path, 7);
+
             for (int i = 1; i < values.GetLength(0); i++)
             {
-
                 for (int j = 0; j < values.GetLength(1); j++)
                 {
                     values[i, j] = values[i, j].Replace(@"""", string.Empty);
@@ -539,6 +538,7 @@ namespace Kuzbass_Project
             {
                 Confirm_B.Enabled = false;
                 NumberDoc_TB.Enabled = false;
+                NumberDoc_TB.Clear();
             }
         }
     }

@@ -153,5 +153,17 @@ namespace Kuzbass_Project
                 }
             }
         }
+
+        private void AddDocument_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Закрытие сервера
+            if (Server != null)
+            {
+                if (Server.IsStarted)
+                {
+                    Server.Stop();
+                }
+            }
+        }
     }
 }

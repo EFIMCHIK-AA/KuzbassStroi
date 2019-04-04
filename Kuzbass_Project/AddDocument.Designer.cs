@@ -39,10 +39,10 @@
             this.Status_GB = new System.Windows.Forms.GroupBox();
             this.Status_TB = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.Host_TB = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.Port_TB = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Host_TB = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -170,23 +170,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Параметры подключения";
             // 
-            // Host_TB
-            // 
-            this.Host_TB.Location = new System.Drawing.Point(51, 21);
-            this.Host_TB.Name = "Host_TB";
-            this.Host_TB.ReadOnly = true;
-            this.Host_TB.Size = new System.Drawing.Size(148, 22);
-            this.Host_TB.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Хост";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -203,6 +186,23 @@
             this.Port_TB.ReadOnly = true;
             this.Port_TB.Size = new System.Drawing.Size(148, 22);
             this.Port_TB.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(39, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Хост";
+            // 
+            // Host_TB
+            // 
+            this.Host_TB.Location = new System.Drawing.Point(51, 21);
+            this.Host_TB.Name = "Host_TB";
+            this.Host_TB.ReadOnly = true;
+            this.Host_TB.Size = new System.Drawing.Size(148, 22);
+            this.Host_TB.TabIndex = 0;
             // 
             // AddDocument
             // 
@@ -221,6 +221,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Получение документов";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddDocument_FormClosing);
             this.Load += new System.EventHandler(this.AddDocument_Load);
             this.Shown += new System.EventHandler(this.AddDocument_Shown);
             this.groupBox1.ResumeLayout(false);

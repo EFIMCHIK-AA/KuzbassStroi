@@ -111,6 +111,10 @@ namespace Kuzbass_Project
             {
                 Delete_B.Enabled = true;
             }
+            else
+            {
+                Delete_B.Enabled = false;
+            }
         }
 
         private void Delete_B_Click(object sender, EventArgs e)

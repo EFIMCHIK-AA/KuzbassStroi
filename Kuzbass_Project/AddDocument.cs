@@ -34,7 +34,7 @@ namespace Kuzbass_Project
             String MyHost = Dns.GetHostName();
             Host_TB.Text = Dns.GetHostByName(MyHost).AddressList[0].ToString();
             Status_TB.AppendText($"Получение хоста => Удачно" + Environment.NewLine);
-            Port_TB.Text = "46700";
+            Port_TB.Text = "48677";
 
             //Проверяем доступен ли порт
             Int32 port = Convert.ToInt32(Port_TB.Text);

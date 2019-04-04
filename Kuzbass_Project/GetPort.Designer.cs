@@ -30,9 +30,9 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Port_TB = new System.Windows.Forms.TextBox();
             this.OK_B = new System.Windows.Forms.Button();
             this.Cancel_B = new System.Windows.Forms.Button();
-            this.Port_TB = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +56,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Данные порта";
             // 
+            // Port_TB
+            // 
+            this.Port_TB.Location = new System.Drawing.Point(101, 30);
+            this.Port_TB.Name = "Port_TB";
+            this.Port_TB.Size = new System.Drawing.Size(205, 22);
+            this.Port_TB.TabIndex = 18;
+            // 
             // OK_B
             // 
             this.OK_B.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -77,13 +84,6 @@
             this.Cancel_B.TabIndex = 17;
             this.Cancel_B.Text = "Отмена";
             this.Cancel_B.UseVisualStyleBackColor = true;
-            // 
-            // Port_TB
-            // 
-            this.Port_TB.Location = new System.Drawing.Point(101, 30);
-            this.Port_TB.Name = "Port_TB";
-            this.Port_TB.Size = new System.Drawing.Size(205, 22);
-            this.Port_TB.TabIndex = 18;
             // 
             // GetPort
             // 

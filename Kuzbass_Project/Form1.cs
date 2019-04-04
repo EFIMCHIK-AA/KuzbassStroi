@@ -343,6 +343,9 @@ namespace Kuzbass_Project
             }
             else
             {
+                //Сначла свернем окно, чтобы не было видно отображение текущего объект формы при нажатие на кнопку Cancel
+                this.WindowState = FormWindowState.Minimized;
+                //Закроем
                 Application.Exit();
             }
         }

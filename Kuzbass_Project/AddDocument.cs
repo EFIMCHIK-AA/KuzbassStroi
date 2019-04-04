@@ -123,6 +123,10 @@ namespace Kuzbass_Project
             {
                 Spisok_LB.Items.RemoveAt(Spisok_LB.SelectedIndex);
             }
+            if(Spisok_LB.Items.Count == 0)
+            {
+                Delete_B.Enabled = false;
+            }
         }
 
         private void AddDocument_Shown(object sender, EventArgs e)

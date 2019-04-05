@@ -505,7 +505,7 @@ namespace Kuzbass_Project
 
         private void Exit_B_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Вы действительно хотите выйти?", "Информация", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+            if (MessageBox.Show("Вы действительно хотите выйти?", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 Application.Exit();
             }

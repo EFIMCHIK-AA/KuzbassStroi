@@ -55,10 +55,10 @@
             // 
             this.Spisok_LB.FormattingEnabled = true;
             this.Spisok_LB.Location = new System.Drawing.Point(4, 17);
-            this.Spisok_LB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Spisok_LB.Margin = new System.Windows.Forms.Padding(2);
             this.Spisok_LB.Name = "Spisok_LB";
             this.Spisok_LB.Size = new System.Drawing.Size(256, 225);
-            this.Spisok_LB.TabIndex = 0;
+            this.Spisok_LB.TabIndex = 1;
             this.Spisok_LB.SelectedIndexChanged += new System.EventHandler(this.Spisok_LB_SelectedIndexChanged);
             // 
             // groupBox1
@@ -66,9 +66,9 @@
             this.groupBox1.Controls.Add(this.Delete_B);
             this.groupBox1.Controls.Add(this.Spisok_LB);
             this.groupBox1.Location = new System.Drawing.Point(9, 10);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(266, 278);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
@@ -77,11 +77,11 @@
             // Delete_B
             // 
             this.Delete_B.Location = new System.Drawing.Point(4, 245);
-            this.Delete_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Delete_B.Margin = new System.Windows.Forms.Padding(2);
             this.Delete_B.Name = "Delete_B";
             this.Delete_B.Size = new System.Drawing.Size(255, 24);
-            this.Delete_B.TabIndex = 5;
-            this.Delete_B.Text = "Удалить документ";
+            this.Delete_B.TabIndex = 2;
+            this.Delete_B.Text = "&Удалить документ";
             this.Delete_B.UseVisualStyleBackColor = true;
             this.Delete_B.Click += new System.EventHandler(this.Delete_B_Click);
             // 
@@ -89,9 +89,9 @@
             // 
             this.groupBox2.Controls.Add(this.Create_B);
             this.groupBox2.Location = new System.Drawing.Point(279, 78);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(154, 51);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
@@ -100,11 +100,11 @@
             // Create_B
             // 
             this.Create_B.Location = new System.Drawing.Point(4, 17);
-            this.Create_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Create_B.Margin = new System.Windows.Forms.Padding(2);
             this.Create_B.Name = "Create_B";
             this.Create_B.Size = new System.Drawing.Size(145, 24);
-            this.Create_B.TabIndex = 4;
-            this.Create_B.Text = "Сформировать";
+            this.Create_B.TabIndex = 3;
+            this.Create_B.Text = "&Сформировать";
             this.Create_B.UseVisualStyleBackColor = true;
             this.Create_B.Click += new System.EventHandler(this.Create_B_Click);
             // 
@@ -113,9 +113,9 @@
             this.groupBox3.Controls.Add(this.OK_B);
             this.groupBox3.Controls.Add(this.Cancel_B);
             this.groupBox3.Location = new System.Drawing.Point(279, 206);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(154, 81);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
@@ -125,11 +125,11 @@
             // 
             this.OK_B.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OK_B.Location = new System.Drawing.Point(4, 16);
-            this.OK_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.OK_B.Margin = new System.Windows.Forms.Padding(2);
             this.OK_B.Name = "OK_B";
             this.OK_B.Size = new System.Drawing.Size(145, 24);
-            this.OK_B.TabIndex = 5;
-            this.OK_B.Text = "Добавить";
+            this.OK_B.TabIndex = 4;
+            this.OK_B.Text = "&Добавить";
             this.OK_B.UseVisualStyleBackColor = true;
             this.OK_B.Click += new System.EventHandler(this.OK_B_Click);
             // 
@@ -137,11 +137,11 @@
             // 
             this.Cancel_B.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancel_B.Location = new System.Drawing.Point(4, 47);
-            this.Cancel_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Cancel_B.Margin = new System.Windows.Forms.Padding(2);
             this.Cancel_B.Name = "Cancel_B";
             this.Cancel_B.Size = new System.Drawing.Size(145, 24);
-            this.Cancel_B.TabIndex = 4;
-            this.Cancel_B.Text = "Отмена";
+            this.Cancel_B.TabIndex = 5;
+            this.Cancel_B.Text = "&Отмена";
             this.Cancel_B.UseVisualStyleBackColor = true;
             this.Cancel_B.Click += new System.EventHandler(this.Cancel_B_Click);
             // 
@@ -149,9 +149,9 @@
             // 
             this.Status_GB.Controls.Add(this.Status_TB);
             this.Status_GB.Location = new System.Drawing.Point(9, 292);
-            this.Status_GB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Status_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Status_GB.Name = "Status_GB";
-            this.Status_GB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Status_GB.Padding = new System.Windows.Forms.Padding(2);
             this.Status_GB.Size = new System.Drawing.Size(424, 118);
             this.Status_GB.TabIndex = 4;
             this.Status_GB.TabStop = false;
@@ -160,13 +160,13 @@
             // Status_TB
             // 
             this.Status_TB.Location = new System.Drawing.Point(4, 17);
-            this.Status_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Status_TB.Margin = new System.Windows.Forms.Padding(2);
             this.Status_TB.Multiline = true;
             this.Status_TB.Name = "Status_TB";
             this.Status_TB.ReadOnly = true;
             this.Status_TB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Status_TB.Size = new System.Drawing.Size(414, 93);
-            this.Status_TB.TabIndex = 0;
+            this.Status_TB.TabIndex = 8;
             // 
             // groupBox4
             // 
@@ -175,9 +175,9 @@
             this.groupBox4.Controls.Add(this.label1);
             this.groupBox4.Controls.Add(this.Host_TB);
             this.groupBox4.Location = new System.Drawing.Point(279, 10);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox4.Size = new System.Drawing.Size(154, 63);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
@@ -196,11 +196,11 @@
             // Port_TB
             // 
             this.Port_TB.Location = new System.Drawing.Point(38, 40);
-            this.Port_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Port_TB.Margin = new System.Windows.Forms.Padding(2);
             this.Port_TB.Name = "Port_TB";
             this.Port_TB.ReadOnly = true;
             this.Port_TB.Size = new System.Drawing.Size(112, 20);
-            this.Port_TB.TabIndex = 2;
+            this.Port_TB.TabIndex = 7;
             // 
             // label1
             // 
@@ -215,11 +215,11 @@
             // Host_TB
             // 
             this.Host_TB.Location = new System.Drawing.Point(38, 17);
-            this.Host_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Host_TB.Margin = new System.Windows.Forms.Padding(2);
             this.Host_TB.Name = "Host_TB";
             this.Host_TB.ReadOnly = true;
             this.Host_TB.Size = new System.Drawing.Size(112, 20);
-            this.Host_TB.TabIndex = 0;
+            this.Host_TB.TabIndex = 6;
             // 
             // AddDocument
             // 
@@ -232,7 +232,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddDocument";

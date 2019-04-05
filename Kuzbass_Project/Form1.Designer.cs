@@ -56,20 +56,20 @@
             // 
             this.Spisok_LB.FormattingEnabled = true;
             this.Spisok_LB.Location = new System.Drawing.Point(4, 17);
-            this.Spisok_LB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Spisok_LB.Margin = new System.Windows.Forms.Padding(2);
             this.Spisok_LB.Name = "Spisok_LB";
             this.Spisok_LB.Size = new System.Drawing.Size(319, 290);
-            this.Spisok_LB.TabIndex = 0;
+            this.Spisok_LB.TabIndex = 2;
             this.Spisok_LB.SelectedIndexChanged += new System.EventHandler(this.Spisok_LB_SelectedIndexChanged);
             // 
             // Confirm_B
             // 
             this.Confirm_B.Location = new System.Drawing.Point(4, 17);
-            this.Confirm_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Confirm_B.Margin = new System.Windows.Forms.Padding(2);
             this.Confirm_B.Name = "Confirm_B";
             this.Confirm_B.Size = new System.Drawing.Size(188, 24);
             this.Confirm_B.TabIndex = 3;
-            this.Confirm_B.Text = "Подтвердить";
+            this.Confirm_B.Text = "&Подтвердить";
             this.Confirm_B.UseVisualStyleBackColor = true;
             this.Confirm_B.Click += new System.EventHandler(this.Confirm_B_Click);
             // 
@@ -78,9 +78,9 @@
             this.Spisok_GB.Controls.Add(this.RefreshSpisok_B);
             this.Spisok_GB.Controls.Add(this.Spisok_LB);
             this.Spisok_GB.Location = new System.Drawing.Point(9, 9);
-            this.Spisok_GB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Spisok_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Spisok_GB.Name = "Spisok_GB";
-            this.Spisok_GB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Spisok_GB.Padding = new System.Windows.Forms.Padding(2);
             this.Spisok_GB.Size = new System.Drawing.Size(326, 343);
             this.Spisok_GB.TabIndex = 4;
             this.Spisok_GB.TabStop = false;
@@ -89,11 +89,11 @@
             // RefreshSpisok_B
             // 
             this.RefreshSpisok_B.Location = new System.Drawing.Point(4, 311);
-            this.RefreshSpisok_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RefreshSpisok_B.Margin = new System.Windows.Forms.Padding(2);
             this.RefreshSpisok_B.Name = "RefreshSpisok_B";
             this.RefreshSpisok_B.Size = new System.Drawing.Size(319, 24);
-            this.RefreshSpisok_B.TabIndex = 2;
-            this.RefreshSpisok_B.Text = "Обновить список";
+            this.RefreshSpisok_B.TabIndex = 1;
+            this.RefreshSpisok_B.Text = "&Обновить список";
             this.RefreshSpisok_B.UseVisualStyleBackColor = true;
             this.RefreshSpisok_B.Click += new System.EventHandler(this.RefreshSpisok_B_Click);
             // 
@@ -104,9 +104,9 @@
             this.Operation_GB.Controls.Add(this.OpenDocument_B);
             this.Operation_GB.Controls.Add(this.Operations_B);
             this.Operation_GB.Location = new System.Drawing.Point(340, 63);
-            this.Operation_GB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Operation_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Operation_GB.Name = "Operation_GB";
-            this.Operation_GB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Operation_GB.Padding = new System.Windows.Forms.Padding(2);
             this.Operation_GB.Size = new System.Drawing.Size(196, 98);
             this.Operation_GB.TabIndex = 6;
             this.Operation_GB.TabStop = false;
@@ -115,10 +115,10 @@
             // NumberDoc_TB
             // 
             this.NumberDoc_TB.Location = new System.Drawing.Point(86, 73);
-            this.NumberDoc_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.NumberDoc_TB.Margin = new System.Windows.Forms.Padding(2);
             this.NumberDoc_TB.Name = "NumberDoc_TB";
             this.NumberDoc_TB.Size = new System.Drawing.Size(108, 20);
-            this.NumberDoc_TB.TabIndex = 12;
+            this.NumberDoc_TB.TabIndex = 4;
             // 
             // label2
             // 
@@ -134,29 +134,29 @@
             // 
             this.OpenDocument_B.BackColor = System.Drawing.SystemColors.ControlLight;
             this.OpenDocument_B.Location = new System.Drawing.Point(4, 18);
-            this.OpenDocument_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.OpenDocument_B.Margin = new System.Windows.Forms.Padding(2);
             this.OpenDocument_B.Name = "OpenDocument_B";
             this.OpenDocument_B.Size = new System.Drawing.Size(188, 24);
-            this.OpenDocument_B.TabIndex = 6;
-            this.OpenDocument_B.Text = "Добавить";
+            this.OpenDocument_B.TabIndex = 5;
+            this.OpenDocument_B.Text = "&Добавить";
             this.OpenDocument_B.UseVisualStyleBackColor = false;
             this.OpenDocument_B.Click += new System.EventHandler(this.OpenDocument_B_Click);
             // 
             // Operations_B
             // 
             this.Operations_B.Location = new System.Drawing.Point(4, 46);
-            this.Operations_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Operations_B.Margin = new System.Windows.Forms.Padding(2);
             this.Operations_B.Name = "Operations_B";
             this.Operations_B.Size = new System.Drawing.Size(188, 24);
-            this.Operations_B.TabIndex = 7;
-            this.Operations_B.Text = "Изменить файлы";
+            this.Operations_B.TabIndex = 6;
+            this.Operations_B.Text = "&Изменить файлы";
             this.Operations_B.UseVisualStyleBackColor = true;
             this.Operations_B.Click += new System.EventHandler(this.Operations_B_Click);
             // 
             // Status_TB
             // 
             this.Status_TB.Location = new System.Drawing.Point(4, 17);
-            this.Status_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Status_TB.Margin = new System.Windows.Forms.Padding(2);
             this.Status_TB.Multiline = true;
             this.Status_TB.Name = "Status_TB";
             this.Status_TB.ReadOnly = true;
@@ -168,9 +168,9 @@
             // 
             this.Status_GB.Controls.Add(this.Status_TB);
             this.Status_GB.Location = new System.Drawing.Point(10, 355);
-            this.Status_GB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Status_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Status_GB.Name = "Status_GB";
-            this.Status_GB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Status_GB.Padding = new System.Windows.Forms.Padding(2);
             this.Status_GB.Size = new System.Drawing.Size(526, 131);
             this.Status_GB.TabIndex = 8;
             this.Status_GB.TabStop = false;
@@ -184,9 +184,9 @@
             // 
             this.groupBox1.Controls.Add(this.Confirm_B);
             this.groupBox1.Location = new System.Drawing.Point(340, 9);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(196, 50);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
@@ -195,11 +195,11 @@
             // Exit_B
             // 
             this.Exit_B.Location = new System.Drawing.Point(4, 16);
-            this.Exit_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Exit_B.Margin = new System.Windows.Forms.Padding(2);
             this.Exit_B.Name = "Exit_B";
             this.Exit_B.Size = new System.Drawing.Size(188, 24);
-            this.Exit_B.TabIndex = 15;
-            this.Exit_B.Text = "Выйти";
+            this.Exit_B.TabIndex = 7;
+            this.Exit_B.Text = "&Выйти";
             this.Exit_B.UseVisualStyleBackColor = true;
             this.Exit_B.Click += new System.EventHandler(this.Exit_B_Click);
             // 
@@ -207,9 +207,9 @@
             // 
             this.groupBox2.Controls.Add(this.Exit_B);
             this.groupBox2.Location = new System.Drawing.Point(340, 304);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(196, 47);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
@@ -227,7 +227,7 @@
             this.Controls.Add(this.Spisok_GB);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -10,6 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using OfficeOpenXml.Drawing;
+using OfficeOpenXml.Table;
 using SimpleTCP;
 
 namespace Kuzbass_Project
@@ -26,7 +30,7 @@ namespace Kuzbass_Project
         private void AddDocument_Load(object sender, EventArgs e)
         {
             //Блокируем кнопки
-            Create_B.Enabled = false;
+            Create_B.Enabled = true;
             OK_B.Enabled = true;
             Delete_B.Enabled = false;
 
@@ -173,6 +177,77 @@ namespace Kuzbass_Project
                     Server.Stop();
                 }
             }
+        }
+
+        private void Create_B_Click(object sender, EventArgs e)
+        {
+            if (Spisok_LB.Items.Count == 0)
+            {
+                MessageBox.Show("Невозможно сформировать акт, нет данных", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            string date = DateTime.Now.ToString();
+            date = date.Replace(".", "_");
+            date = date.Replace(":", "_");
+            saveFileDialog1.FileName = "Акт " + date;
+            saveFileDialog1.Filter = "Microsoft Excel Worksheet (*.xlsx)|*.xlsx";
+            System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонАкт.xlsx");
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                System.IO.FileInfo file = new System.IO.FileInfo(saveFileDialog1.FileName);
+                try
+                {
+                    var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
+                }
+                catch
+                {
+                    try
+                    {
+                        System.IO.File.Delete(saveFileDialog1.FileName);
+                        var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Шаблон акта не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+            try
+            {
+                ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName));
+                ExcelWorksheet ws2 = workbook1.Workbook.Worksheets[1];
+                var rowCntAct = ws2.Dimension.End.Row;
+                Excel excel = new Excel();
+                Document Temp = new Document();
+                if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
+                {
+                    for (Int32 i = 0; i < Spisok_LB.Items.Count; i++)
+                    {
+                        excel.SplitData(Temp, Spisok_LB.Items[i] as String);
+                        ws2.Cells[i + rowCntAct+1, 1].Value = Temp.Number;
+                        ws2.Cells[i + rowCntAct+1, 2].Value = Temp.List;
+                        ws2.Cells[i + rowCntAct+1, 3].Value = Temp.Name;
+                        ws2.Cells[i + rowCntAct+1, 4].Value = Temp.Executor;
+                        ws2.Cells[i + rowCntAct+1, 5].Value = Temp.Lenght;
+                        ws2.Cells[i + rowCntAct+1, 6].Value = Temp.Weight;
+                        ws2.Cells[i + rowCntAct+1, 7].Value = Temp.DateCreate;
+                    }
+                    int last = ws2.Dimension.End.Row;
+                    ws2.Cells[last + 2, 4].Value = "Принял";
+                    ws2.Cells[last + 3, 4].Value = "Сдал";
+                    ws2.Cells[last + 2, 6].Value = "______________";
+                    ws2.Cells[last + 3, 6].Value = "______________";
+                    ws2.Cells[last + 2, 7].Value = "Линник О.В.";
+                    ws2.Cells[last + 3, 7].Value = "/______________/";
+                    workbook1.Save();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Невозможно сформировать акт, закройте все книги Excel", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
         }
     }
 }

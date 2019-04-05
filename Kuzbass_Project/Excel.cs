@@ -60,26 +60,6 @@ namespace Kuzbass_Project
             workbook.Save();
 
         }
-        //public void CreateAct(string path,Document Name,int i,int rowCnt)
-        //{
-        //    ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(path));
-        //    ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
-
-        //    ws1.Cells[i + rowCnt, 1].Value = Name.Number;
-        //    ws1.Cells[i + rowCnt, 2].Value = Name.List;
-        //    ws1.Cells[i + rowCnt, 3].Value = Name.Name;
-        //    ws1.Cells[i + rowCnt, 4].Value = Name.Executor;
-        //    ws1.Cells[i + rowCnt, 5].Value = Name.Lenght;
-        //    ws1.Cells[i + rowCnt, 6].Value = Name.Weight;
-        //    int last = ws1.Dimension.End.Row;
-        //    ws1.Cells[last + 2, 4].Value = "Принял";
-        //    ws1.Cells[last + 3, 4].Value = "Сдал";
-        //    ws1.Cells[last + 2, 6].Value = "______________";
-        //    ws1.Cells[last + 3, 6].Value = "______________";
-        //    ws1.Cells[last + 2, 7].Value = "Линник О.В.";
-        //    ws1.Cells[last + 3, 7].Value = "/______________/";
-        //    workbook.Save();
-        //}
     }
 }
 

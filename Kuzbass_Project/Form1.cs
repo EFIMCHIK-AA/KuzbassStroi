@@ -143,58 +143,6 @@ namespace Kuzbass_Project
         {
             Status_TB.Clear();
             Documents.Clear();
-
-            ////Выбирается файл, достаются с него все необходимые данные, преобразуется если необходимо <- ТВОЁ
-            //if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
-            //    return;
-            //string filename = openFileDialog1.FileName;
-            ////Объект, дальше работай с ним
-            //Excel value = new Excel();
-            //value.GetValues(filename);
-            //value.CreateHeaderReg();            
-
-            ////Добвение статуса
-            //ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(@"C:\Users\Админ-Пк\Desktop\Реестр\Реестр.xlsx"));
-            //ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
-            //var rowCnt = ws1.Dimension.End.Row;
-            //int b = value.GetLeight();
-            //string date = DateTime.Now.ToString();
-            //date = date.Replace(".", "_");
-            //date = date.Replace(":", "_");
-            //saveFileDialog1.FileName = "Акт " + date;
-            //saveFileDialog1.Filter = "Microsoft Excel Worksheet (*.xlsx)|*.xlsx";
-            //System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"C:\Users\Админ-Пк\Desktop\Акты\Шаблон.xlsx");
-            //if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            //{
-            //    System.IO.FileInfo file = new System.IO.FileInfo(saveFileDialog1.FileName);
-            //    try
-            //    {
-            //        var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
-            //    }
-            //    catch
-            //    {
-            //        System.IO.File.Delete(saveFileDialog1.FileName);
-            //        var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
-            //    }
-            //}
-            //ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName));
-            //ExcelWorksheet ws2 = workbook1.Workbook.Worksheets[1];
-            //var rowCntAct = ws2.Dimension.End.Row;
-
-            //for (int i = 1; i + rowCnt < b + rowCnt; i++)
-            //{
-            //    value.WriteReg(Temp,i,rowCnt);
-            //    if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
-            //    {
-
-            //        ws2.Cells[i + rowCntAct, 1].Value = Temp.Number;
-            //        ws2.Cells[i + rowCntAct, 2].Value = Temp.List;
-            //        ws2.Cells[i + rowCntAct, 3].Value = Temp.Name;
-            //        ws2.Cells[i + rowCntAct, 4].Value = Temp.Executor;
-            //        ws2.Cells[i + rowCntAct, 5].Value = Temp.Lenght;
-            //        ws2.Cells[i + rowCntAct, 6].Value = Temp.Weight;
-            //    }
-
             //Вызываем форму
             AddDocument Dialog = new AddDocument();
             try
@@ -213,6 +161,11 @@ namespace Kuzbass_Project
 
                 if (Dialog.ShowDialog() == DialogResult.OK)
                 {
+                    if (Dialog.Spisok_LB.Items.Count == 0)
+                    {
+                        MessageBox.Show("Нет данных для добавление в БД", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     //Документ для работы
                     Excel excel = new Excel();
                     try
@@ -290,18 +243,16 @@ namespace Kuzbass_Project
             catch
             {
                 MessageBox.Show("Файл реестра отсутсвует и будет создан автоматически", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонРеестр.xlsx");
-                var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(@"Реестр.xlsx");
+                try
+                {
+                    System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонРеестр.xlsx");
+                    var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(@"Реестр.xlsx");
+                }
+                catch
+                {
+                    MessageBox.Show("Шаблон реестра отсутствует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-
-            //int last = ws2.Dimension.End.Row;
-            //ws2.Cells[last + 2, 4].Value = "Принял";
-            //ws2.Cells[last + 3, 4].Value = "Сдал";
-            //ws2.Cells[last + 2, 6].Value = "______________";
-            //ws2.Cells[last + 3, 6].Value = "______________";
-            //ws2.Cells[last + 2, 7].Value = "Линник О.В.";
-            //ws2.Cells[last + 3, 7].Value = "/______________/";
-            //workbook1.Save();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -388,6 +339,8 @@ namespace Kuzbass_Project
                 //Закроем
                 Application.Exit();
             }
+
+            RefreshSpisok_B.PerformClick();
         }
 
         private void RefreshSpisok_B_Click(object sender, EventArgs e)

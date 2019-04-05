@@ -27,7 +27,7 @@ namespace Kuzbass_Project
         {
             //Блокируем кнопки
             Create_B.Enabled = false;
-            OK_B.Enabled = false;
+            OK_B.Enabled = true;
             Delete_B.Enabled = false;
 
             //Получаем хост и  задаем порт 
@@ -115,6 +115,7 @@ namespace Kuzbass_Project
             {
                 Delete_B.Enabled = false;
             }
+
         }
 
         private void Delete_B_Click(object sender, EventArgs e)

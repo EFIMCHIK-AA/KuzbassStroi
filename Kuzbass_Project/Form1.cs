@@ -197,61 +197,101 @@ namespace Kuzbass_Project
 
             //Вызываем форму
             AddDocument Dialog = new AddDocument();
-
-            if (Dialog.ShowDialog() == DialogResult.OK)
-            {             
-                //Документ для работы
-                Document Temp = new Document();
-
-                //Добавляю в базу данных и вывожу статус
+            try
+            {
+                ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(@"Реестр.xlsx"));
+                ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
                 try
                 {
-                    //Строка подлючения
-                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                    workbook.Save();
+                }
+                catch
+                {
+                    MessageBox.Show("Перед добавлением чертежей, закройте все книги Excel", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
 
-                    using (var connect = new NpgsqlConnection(connString))
+
+                if (Dialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Документ для работы
+                    Excel excel = new Excel();
+                    try
                     {
-                        //Открытие потока
-                        connect.Open();
+                        workbook.Save();
+                        var rowCnt = ws1.Dimension.End.Row;
 
-                        //Считываем все QR
-                        for (Int32 i = 0; i < Dialog.Spisok_LB.Items.Count; i++)
+                        //Добавляю в базу данных и вывожу статус
+                        try
                         {
-                            //Вытаскиваешь данные с документа 
-                            //и записываешь в Temp <- Кирилл
+                            //Строка подлючения
+                            String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
-                            //Добавление
-                            using (var cmd = new NpgsqlCommand())
+                            using (var connect = new NpgsqlConnection(connString))
                             {
-                                cmd.Connection = connect;
-                                cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_Order\", \"Executor_Order\", \"Number_Order\", \"List_Order\", \"Mark_Order\"," +
-                                                  $"\"Lenght_Order\",\"Weight_Order\",\"DateCreate_Order\")" +
-                                                  $"VALUES('{Temp.QR}', '{Temp.Executor}', '{Temp.Number}', '{Temp.List}', '{Temp.Name}', '{Temp.Lenght}', '{Temp.Weight}', '{Temp.DateCreate}');" +
-                                                  $"INSERT INTO \"StatusOrders\"(\"id_Order\", \"Status_Order\")" +
-                                                  $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.Status}');" +
-                                                  $"INSERT INTO \"NumberDocOrder\"(\"id_Order\", \"NumberDoc\")" +
-                                                  $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.NumberDoc}');";
-                                cmd.ExecuteNonQuery();
+                                //Открытие потока
+                                connect.Open();
+
+                                //Считываем все QR
+                                for (Int32 i = 0; i < Dialog.Spisok_LB.Items.Count; i++)
+                                {
+                                    //Вытаскиваешь данные с документа
+                                    Document Temp = new Document();
+                                    //Заполнение данных
+                                    excel.SplitData(Temp, Dialog.Spisok_LB.Items[i] as String);
+                                    try
+                                    {
+                                        //Добавление
+                                        using (var cmd = new NpgsqlCommand())
+                                        {
+                                            cmd.Connection = connect;
+                                            cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_Order\", \"Executor_Order\", \"Number_Order\", \"List_Order\", \"Mark_Order\"," +
+                                                              $"\"Lenght_Order\",\"Weight_Order\",\"DateCreate_Order\")" +
+                                                              $"VALUES('{Temp.QR}', '{Temp.Executor}', '{Temp.Number}', '{Temp.List}', '{Temp.Name}', '{Temp.Lenght}', '{Temp.Weight}', '{Temp.DateCreate}');" +
+                                                              $"INSERT INTO \"StatusOrders\"(\"id_Order\", \"Status_Order\")" +
+                                                              $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.Status}');" +
+                                                              $"INSERT INTO \"NumberDocOrders\"(\"id_Order\", \"NumberDoc\")" +
+                                                              $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.NumberDoc}');";
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        continue;
+                                    }
+                                    //Запись реестра
+                                    excel.WriteReg(Temp, i + 1, rowCnt, workbook, ws1);
+
+                                    //Вывод в компонент сообщения об удачном добавлении
+                                    Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} добавлен в базу трекинга" + Environment.NewLine);
+                                }
+
+                                //Закрытие потока
+                                connect.Close();
                             }
 
-                            //Вывод в компонент сообщения об удачном добавлении
-                            Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} добавлен в базу трекинга" + Environment.NewLine);
-                        }
+                            //Обновляем данные
+                            RefreshSpisok_B.PerformClick();
 
-                        //Закрытие потока
-                        connect.Close();
+                            //Вывод инорфмационного окна
+                            MessageBox.Show($"Чертежи успешно добавлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show($"Попытка добавление некорректного QR", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                     }
 
-                    //Обновляем данные
-                    RefreshSpisok_B.PerformClick();
-
-                    //Вывод инорфмационного окна
-                    MessageBox.Show($"Чертежи успешно добавлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    catch
+                    {
+                        MessageBox.Show("Закройте все книги Excel и повторите попытку", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                catch (Exception)
-                {
-                    MessageBox.Show($"Попытка добавление некорректного QR \"{Temp.QR}\" ", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+            }
+            catch
+            {
+                MessageBox.Show("Файл реестра отсутсвует и будет создан автоматически", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонРеестр.xlsx");
+                var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(@"Реестр.xlsx");
             }
 
             //int last = ws2.Dimension.End.Row;

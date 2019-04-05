@@ -13,109 +13,52 @@ namespace Kuzbass_Project
 {
     class Excel
     {
-        private string[,] values = null;
-        public void CreateHeaderReg()
+        public void SplitData(Document Temp, string values)
         {
-            //Создание шапки реестра
-            ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(@"C:\Users\Админ-Пк\Desktop\Реестр\Реестр.xlsx"));
-            ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
-
-            ws1.Cells["A1:G1"].Merge = true;
-            ws1.Cells[1, 1].Value = "Реестр чертежей";
-            ws1.Cells[1, 1].Style.Font.Size = 30;
-            ws1.Column(1).Width = 15;
-            ws1.Column(2).Width = 10;
-            ws1.Column(3).Width = 20;
-            ws1.Column(4).Width = 30;
-            ws1.Column(5).Width = 15;
-            ws1.Column(6).Width = 20;
-
-            using (ExcelRange range = ws1.Cells["A2:F2"])
+            Temp.DateCreate = DateTime.Now.ToString();
+            Temp.QR = values;
+            if (values.IndexOf("_") != -1)
             {
-                range.Style.Font.Bold = true;
-                range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                range.Style.Fill.BackgroundColor.SetColor(Color.White);
-
-                range.Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                range.Style.Border.Top.Color.SetColor(Color.Black);
-                range.Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                range.Style.Border.Left.Color.SetColor(Color.Black);
-                range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                range.Style.Border.Right.Color.SetColor(Color.Black);
-                range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                range.Style.Border.Bottom.Color.SetColor(Color.Black);
+                Temp.Number = values.Remove(values.IndexOf("_"), values.Length - values.IndexOf("_"));
+                values = values.Remove(0, values.IndexOf("_") + 1);
             }
-            ws1.Cells[2, 1].Value = "№ заказа";
-            ws1.Cells[2, 2].Value = "Лист";
-            ws1.Cells[2, 3].Value = "Марка";
-            ws1.Cells[2, 4].Value = "Исполнитель";
-            ws1.Cells[2, 5].Value = "Длина";
-            ws1.Cells[2, 6].Value = "Вес без сварки";
-            workbook.Save();
+            if (values.IndexOf("_") != -1)
+            {
+                Temp.List = values.Remove(values.IndexOf("_"), values.Length - values.IndexOf("_"));
+                values = values.Remove(0, values.IndexOf("_") + 1);
+            }
+            if (values.IndexOf("_") != -1)
+            {
+                Temp.Name = values.Remove(values.IndexOf("_"), values.Length - values.IndexOf("_"));
+                values = values.Remove(0, values.IndexOf("_") + 1);
+            }
+            if (values.IndexOf("_") != -1)
+            {
+                Temp.Executor = values.Remove(values.IndexOf("_"), values.Length - values.IndexOf("_"));
+                values = values.Remove(0, values.IndexOf("_") + 1);
+            }
+            if (values.IndexOf("_") != -1)
+            {
+                Temp.Lenght = values.Remove(values.IndexOf("_"), values.Length - values.IndexOf("_"));
+                values = values.Remove(0, values.IndexOf("_") + 1);
+            }
+            if (values.Trim() != "")
+            {
+                Temp.Weight = values;
+            }
         }
-        public void WriteReg(Document Name, int i,int rowCnt)
+        public void WriteReg(Document Name, int i, int rowCnt, ExcelPackage workbook, ExcelWorksheet ws1)
         {
             //Открытие созданного файла реестр
-            ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(@"C:\Users\Админ-Пк\Desktop\Реестр\Реестр.xlsx"));
-            ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
-                Name.QR = values[i, 0];
-                if (values[i, 0].IndexOf("_") != -1)
-                {
-                    Name.Number = values[i, 0].Remove(values[i, 0].IndexOf("_"), values[i, 0].Length - values[i, 0].IndexOf("_"));
-                    values[i, 0] = values[i, 0].Remove(0, values[i, 0].IndexOf("_") + 1);
-                }
-                if (values[i, 0].IndexOf("_") != -1)
-                {
-                    Name.List = values[i, 0].Remove(values[i, 0].IndexOf("_"), values[i, 0].Length - values[i, 0].IndexOf("_"));
-                    values[i, 0] = values[i, 0].Remove(0, values[i, 0].IndexOf("_") + 1);
-                }
-                if (values[i, 0].IndexOf("_") != -1)
-                {
-                    Name.Name = values[i, 0].Remove(values[i, 0].IndexOf("_"), values[i, 0].Length - values[i, 0].IndexOf("_"));
-                    values[i, 0] = values[i, 0].Remove(0, values[i, 0].IndexOf("_") + 1);
-                }
-                if (values[i, 0].IndexOf("_") != -1)
-                {
-                    Name.Executor = values[i, 0].Remove(values[i, 0].IndexOf("_"), values[i, 0].Length - values[i, 0].IndexOf("_"));
-                    values[i, 0] = values[i, 0].Remove(0, values[i, 0].IndexOf("_") + 1);
-                }
-                if (values[i, 0].IndexOf("_") != -1)
-                {
-                    Name.Lenght = values[i, 0].Remove(values[i, 0].IndexOf("_"), values[i, 0].Length - values[i, 0].IndexOf("_"));
-                    values[i, 0] = values[i, 0].Remove(0, values[i, 0].IndexOf("_") + 1);
-                }
-                if (values[i, 0].Trim() != "")
-                {
-                    Name.Weight = values[i, 0];
-                }
-                ws1.Cells[i + rowCnt, 1].Value = Name.Number;
-                ws1.Cells[i + rowCnt, 2].Value = Name.List;
-                ws1.Cells[i + rowCnt, 3].Value = Name.Name;
-                ws1.Cells[i + rowCnt, 4].Value = Name.Executor;
-                ws1.Cells[i + rowCnt, 5].Value = Name.Lenght;
-                ws1.Cells[i + rowCnt, 6].Value = Name.Weight;
-                workbook.Save();
-            
-        }
-        public int GetLeight()
-        {
-            int b = values.Length/7;
-            return b;
-        }
-        public void GetValues(string path)
-        {
+            ws1.Cells[i + rowCnt, 1].Value = Name.Number;
+            ws1.Cells[i + rowCnt, 2].Value = Name.List;
+            ws1.Cells[i + rowCnt, 3].Value = Name.Name;
+            ws1.Cells[i + rowCnt, 4].Value = Name.Executor;
+            ws1.Cells[i + rowCnt, 5].Value = Name.Lenght;
+            ws1.Cells[i + rowCnt, 6].Value = Name.Weight;
+            ws1.Cells[i + rowCnt, 7].Value = Name.DateCreate;
+            workbook.Save();
 
-            values = CSV.GetStringsFromFile(path, 7);
-            for (int i = 1; i < values.GetLength(0); i++)
-            {
-
-                for (int j = 0; j < values.GetLength(1); j++)
-                {
-                    values[i, j] = values[i, j].Replace(@"""", string.Empty);
-                }
-            }
         }
         //public void CreateAct(string path,Document Name,int i,int rowCnt)
         //{

@@ -163,7 +163,7 @@ namespace Kuzbass_Project
                 {
                     if (Dialog.Spisok_LB.Items.Count == 0)
                     {
-                        MessageBox.Show("Нет данных для добавление в БД", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Данные для добавления не обнаружены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     //Документ для работы
@@ -209,6 +209,8 @@ namespace Kuzbass_Project
                                     }
                                     catch
                                     {
+                                        Status_TB.AppendText($"QR {Temp.QR} существует => Добавление не произведено" + Environment.NewLine);
+
                                         continue;
                                     }
                                     //Запись реестра
@@ -346,7 +348,8 @@ namespace Kuzbass_Project
         private void RefreshSpisok_B_Click(object sender, EventArgs e)
         {
             //Очистка
-            ClearField();
+            //ClearField();
+            Spisok_LB.Items.Clear();
             Documents.Clear();
 
             //Загрузка пользователей с таблицы Orders в список Documents

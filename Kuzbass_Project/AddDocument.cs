@@ -151,8 +151,11 @@ namespace Kuzbass_Project
                 if (Server.IsStarted)
                 {
                     Server.Stop();
+                    Status_TB.AppendText("Закрытие сервера...");
+                    System.Threading.Thread.Sleep(1000);
                 }
             }
+
         }
 
         private void Cancel_B_Click(object sender, EventArgs e)
@@ -163,8 +166,11 @@ namespace Kuzbass_Project
                 if (Server.IsStarted)
                 {
                     Server.Stop();
+                    Status_TB.AppendText("Закрытие сервера...");
+                    System.Threading.Thread.Sleep(1000);
                 }
             }
+            
         }
 
         private void AddDocument_FormClosing(object sender, FormClosingEventArgs e)
@@ -175,6 +181,8 @@ namespace Kuzbass_Project
                 if (Server.IsStarted)
                 {
                     Server.Stop();
+                    Status_TB.AppendText("Закрытие сервера...");
+                    System.Threading.Thread.Sleep(1000);
                 }
             }
         }

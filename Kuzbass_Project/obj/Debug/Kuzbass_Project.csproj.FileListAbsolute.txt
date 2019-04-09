@@ -91,3 +91,5 @@ C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.A
 C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.Change.resources
 C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.GetPort.resources
 C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.OperationForFiles.resources
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.AdminForm.resources
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\bin\Debug\Zen.Barcode.Core.dll

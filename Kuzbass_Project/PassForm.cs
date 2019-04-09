@@ -19,42 +19,40 @@ namespace Kuzbass_Project
 
         private void PassForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(DialogResult == DialogResult.OK)
-            {
-                try
-                {
-                    if (String.IsNullOrWhiteSpace(Pass_TB.Text))
-                    {
-                        Pass_TB.Focus();
-                        throw new Exception("В поле \"Пароль\" должно быть значение");
-                    }
-
-                    if (Login_CB.SelectedIndex == 0)
-                    {
-                        Login_CB.Focus();
-                        throw new Exception("Необходимо выбрать пользователя");
-                    }
-
-                    if (NamePosition.GetHashPass(Login_CB.SelectedItem.ToString()) != Pass_TB.Text)
-                    {
-                        Pass_TB.Focus();
-                        throw new Exception("Неправильно введен пароль");
-                    }
-                }
-                catch (Exception E)
-                {
-                    MessageBox.Show(E.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    e.Cancel = true;
-                }
-            }
-            else
-            {
-                Application.Exit();
-            }
+            Application.Exit();
         }
 
         private void PassForm_Load(object sender, EventArgs e)
         {
+            //Добавляем по умолчанию
+            Login_CB.Items.Add("Не задано");
+            //Установка тестовых данных по умолчанию на "Не задано"
+            Login_CB.SelectedIndex = 0;
+
+            //Подгрузка должностей из БД
+            try
+            {
+                NamePosition.SetPosition();
+
+                if (NamePosition.Positions.Count != 0)
+                {
+                    //Вывод всех позиций в Login_CB
+                    foreach (Position Temp in NamePosition.Positions)
+                    {
+                        Login_CB.Items.Add(Temp.Name);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Должности для интеграции не обнаружены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception Npgsql)
+            {
+                MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            //Скрываем пароль
             Pass_TB.UseSystemPasswordChar = true;
         }
 
@@ -86,6 +84,64 @@ namespace Kuzbass_Project
                 CheckPass_CB.Enabled = true;
                 Pass_TB.Enabled = true;
             }
+        }
+
+        private void Enter_B_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(Pass_TB.Text))
+                {
+                    Pass_TB.Focus();
+                    throw new Exception("В поле \"Пароль\" должно быть значение");
+                }
+
+                if (Login_CB.SelectedIndex == 0)
+                {
+                    Login_CB.Focus();
+                    throw new Exception("Необходимо выбрать пользователя");
+                }
+
+                String Mode = Login_CB.SelectedItem.ToString();
+
+                if (Mode == "Администратор")
+                {
+                    if (NamePosition.GetHashPass(Mode) != Pass_TB.Text)
+                    {
+                        Pass_TB.Focus();
+                        throw new Exception("Неправильно введен пароль");
+                    }
+                    else
+                    {
+                        this.Hide();
+                        Form Dialog = new AdminForm();
+                        Dialog.Show();
+                    }
+                }
+                else
+                {
+                    if (NamePosition.GetHashPass(Mode) != Pass_TB.Text)
+                    {
+                        Pass_TB.Focus();
+                        throw new Exception("Неправильно введен пароль");
+                    }
+                    else
+                    {
+                        this.Hide();
+                        Form Dialog = new Form1(Mode);
+                        Dialog.Show();
+                    }
+                }
+            }
+            catch(Exception E)
+            {
+                MessageBox.Show(E.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void Cancel_B_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

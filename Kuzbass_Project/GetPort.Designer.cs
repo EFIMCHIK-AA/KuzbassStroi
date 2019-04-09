@@ -39,10 +39,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 27);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(9, 33);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 13);
+            this.label1.Size = new System.Drawing.Size(86, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Новый порт";
             // 
@@ -50,30 +49,30 @@
             // 
             this.groupBox1.Controls.Add(this.Port_TB);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(29, 29);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Location = new System.Drawing.Point(39, 36);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(239, 57);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox1.Size = new System.Drawing.Size(319, 70);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Данные порта";
             // 
             // Port_TB
             // 
-            this.Port_TB.Location = new System.Drawing.Point(76, 24);
-            this.Port_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Port_TB.Location = new System.Drawing.Point(101, 30);
+            this.Port_TB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Port_TB.Name = "Port_TB";
-            this.Port_TB.Size = new System.Drawing.Size(155, 20);
+            this.Port_TB.Size = new System.Drawing.Size(205, 22);
             this.Port_TB.TabIndex = 1;
             // 
             // OK_B
             // 
             this.OK_B.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OK_B.Location = new System.Drawing.Point(29, 90);
-            this.OK_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.OK_B.Location = new System.Drawing.Point(39, 111);
+            this.OK_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.OK_B.Name = "OK_B";
-            this.OK_B.Size = new System.Drawing.Size(116, 24);
+            this.OK_B.Size = new System.Drawing.Size(155, 30);
             this.OK_B.TabIndex = 2;
             this.OK_B.Text = "&ОК";
             this.OK_B.UseVisualStyleBackColor = true;
@@ -81,10 +80,10 @@
             // Cancel_B
             // 
             this.Cancel_B.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel_B.Location = new System.Drawing.Point(153, 90);
-            this.Cancel_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Cancel_B.Location = new System.Drawing.Point(204, 111);
+            this.Cancel_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Cancel_B.Name = "Cancel_B";
-            this.Cancel_B.Size = new System.Drawing.Size(116, 24);
+            this.Cancel_B.Size = new System.Drawing.Size(155, 30);
             this.Cancel_B.TabIndex = 3;
             this.Cancel_B.Text = "&Отмена";
             this.Cancel_B.UseVisualStyleBackColor = true;
@@ -92,19 +91,20 @@
             // GetPort
             // 
             this.AcceptButton = this.OK_B;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.Cancel_B;
-            this.ClientSize = new System.Drawing.Size(298, 143);
+            this.ClientSize = new System.Drawing.Size(397, 176);
             this.Controls.Add(this.Cancel_B);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.OK_B);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "GetPort";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Порт";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GetPort_FormClosing);
+            this.Load += new System.EventHandler(this.GetPort_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

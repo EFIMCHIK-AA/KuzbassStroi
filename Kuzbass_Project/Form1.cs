@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using Npgsql;
@@ -14,6 +15,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Table;
+using System.Net.NetworkInformation;
 
 namespace Kuzbass_Project
 {
@@ -22,12 +24,15 @@ namespace Kuzbass_Project
         private String[,] values = null;
         private String Mode;
 
-        public Form1()
+        public Form1(String Mode)
         {
             InitializeComponent();
+            this.Mode = Mode;
+            this.confirm = false;
             openFileDialog1.Filter = "CSV файл (*.csv)|*.csv";
             openFileDialog1.FileName = "";
         }
+        bool confirm;
 
         private void ClearField()
         {
@@ -143,39 +148,104 @@ namespace Kuzbass_Project
         {
             Status_TB.Clear();
             Documents.Clear();
-            //Вызываем форму
-            AddDocument Dialog = new AddDocument();
-            try
+
+            //Получаем хост и  задаем порт 
+            String MyHost = Dns.GetHostName();
+            String Host = Dns.GetHostByName(MyHost).AddressList[0].ToString();
+
+            if (File.Exists(@"Connect\Port.txt"))
             {
-                ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(@"Реестр.xlsx"));
-                ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
+                //Считываем порт из файла
+                String strPort = null;
+
+                //Считываем стандартный порт
                 try
                 {
-                    workbook.Save();
+                    using (StreamReader sr = new StreamReader(File.Open(@"Connect\Port.txt", FileMode.Open)))
+                    {
+                        strPort = sr.ReadLine();
+                    }
                 }
                 catch
                 {
-                    MessageBox.Show("Перед добавлением чертежей, закройте все книги Excel", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("При считывании порта произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
+                //Проверяем доступен ли порт
+                Int32 port = Convert.ToInt32(strPort);
 
-                if (Dialog.ShowDialog() == DialogResult.OK)
+                //Получаем список всех портов
+                IPGlobalProperties iPGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
+                TcpConnectionInformation[] tcpConnectionInformation = iPGlobalProperties.GetActiveTcpConnections();
+
+                //Перебираем и находим совпадение
+                foreach (TcpConnectionInformation tcpi in tcpConnectionInformation)
                 {
-                    if (Dialog.Spisok_LB.Items.Count == 0)
+                    if (tcpi.LocalEndPoint.Port == port)
                     {
-                        MessageBox.Show("Данные для добавления не обнаружены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show($"Порт {port}, установленный в качестве базового порта запуска, занят." +
+                                        $"Необходимо установить свободный порт для подлючения", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    //Документ для работы
-                    Excel excel = new Excel();
+                }
+
+                String PathRegistry = null;
+
+                if (File.Exists(@"SavePath\Registry.txt"))
+                {
+
+                    try
+                    {
+                        using (StreamReader sr = new StreamReader(File.Open(@"SavePath\Registry.txt", FileMode.Open)))
+                        {
+                            PathRegistry = sr.ReadLine();
+                        }
+
+                    }
+                    catch
+                    {
+                        MessageBox.Show("При считывании места реестра произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Отсутствует файл Registry.txt. Введите порт в соответствующее поле и подтвердите сохранение, - файл Registry.txt будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                //Метка для возврата
+                Tag:
+
+                if (File.Exists(PathRegistry))
+                {
+
+
+                    ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(PathRegistry));
+                    ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
+
                     try
                     {
                         workbook.Save();
-                        var rowCnt = ws1.Dimension.End.Row;
 
-                        //Добавляю в базу данных и вывожу статус
-                        try
+                        //Вызываем форму
+                        AddDocument Dialog = new AddDocument(port, Host);
+
+                        if (Dialog.ShowDialog() == DialogResult.OK)
                         {
+                            if (Dialog.Spisok_LB.Items.Count == 0)
+                            {
+                                MessageBox.Show("Данные для добавления не обнаружены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            //Документ для работы
+                            Excel excel = new Excel();
+
+                            workbook.Save();
+                            var rowCnt = ws1.Dimension.End.Row;
+
                             //Строка подлючения
                             String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
@@ -184,15 +254,36 @@ namespace Kuzbass_Project
                                 //Открытие потока
                                 connect.Open();
 
+                                //Для хранения не уникальных QR
+                                List<String> CheckUnigueQR = new List<String>();
+                                    
                                 //Считываем все QR
                                 for (Int32 i = 0; i < Dialog.Spisok_LB.Items.Count; i++)
                                 {
-                                    //Вытаскиваешь данные с документа
-                                    Document Temp = new Document();
-                                    //Заполнение данных
-                                    excel.SplitData(Temp, Dialog.Spisok_LB.Items[i] as String);
-                                    try
+                                    CheckUnigueQR.Clear();
+
+                                    //Чтение
+                                    using (var cmd = new NpgsqlCommand($"SELECT \"QR_Order\" FROM \"Orders\"" +
+                                                                       $"WHERE \"QR_Order\" = {Dialog.Spisok_LB.Items[i]}", connect))
                                     {
+                                        using (var reader = cmd.ExecuteReader())
+                                        {
+                                            //Вывод в компонент
+                                            while (reader.Read())
+                                            {
+                                                CheckUnigueQR.Add(reader.GetString(0));
+                                            }
+                                        }
+                                    }
+
+                                    if(CheckUnigueQR.Count == 0)
+                                    {
+                                        //Вытаскиваешь данные с документа
+                                        Document Temp = new Document();
+
+                                        //Заполнение данных
+                                        excel.SplitData(Temp, Dialog.Spisok_LB.Items[i] as String);
+
                                         //Добавление
                                         using (var cmd = new NpgsqlCommand())
                                         {
@@ -206,18 +297,17 @@ namespace Kuzbass_Project
                                                               $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.NumberDoc}');";
                                             cmd.ExecuteNonQuery();
                                         }
+
+                                        //Запись реестра
+                                        excel.WriteReg(Temp, i + 1, rowCnt, workbook, ws1);
+
+                                        //Вывод в компонент сообщения об удачном добавлении
+                                        Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} => Добавлен в базу отслеживания" + Environment.NewLine);
                                     }
-                                    catch
+                                    else
                                     {
-                                        Status_TB.AppendText($"QR {Temp.QR} существует => Добавление не произведено" + Environment.NewLine);
-
-                                        continue;
-                                    }
-                                    //Запись реестра
-                                    excel.WriteReg(Temp, i + 1, rowCnt, workbook, ws1);
-
-                                    //Вывод в компонент сообщения об удачном добавлении
-                                    Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} добавлен в базу трекинга" + Environment.NewLine);
+                                        Status_TB.AppendText($"QR {Spisok_LB.Items[i]} существует => Добавление не произведено" + Environment.NewLine);
+                                    }    
                                 }
 
                                 //Закрытие потока
@@ -226,34 +316,47 @@ namespace Kuzbass_Project
 
                             //Обновляем данные
                             RefreshSpisok_B.PerformClick();
-
-                            //Вывод инорфмационного окна
-                            MessageBox.Show($"Чертежи успешно добавлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show($"Попытка добавление некорректного QR", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
-
-                    catch
+                    catch (Exception)
                     {
-                        MessageBox.Show("Закройте все книги Excel и повторите попытку", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Перед добавлением чертежей, закройте все книги Excel", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    if(File.Exists(@"Шаблоны\ШаблонРеестр.xlsx"))
+                    {
+                        //Считываем порт из файла
+                        String path = null;
+
+                        //Считываем место реестра
+                        try
+                        {
+                            using (StreamReader sr = new StreamReader(File.Open(@"SavePath\Registry.txt", FileMode.Open)))
+                            {
+                                path = sr.ReadLine();
+                            }
+
+                            System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонРеестр.xlsx");
+                            var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(path);
+                            goto Tag;
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Ошибка при создании реестра", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Создание реестра невозможно. Шаблон реестра отсутствует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
-            catch
+            else
             {
-                MessageBox.Show("Файл реестра отсутсвует и будет создан автоматически", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                try
-                {
-                    System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонРеестр.xlsx");
-                    var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(@"Реестр.xlsx");
-                }
-                catch
-                {
-                    MessageBox.Show("Шаблон реестра отсутствует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show("Отсутствует файл Port.txt. Введите порт в соответствующее поле и подтвердите сохранение, - файл Port.txt будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -267,79 +370,36 @@ namespace Kuzbass_Project
             Exit_B.Enabled = false;
             Operations_B.Enabled = false;
 
-
-            PassForm Dialog = new PassForm();
-            //Добавляем по умолчанию
-            Dialog.Login_CB.Items.Add("Не задано");
-            //Установка тестовых данных по умолчанию на "Не задано"
-            Dialog.Login_CB.SelectedIndex = 0;
-
-            //Подгрузка должностей из БД
-            try
+            if (Mode == "Архивариус")
             {
-                NamePosition.SetPosition();
-
-                if (NamePosition.Positions.Count != 0)
-                {
-                    //Вывод всех позиций в Login_CB
-                    foreach (Position Temp in NamePosition.Positions)
-                    {
-                        Dialog.Login_CB.Items.Add(Temp.Name);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Должности для интеграции не обнаружены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                //Блокироване и анлок кнопок
+                Confirm_B.Enabled = false;
+                OpenDocument_B.Enabled = true;
+                RefreshSpisok_B.Enabled = true;
+                NumberDoc_TB.Enabled = false;
+                Exit_B.Enabled = true;
+                Operations_B.Enabled = true;
             }
-            catch (Exception Npgsql)
+            else if (Mode == "Сотрудник ПДО")
             {
-                MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-            if (Dialog.ShowDialog() == DialogResult.OK)
-            {
-                //Получение режима
-                Mode = Dialog.Login_CB.SelectedItem.ToString();
-
-                if (Mode == "Архивариус")
-                {
-                    //Блокироване и анлок кнопок
-                    Confirm_B.Enabled = false;
-                    OpenDocument_B.Enabled = true;
-                    RefreshSpisok_B.Enabled = true;
-                    NumberDoc_TB.Enabled = false;
-                    Exit_B.Enabled = true;
-                    Operations_B.Enabled = true;
-                }
-                else if (Mode == "Сотрудник ПДО")
-                {
-                    //Блокироване и анлок кнопок
-                    Confirm_B.Enabled = false;
-                    RefreshSpisok_B.Enabled = true;
-                    OpenDocument_B.Enabled = false;
-                    Exit_B.Enabled = true;
-                    Operations_B.Enabled = true;
-                    NumberDoc_TB.Enabled = false;
-                }
-                else
-                {
-                    //Блокироване и анлок кнопок
-                    OpenDocument_B.Enabled = false;
-                    Confirm_B.Enabled = false;
-                    RefreshSpisok_B.Enabled = true;
-                    OpenDocument_B.Enabled = false;
-                    NumberDoc_TB.Enabled = false;
-                    Exit_B.Enabled = true;
-                    Operations_B.Enabled = true;
-                }
+                //Блокироване и анлок кнопок
+                Confirm_B.Enabled = false;
+                RefreshSpisok_B.Enabled = true;
+                OpenDocument_B.Enabled = false;
+                Exit_B.Enabled = true;
+                Operations_B.Enabled = true;
+                NumberDoc_TB.Enabled = false;
             }
             else
             {
-                //Сначла свернем окно, чтобы не было видно отображение текущего объект формы при нажатие на кнопку Cancel
-                this.WindowState = FormWindowState.Minimized;
-                //Закроем
-                Application.Exit();
+                //Блокироване и анлок кнопок
+                OpenDocument_B.Enabled = false;
+                Confirm_B.Enabled = false;
+                RefreshSpisok_B.Enabled = true;
+                OpenDocument_B.Enabled = false;
+                NumberDoc_TB.Enabled = false;
+                Exit_B.Enabled = true;
+                Operations_B.Enabled = true;
             }
 
             RefreshSpisok_B.PerformClick();
@@ -538,6 +598,26 @@ namespace Kuzbass_Project
                 Confirm_B.Enabled = false;
                 NumberDoc_TB.Enabled = false;
                 NumberDoc_TB.Clear();
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (confirm == true)
+            {
+                return;
+            }
+
+            Application.Exit();
+        }
+
+        private void ChangeUser_B_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите сменить пользователя?", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                confirm = true;
+                this.Close();
+                Program.InitializationForm.Show();
             }
         }
     }

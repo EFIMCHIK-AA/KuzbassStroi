@@ -11,12 +11,16 @@ namespace Kuzbass_Project
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
+        /// 
+        static public PassForm InitializationForm;
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            InitializationForm = new PassForm();
+            Application.Run(InitializationForm);
         }
     }
 }

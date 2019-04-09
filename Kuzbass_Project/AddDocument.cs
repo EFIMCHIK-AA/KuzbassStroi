@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.NetworkInformation;
 using System.Net;
 using System.Net.Sockets;
@@ -20,13 +21,19 @@ namespace Kuzbass_Project
 {
     public partial class AddDocument : Form
     {
-        public AddDocument()
+        public AddDocument(Int32 Port, String Host)
         {
             InitializeComponent();
+            this.port = Port;
+            this.Host = Host;
         }
 
+        Int32 port;
+        String Host;
         SimpleTcpServer Server;
-        
+
+
+
         private void AddDocument_Load(object sender, EventArgs e)
         {
             //Блокируем кнопки
@@ -34,69 +41,18 @@ namespace Kuzbass_Project
             OK_B.Enabled = true;
             Delete_B.Enabled = false;
 
-            //Получаем хост и  задаем порт 
-            String MyHost = Dns.GetHostName();
-            Host_TB.Text = Dns.GetHostByName(MyHost).AddressList[0].ToString();
             Status_TB.AppendText($"Получение хоста => Удачно" + Environment.NewLine);
-            Port_TB.Text = "48677";
+            Status_TB.AppendText($"Получение порта => Удачно" + Environment.NewLine);
 
-            //Проверяем доступен ли порт
-            Int32 port = Convert.ToInt32(Port_TB.Text);
-
-            while(true)
-            {
-                //Получаем список всех портов
-                IPGlobalProperties iPGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
-                TcpConnectionInformation[] tcpConnectionInformation = iPGlobalProperties.GetActiveTcpConnections();
-
-                bool isAvailable = true;
-
-                //Перебираем и находим совпадение
-                foreach (TcpConnectionInformation tcpi in tcpConnectionInformation)
-                {
-                    if (tcpi.LocalEndPoint.Port == port)
-                    {
-                        isAvailable = false;
-
-                        if (MessageBox.Show($"Порт {port}, установленный в качестве базового порта запуска, занят." +
-                                           $" Пожалуйста введите доступный порт для подлючения в программе и на устройстве для считывания QR кода", "Внимание",
-                                           MessageBoxButtons.OK, MessageBoxIcon.Warning) == DialogResult.OK)
-                        {
-                            GetPort Dialog = new GetPort();
-
-                            if (Dialog.ShowDialog() == DialogResult.OK)
-                            {
-                                port = Convert.ToInt32(Dialog.Port_TB.Text);
-                                Port_TB.Text = port.ToString();
-                                break;
-                            }
-                            else
-                            {
-                                this.Cancel_B.PerformClick();
-                                return;
-                            }
-                        }
-                    }
-                }
-
-                //Если совпадений с нашим портом нет, то продолжаем запус сервера
-                if (isAvailable == true)
-                {
-                    Status_TB.AppendText($"Получение порта => Удачно" + Environment.NewLine);
-
-                    Server = new SimpleTcpServer();
-                    Server.Delimiter = 0x13;
-                    Server.DataReceived += Server_DataReceived;
-                    Server.StringEncoder = Encoding.UTF8;
-                    //Запускаем сервер
-                    IPAddress ip = IPAddress.Parse(Host_TB.Text);
-                    Server.Start(ip, port);
-                    Status_TB.AppendText($"Запуск сервера  => Удачно" + Environment.NewLine +
-                                         $"Ожидание QR" + Environment.NewLine);
-                    //Выходим из цикла
-                    break;
-                }
-            }
+            Server = new SimpleTcpServer();
+            Server.Delimiter = 0x13;
+            Server.DataReceived += Server_DataReceived;
+            Server.StringEncoder = Encoding.UTF8;
+            //Запускаем сервер
+            IPAddress ip = IPAddress.Parse(Host);
+            Server.Start(ip, port);
+            Status_TB.AppendText($"Запуск сервера  => Удачно" + Environment.NewLine +
+                                 $"Ожидание QR" + Environment.NewLine);
         }
 
         private void Server_DataReceived(object sender, SimpleTCP.Message e)
@@ -155,7 +111,6 @@ namespace Kuzbass_Project
                     System.Threading.Thread.Sleep(1000);
                 }
             }
-
         }
 
         private void Cancel_B_Click(object sender, EventArgs e)
@@ -169,8 +124,7 @@ namespace Kuzbass_Project
                     Status_TB.AppendText("Закрытие сервера...");
                     System.Threading.Thread.Sleep(1000);
                 }
-            }
-            
+            }   
         }
 
         private void AddDocument_FormClosing(object sender, FormClosingEventArgs e)
@@ -194,68 +148,69 @@ namespace Kuzbass_Project
                 MessageBox.Show("Невозможно сформировать акт, нет данных", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            string date = DateTime.Now.ToString();
-            date = date.Replace(".", "_");
-            date = date.Replace(":", "_");
-            saveFileDialog1.FileName = "Акт " + date;
-            saveFileDialog1.Filter = "Microsoft Excel Worksheet (*.xlsx)|*.xlsx";
-            System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонАкт.xlsx");
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+
+            if(File.Exists(@"Шаблоны\ШаблонАкт.xlsx"))
             {
-                System.IO.FileInfo file = new System.IO.FileInfo(saveFileDialog1.FileName);
-                try
+                string date = DateTime.Now.ToString();
+
+                date = date.Replace(".", "_");
+                date = date.Replace(":", "_");
+                saveFileDialog1.FileName = "Акт " + date;
+                saveFileDialog1.Filter = "Microsoft Excel Worksheet (*.xlsx)|*.xlsx";
+
+                System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонАкт.xlsx");
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
+                    System.IO.FileInfo file = new System.IO.FileInfo(saveFileDialog1.FileName);
                     var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
-                }
-                catch
-                {
+
                     try
                     {
-                        System.IO.File.Delete(saveFileDialog1.FileName);
-                        var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
+                        ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName));
+                        ExcelWorksheet ws2 = workbook1.Workbook.Worksheets[1];
+                        var rowCntAct = ws2.Dimension.End.Row;
+                        Excel excel = new Excel();
+                        Document Temp = new Document();
+                        if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
+                        {
+                            for (Int32 i = 0; i < Spisok_LB.Items.Count; i++)
+                            {
+                                excel.SplitData(Temp, Spisok_LB.Items[i] as String);
+                                ws2.Cells[i + rowCntAct + 1, 1].Value = Temp.Number;
+                                ws2.Cells[i + rowCntAct + 1, 2].Value = Temp.List;
+                                ws2.Cells[i + rowCntAct + 1, 3].Value = Temp.Name;
+                                ws2.Cells[i + rowCntAct + 1, 4].Value = Temp.Executor;
+                                ws2.Cells[i + rowCntAct + 1, 5].Value = Temp.Lenght;
+                                ws2.Cells[i + rowCntAct + 1, 6].Value = Temp.Weight;
+                                ws2.Cells[i + rowCntAct + 1, 7].Value = Temp.DateCreate;
+                            }
+                            int last = ws2.Dimension.End.Row;
+                            ws2.Cells[last + 2, 4].Value = "Принял";
+                            ws2.Cells[last + 3, 4].Value = "Сдал";
+                            ws2.Cells[last + 2, 6].Value = "______________";
+                            ws2.Cells[last + 3, 6].Value = "______________";
+                            ws2.Cells[last + 2, 7].Value = "Линник О.В.";
+                            ws2.Cells[last + 3, 7].Value = "/______________/";
+                            workbook1.Save();
+                        }
                     }
                     catch
                     {
-                        MessageBox.Show("Шаблон акта не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Невозможно сформировать акт, закройте все книги Excel", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                 }
-            }
-            try
-            {
-                ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName));
-                ExcelWorksheet ws2 = workbook1.Workbook.Worksheets[1];
-                var rowCntAct = ws2.Dimension.End.Row;
-                Excel excel = new Excel();
-                Document Temp = new Document();
-                if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
+                else
                 {
-                    for (Int32 i = 0; i < Spisok_LB.Items.Count; i++)
-                    {
-                        excel.SplitData(Temp, Spisok_LB.Items[i] as String);
-                        ws2.Cells[i + rowCntAct+1, 1].Value = Temp.Number;
-                        ws2.Cells[i + rowCntAct+1, 2].Value = Temp.List;
-                        ws2.Cells[i + rowCntAct+1, 3].Value = Temp.Name;
-                        ws2.Cells[i + rowCntAct+1, 4].Value = Temp.Executor;
-                        ws2.Cells[i + rowCntAct+1, 5].Value = Temp.Lenght;
-                        ws2.Cells[i + rowCntAct+1, 6].Value = Temp.Weight;
-                        ws2.Cells[i + rowCntAct+1, 7].Value = Temp.DateCreate;
-                    }
-                    int last = ws2.Dimension.End.Row;
-                    ws2.Cells[last + 2, 4].Value = "Принял";
-                    ws2.Cells[last + 3, 4].Value = "Сдал";
-                    ws2.Cells[last + 2, 6].Value = "______________";
-                    ws2.Cells[last + 3, 6].Value = "______________";
-                    ws2.Cells[last + 2, 7].Value = "Линник О.В.";
-                    ws2.Cells[last + 3, 7].Value = "/______________/";
-                    workbook1.Save();
+                    return;
                 }
             }
-            catch
+            else
             {
-                MessageBox.Show("Невозможно сформировать акт, закройте все книги Excel", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Шаблон акта не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            
         }
     }
 }

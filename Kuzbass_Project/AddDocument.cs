@@ -61,7 +61,7 @@ namespace Kuzbass_Project
             {
                 Spisok_LB.Items.Add(e.MessageString);
                 Status_TB.AppendText($"QR {e.MessageString} получен" + Environment.NewLine);
-                e.ReplyLine(e.MessageString);
+                //e.ReplyLine(e.MessageString);
             });
         }
 

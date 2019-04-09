@@ -264,7 +264,7 @@ namespace Kuzbass_Project
 
                                     //Чтение
                                     using (var cmd = new NpgsqlCommand($"SELECT \"QR_Order\" FROM \"Orders\"" +
-                                                                       $"WHERE \"QR_Order\" = {Dialog.Spisok_LB.Items[i]}", connect))
+                                                                       $"WHERE \"QR_Order\" = '{Dialog.Spisok_LB.Items[i]}'", connect))
                                     {
                                         using (var reader = cmd.ExecuteReader())
                                         {

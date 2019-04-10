@@ -60,7 +60,10 @@ namespace Kuzbass_Project
             Spisok_LB.Invoke((MethodInvoker)delegate ()
             {
                 Spisok_LB.Items.Add(e.MessageString);
-                Status_TB.AppendText($"QR {e.MessageString} получен" + Environment.NewLine);
+                Status_TB.AppendText($"Получение QR..." + Environment.NewLine);//Тест
+                System.Threading.Thread.Sleep(100);//Тест
+                Status_TB.AppendText($"QR {e.MessageString} => Получен" + Environment.NewLine);
+
                 //e.ReplyLine(e.MessageString);
             });
         }
@@ -91,12 +94,8 @@ namespace Kuzbass_Project
         }
 
         private void AddDocument_Shown(object sender, EventArgs e)
-        {           
-        }
-
-        private void StartScan_B_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void OK_B_Click(object sender, EventArgs e)

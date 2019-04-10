@@ -228,7 +228,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(235, 96);
             this.label4.TabIndex = 12;
-            this.label4.Text = "Использутей QR сканер\r\nдля определения\r\nпараметров подлючения\r\nна устройстве";
+            this.label4.Text = "Используйте QR сканер\r\nдля определения\r\nпараметров подлючения\r\nна устройстве";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // AdminForm

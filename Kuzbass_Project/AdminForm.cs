@@ -206,6 +206,8 @@ namespace Kuzbass_Project
                     {
                         FileInfo fInfoSrc = new FileInfo(@"Шаблоны\ШаблонРеестр.xlsx");
                         var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(path);
+
+                        MessageBox.Show("Файл реестра успешно создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 catch

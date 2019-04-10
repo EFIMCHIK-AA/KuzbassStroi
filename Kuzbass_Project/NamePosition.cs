@@ -13,9 +13,9 @@ namespace Kuzbass_Project
         public static List<Position> Positions = new List<Position>();
 
         //Запись с бд в массив
-        static public void SetPosition()
+        static public void SetPosition(String Host, Int32 Port)
         {
-            String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+            String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
             using (var connect = new NpgsqlConnection(connString))
             {

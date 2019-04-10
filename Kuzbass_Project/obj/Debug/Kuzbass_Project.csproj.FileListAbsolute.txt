@@ -85,7 +85,6 @@ C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\K
 C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.Change.resources
 C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.AddDocument.resources
 C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\bin\Debug\SimpleTCP.dll
-C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.GetPort.resources
 C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\bin\Debug\SimpleTCP.dll
 C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.AddDocument.resources
 C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.Change.resources
@@ -93,3 +92,4 @@ C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.G
 C:\Users\Kirill\Desktop\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.OperationForFiles.resources
 C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.AdminForm.resources
 C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\bin\Debug\Zen.Barcode.Core.dll
+C:\Users\vipef\OneDrive\Рабочий стол\KuzbassShahtStroi\KuzbassStroi\Kuzbass_Project\bin\Debug\DevOne.Security.Cryptography.BCrypt.dll

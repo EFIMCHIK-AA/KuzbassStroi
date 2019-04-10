@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -36,46 +37,78 @@ namespace Kuzbass_Project
             Change_B.Enabled = false;
             Delete_B.Enabled = false;
 
-            if (Mode_CB.SelectedItem.ToString() == "Не подтвержденные документы")
-            {
-                //Заполняем список
-                GetSpisok.GetSpisokItemsNO(Spisok_LB, Mode);
+            String Host = null;
+            Int32 Port = 0;
 
-                //Разблокировка кнопок
-                if (Spisok_LB.Items.Count > 0)
-                {
-                    ClearSpisok_B.Enabled = true;
-                }
-                else
-                {
-                    ClearSpisok_B.Enabled = false;
-                    MessageBox.Show("Не подтвержденные документы не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else if (Mode_CB.SelectedItem.ToString() == "Подтвержденные документы")
+            //Подгружаем параметры подключения
+            if (File.Exists(@"Connect\DataBase\DateConnect.txt"))
             {
-                //Заполняем список
-                GetSpisok.GetSpisokItemsYES(Spisok_LB, Mode);
-
-                //Разблокировка кнопок
-                if (Spisok_LB.Items.Count > 0)
+                //Считываем параметры подлючения
+                try
                 {
-                    ClearSpisok_B.Enabled = true;
+                    using (StreamReader sr = new StreamReader(File.Open(@"Connect\DataBase\DateConnect.txt", FileMode.Open)))
+                    {
+                        Host = sr.ReadLine();
+                        Port = Convert.ToInt32(sr.ReadLine());
+                    }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("Подтвержденные документы не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("При считывании параметров подлючения произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-            }
-            else if(Mode_CB.SelectedItem.ToString() == "Не задано")
-            {
-                Mode_CB.Focus();
-                MessageBox.Show("Необходимо выбрать режим отображения", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                Mode_CB.Focus();
-                MessageBox.Show("Ошибка при обновлении данных", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Файд с параметрами подлючения отсутсвует. Необходимо добавить файл DateConnect.txt", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if(Host != null & Port != 0)
+            {
+                if (Mode_CB.SelectedItem.ToString() == "Не подтвержденные документы")
+                {
+                    //Заполняем список
+                    GetSpisok.GetSpisokItemsNO(Spisok_LB, Mode, Host, Port);
+
+                    //Разблокировка кнопок
+                    if (Spisok_LB.Items.Count > 0)
+                    {
+                        ClearSpisok_B.Enabled = true;
+                    }
+                    else
+                    {
+                        ClearSpisok_B.Enabled = false;
+                        MessageBox.Show("Не подтвержденные документы не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else if (Mode_CB.SelectedItem.ToString() == "Подтвержденные документы")
+                {
+                    //Заполняем список
+                    GetSpisok.GetSpisokItemsYES(Spisok_LB, Mode, Host, Port);
+
+                    //Разблокировка кнопок
+                    if (Spisok_LB.Items.Count > 0)
+                    {
+                        ClearSpisok_B.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Подтвержденные документы не обнаружены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else if (Mode_CB.SelectedItem.ToString() == "Не задано")
+                {
+                    Mode_CB.Focus();
+                    MessageBox.Show("Необходимо выбрать режим отображения", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    Mode_CB.Focus();
+                    MessageBox.Show("Ошибка при обновлении данных", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ошибка при обновлении данных", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

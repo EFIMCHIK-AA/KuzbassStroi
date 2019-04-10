@@ -46,11 +46,18 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.QR_PB = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.HostDB_TB = new System.Windows.Forms.TextBox();
+            this.SaveBD_B = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.PortDB_TB = new System.Windows.Forms.TextBox();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.QR_PB)).BeginInit();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox4
@@ -130,7 +137,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.Path_TB);
             this.groupBox1.Controls.Add(this.ChangePath_B);
-            this.groupBox1.Location = new System.Drawing.Point(12, 146);
+            this.groupBox1.Location = new System.Drawing.Point(12, 131);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(341, 119);
             this.groupBox1.TabIndex = 9;
@@ -168,7 +175,7 @@
             // 
             this.groupBox3.Controls.Add(this.Exit_B);
             this.groupBox3.Controls.Add(this.ChangeUser_B);
-            this.groupBox3.Location = new System.Drawing.Point(12, 274);
+            this.groupBox3.Location = new System.Drawing.Point(12, 402);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -231,11 +238,70 @@
             this.label4.Text = "Используйте QR сканер\r\nдля определения\r\nпараметров подлючения\r\nна устройстве";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label6);
+            this.groupBox5.Controls.Add(this.PortDB_TB);
+            this.groupBox5.Controls.Add(this.label5);
+            this.groupBox5.Controls.Add(this.HostDB_TB);
+            this.groupBox5.Controls.Add(this.SaveBD_B);
+            this.groupBox5.Location = new System.Drawing.Point(12, 256);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(341, 119);
+            this.groupBox5.TabIndex = 13;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "База данных";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(39, 17);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Хост";
+            // 
+            // HostDB_TB
+            // 
+            this.HostDB_TB.Location = new System.Drawing.Point(51, 20);
+            this.HostDB_TB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.HostDB_TB.Name = "HostDB_TB";
+            this.HostDB_TB.Size = new System.Drawing.Size(281, 22);
+            this.HostDB_TB.TabIndex = 10;
+            // 
+            // SaveBD_B
+            // 
+            this.SaveBD_B.Location = new System.Drawing.Point(6, 78);
+            this.SaveBD_B.Name = "SaveBD_B";
+            this.SaveBD_B.Size = new System.Drawing.Size(324, 30);
+            this.SaveBD_B.TabIndex = 8;
+            this.SaveBD_B.Text = "Сохранить";
+            this.SaveBD_B.UseVisualStyleBackColor = true;
+            this.SaveBD_B.Click += new System.EventHandler(this.SaveBD_B_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 49);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(41, 17);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Порт";
+            // 
+            // PortDB_TB
+            // 
+            this.PortDB_TB.Location = new System.Drawing.Point(51, 46);
+            this.PortDB_TB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.PortDB_TB.Name = "PortDB_TB";
+            this.PortDB_TB.Size = new System.Drawing.Size(281, 22);
+            this.PortDB_TB.TabIndex = 12;
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(626, 373);
+            this.ClientSize = new System.Drawing.Size(626, 503);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
@@ -256,6 +322,8 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.QR_PB)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,5 +348,11 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PictureBox QR_PB;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox PortDB_TB;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox HostDB_TB;
+        private System.Windows.Forms.Button SaveBD_B;
     }
 }

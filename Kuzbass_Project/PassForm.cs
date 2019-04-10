@@ -1,4 +1,6 @@
 ﻿using System;
+using DevOne.Security.Cryptography.BCrypt; 
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,27 +31,59 @@ namespace Kuzbass_Project
             //Установка тестовых данных по умолчанию на "Не задано"
             Login_CB.SelectedIndex = 0;
 
-            //Подгрузка должностей из БД
-            try
-            {
-                NamePosition.SetPosition();
+            String Host = null;
+            Int32 Port = 0;
 
-                if (NamePosition.Positions.Count != 0)
+            //Подгружаем параметры подключения
+            if (File.Exists(@"Connect\DataBase\DateConnect.txt"))
+            {
+                //Считываем параметры подлючения
+                try
                 {
-                    //Вывод всех позиций в Login_CB
-                    foreach (Position Temp in NamePosition.Positions)
+                    using (StreamReader sr = new StreamReader(File.Open(@"Connect\DataBase\DateConnect.txt", FileMode.Open)))
                     {
-                        Login_CB.Items.Add(Temp.Name);
+                        Host = sr.ReadLine();
+                        Port = Convert.ToInt32(sr.ReadLine());
                     }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("Должности для интеграции не обнаружены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("При считывании параметров подлючения произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            catch (Exception Npgsql)
+            else
             {
-                MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Файд с параметрами подлючения отсутсвует. Необходимо добавить файл DateConnect.txt", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if(Host != null & Port != 0)
+            {
+                //Подгрузка должностей из БД
+                try
+                {
+                    NamePosition.SetPosition(Host, Port);
+
+                    if (NamePosition.Positions.Count != 0)
+                    {
+                        //Вывод всех позиций в Login_CB
+                        foreach (Position Temp in NamePosition.Positions)
+                        {
+                            Login_CB.Items.Add(Temp.Name);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Должности для интеграции не обнаружены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception Npgsql)
+                {
+                    MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ошибка при загрузке параметров подключения", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             //Скрываем пароль
@@ -103,6 +137,17 @@ namespace Kuzbass_Project
                 }
 
                 String Mode = Login_CB.SelectedItem.ToString();
+
+                String password = null;
+                
+                foreach(Position Temp in NamePosition.Positions)
+                {
+                    if(Temp.Name == Mode)
+                    {
+                        password = Temp.HashPass;
+                        break;
+                    }
+                }
 
                 if (Mode == "Администратор")
                 {

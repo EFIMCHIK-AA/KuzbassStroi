@@ -23,6 +23,8 @@ namespace Kuzbass_Project
     {
         private String[,] values = null;
         private String Mode;
+        private String Host;
+        private Int32 Port;
 
         public Form1(String Mode)
         {
@@ -54,7 +56,7 @@ namespace Kuzbass_Project
                 try
                 {
                     //Строка подлючения
-                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                    String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                     using (var connect = new NpgsqlConnection(connString))
                     {
@@ -247,7 +249,7 @@ namespace Kuzbass_Project
                             var rowCnt = ws1.Dimension.End.Row;
 
                             //Строка подлючения
-                            String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                            String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                             using (var connect = new NpgsqlConnection(connString))
                             {
@@ -402,6 +404,28 @@ namespace Kuzbass_Project
                 Operations_B.Enabled = true;
             }
 
+            //Подгружаем параметры подключения
+            if(File.Exists(@"Connect\DataBase\DateConnect.txt"))
+            {
+                //Считываем параметры подлючения
+                try
+                {
+                    using (StreamReader sr = new StreamReader(File.Open(@"Connect\DataBase\DateConnect.txt", FileMode.Open)))
+                    {
+                        Host = sr.ReadLine();
+                        Port = Convert.ToInt32(sr.ReadLine());
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("При считывании параметров подлючения произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Файд с параметрами подлючения отсутсвует. Необходимо добавить файл DateConnect.txt", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             RefreshSpisok_B.PerformClick();
         }
 
@@ -417,7 +441,7 @@ namespace Kuzbass_Project
             try
             {
                 //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                 using (var connect = new NpgsqlConnection(connString))
                 {

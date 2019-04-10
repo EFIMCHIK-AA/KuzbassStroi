@@ -96,6 +96,28 @@ namespace Kuzbass_Project
                 MessageBox.Show("Отсутствует файл Registry.txt. Введите порт в соответствующее поле и подтвердите сохранение, - файл Registry.txt будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
+            if (File.Exists(@"Connect\DataBase\DateConnect.txt"))
+            {
+
+                try
+                {
+                    using (StreamReader sr = new StreamReader(File.Open(@"Connect\DataBase\DateConnect.txt", FileMode.Open)))
+                    {
+                        HostDB_TB.Text = sr.ReadLine();
+                        PortDB_TB.Text = sr.ReadLine();
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("При считывании параметров подлючения произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Отсутствует файл DateConnect.txt. Введите данные подключения в соответствующие поля и подтвердите сохранение, - файл DateConnect.txt. будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
             //Генерация QR
             Zen.Barcode.CodeQrBarcodeDraw QrCode = Zen.Barcode.BarcodeDrawFactory.CodeQr;
             QR_PB.Image = QrCode.Draw($"{Host_TB.Text.Trim()}_{Port_TB.Text.Trim()}", 100);
@@ -179,7 +201,7 @@ namespace Kuzbass_Project
                     }
                 }
 
-                MessageBox.Show("Путь реестра успешно обновлен", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Путь реестра успешно обновлен", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -219,6 +241,42 @@ namespace Kuzbass_Project
             else
             {
                 MessageBox.Show("Создание реестра невозможно. Шаблон реестра отсутствует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveBD_B_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(HostDB_TB.Text))
+                {
+                    throw new Exception("Необходимо ввести хост базы данных");
+
+                }
+
+                if (String.IsNullOrWhiteSpace(PortDB_TB.Text))
+                {
+                    throw new Exception("Необходимо ввести порт базы данных");
+                }
+
+                if (File.Exists(@"Connect\DataBase\DateConnect.txt"))
+                {
+                    //Удаляем старый файл
+                    File.Delete(@"Connect\DataBase\DateConnect.txt");
+                }
+
+                //Записываем новый порт
+                using (StreamWriter sw = new StreamWriter(File.Open(@"Connect\DataBase\DateConnect.txt", FileMode.Create)))
+                {
+                    sw.WriteLine(HostDB_TB.Text.Trim());
+                    sw.WriteLine(PortDB_TB.Text.Trim());
+                }
+
+                MessageBox.Show("Параметры подлючения успешно обновлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch(Exception E)
+            {
+                MessageBox.Show(E.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

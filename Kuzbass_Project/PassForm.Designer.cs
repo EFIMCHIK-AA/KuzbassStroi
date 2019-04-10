@@ -110,7 +110,7 @@
             // Enter_B
             // 
             this.Enter_B.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.Enter_B.Location = new System.Drawing.Point(13, 103);
+            this.Enter_B.Location = new System.Drawing.Point(6, 103);
             this.Enter_B.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Enter_B.Name = "Enter_B";
             this.Enter_B.Size = new System.Drawing.Size(153, 30);

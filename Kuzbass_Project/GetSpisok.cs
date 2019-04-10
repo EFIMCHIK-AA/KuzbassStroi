@@ -10,12 +10,12 @@ namespace Kuzbass_Project
 {
     static class GetSpisok
     {
-        static internal void GetSpisokItemsNO (ListBox TempList, String Mode)
+        static internal void GetSpisokItemsNO (ListBox TempList, String Mode, String Host, Int32 Port)
         {
             try
             {
                 //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                 using (var connect = new NpgsqlConnection(connString))
                 {
@@ -138,12 +138,12 @@ namespace Kuzbass_Project
             }
         }
 
-        static internal void GetSpisokItemsYES(ListBox TempList, String Mode)
+        static internal void GetSpisokItemsYES(ListBox TempList, String Mode, String Host, Int32 Port)
         {
             try
             {
                 //Строка подлючения
-                String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                 using (var connect = new NpgsqlConnection(connString))
                 {

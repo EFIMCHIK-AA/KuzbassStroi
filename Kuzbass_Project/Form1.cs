@@ -23,8 +23,9 @@ namespace Kuzbass_Project
     {
         private String[,] values = null;
         private String Mode;
-        private String Host;
-        private Int32 Port;
+        private String Host_BD;
+        private Int32 Port_BD;
+        private String Host_server;
 
         public Form1(String Mode)
         {
@@ -56,7 +57,7 @@ namespace Kuzbass_Project
                 try
                 {
                     //Строка подлючения
-                    String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                    String connString = $"Server = {Host_BD}; Port = {Port_BD}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                     using (var connect = new NpgsqlConnection(connString))
                     {
@@ -148,12 +149,10 @@ namespace Kuzbass_Project
 
         private void OpenDocument_B_Click(object sender, EventArgs e)
         {
+            String MyHost = Dns.GetHostName();
+            Host_server = Dns.GetHostByName(MyHost).AddressList[0].ToString();
             Status_TB.Clear();
             Documents.Clear();
-
-            //Получаем хост и  задаем порт 
-            String MyHost = Dns.GetHostName();
-            String Host = Dns.GetHostByName(MyHost).AddressList[0].ToString();
 
             if (File.Exists(@"Connect\Port.txt"))
             {
@@ -175,7 +174,7 @@ namespace Kuzbass_Project
                 }
 
                 //Проверяем доступен ли порт
-                Int32 port = Convert.ToInt32(strPort);
+                Int32 port_server = Convert.ToInt32(strPort);
 
                 //Получаем список всех портов
                 IPGlobalProperties iPGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
@@ -232,7 +231,7 @@ namespace Kuzbass_Project
                         workbook.Save();
 
                         //Вызываем форму
-                        AddDocument Dialog = new AddDocument(port, Host);
+                        AddDocument Dialog = new AddDocument(port_server, Host_server);
 
                         if (Dialog.ShowDialog() == DialogResult.OK)
                         {
@@ -249,7 +248,7 @@ namespace Kuzbass_Project
                             var rowCnt = ws1.Dimension.End.Row;
 
                             //Строка подлючения
-                            String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                            String connString = $"Server = {Host_BD}; Port = {Port_BD}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                             using (var connect = new NpgsqlConnection(connString))
                             {
@@ -260,7 +259,7 @@ namespace Kuzbass_Project
                                 List<String> CheckUnigueQR = new List<String>();
                                     
                                 //Считываем все QR
-                                for (Int32 i = 0; i < Dialog.Spisok_LB.Items.Count; i++)
+                                for (Int32 i = 0,j=0; i < Dialog.Spisok_LB.Items.Count; i++)
                                 {
                                     CheckUnigueQR.Clear();
 
@@ -301,14 +300,15 @@ namespace Kuzbass_Project
                                         }
 
                                         //Запись реестра
-                                        excel.WriteReg(Temp, i + 1, rowCnt, workbook, ws1);
+                                        excel.WriteReg(Temp, j + 1, rowCnt, workbook, ws1);
+                                        j++;
 
                                         //Вывод в компонент сообщения об удачном добавлении
                                         Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} => Добавлен в базу отслеживания" + Environment.NewLine);
                                     }
                                     else
                                     {
-                                        Status_TB.AppendText($"QR {Spisok_LB.Items[i]} существует => Добавление не произведено" + Environment.NewLine);
+                                        Status_TB.AppendText($"QR {Dialog.Spisok_LB.Items[i]} существует => Добавление не произведено" + Environment.NewLine);
                                     }    
                                 }
 
@@ -412,8 +412,8 @@ namespace Kuzbass_Project
                 {
                     using (StreamReader sr = new StreamReader(File.Open(@"Connect\DataBase\DateConnect.txt", FileMode.Open)))
                     {
-                        Host = sr.ReadLine();
-                        Port = Convert.ToInt32(sr.ReadLine());
+                        Host_BD = sr.ReadLine();
+                        Port_BD = Convert.ToInt32(sr.ReadLine());
                     }
                 }
                 catch
@@ -441,7 +441,7 @@ namespace Kuzbass_Project
             try
             {
                 //Строка подлючения
-                String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                String connString = $"Server = {Host_BD}; Port = {Port_BD}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                 using (var connect = new NpgsqlConnection(connString))
                 {
@@ -600,7 +600,7 @@ namespace Kuzbass_Project
 
         private void Operations_B_Click(object sender, EventArgs e)
         {
-            OperationForFiles Dialog = new OperationForFiles(Mode);
+            OperationForFiles Dialog = new OperationForFiles(Mode,Host_BD,Port_BD);
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
                 RefreshSpisok_B.PerformClick();

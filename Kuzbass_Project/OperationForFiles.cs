@@ -14,11 +14,15 @@ namespace Kuzbass_Project
 {
     public partial class OperationForFiles : Form
     {
-        public OperationForFiles(String Mode)
+        public OperationForFiles(String Mode,String Host,Int32 Port)
         {
             InitializeComponent();
             this.Mode = Mode;
+            this.Port = Port;
+            this.Host = Host;
         }
+        String Host;
+        Int32 Port;
 
         //Режим работы из главной формы
         String Mode;
@@ -157,7 +161,7 @@ namespace Kuzbass_Project
                 {
                     Document Temp = Spisok_LB.Items[Spisok_LB.SelectedIndex] as Document;
 
-                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                    String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                     using (var connect = new NpgsqlConnection(connString))
                     {
@@ -199,7 +203,7 @@ namespace Kuzbass_Project
 
                 if (Dialog.ShowDialog() == DialogResult.OK)
                 {
-                    String connString = "Server = 127.0.0.1; Port = 5432; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+                    String connString = $"Server = {Host}; Port = {Port}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                     using (var connect = new NpgsqlConnection(connString))
                     {

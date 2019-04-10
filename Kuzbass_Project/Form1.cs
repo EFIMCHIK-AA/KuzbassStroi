@@ -182,15 +182,15 @@ namespace Kuzbass_Project
                 TcpConnectionInformation[] tcpConnectionInformation = iPGlobalProperties.GetActiveTcpConnections();
 
                 //Перебираем и находим совпадение
-                foreach (TcpConnectionInformation tcpi in tcpConnectionInformation)
-                {
-                    if (tcpi.LocalEndPoint.Port == port)
-                    {
-                        MessageBox.Show($"Порт {port}, установленный в качестве базового порта запуска, занят." +
-                                        $"Необходимо установить свободный порт для подлючения", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
+                //foreach (TcpConnectionInformation tcpi in tcpConnectionInformation)
+                //{
+                //    if (tcpi.LocalEndPoint.Port == port)
+                //    {
+                //        MessageBox.Show($"Порт {port}, установленный в качестве базового порта запуска, занят." +
+                //                        $"Необходимо установить свободный порт для подлючения", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //        return;
+                //    }
+                //}
 
                 String PathRegistry = null;
 

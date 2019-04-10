@@ -1,20 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Net.NetworkInformation;
 using System.Net;
-using System.Net.Sockets;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using OfficeOpenXml;
-using OfficeOpenXml.Style;
-using OfficeOpenXml.Drawing;
-using OfficeOpenXml.Table;
 using SimpleTCP;
 
 namespace Kuzbass_Project
@@ -50,9 +39,17 @@ namespace Kuzbass_Project
             Server.StringEncoder = Encoding.UTF8;
             //Запускаем сервер
             IPAddress ip = IPAddress.Parse(Host);
-            Server.Start(ip, port);
-            Status_TB.AppendText($"Запуск сервера  => Удачно" + Environment.NewLine +
-                                 $"Ожидание QR" + Environment.NewLine);
+
+            try
+            {
+                Server.Start(ip, port);
+                Status_TB.AppendText($"Запуск сервера  => Удачно" + Environment.NewLine +
+                     $"Ожидание QR" + Environment.NewLine);
+            }
+            catch
+            {
+                MessageBox.Show("Порт открытия сервера занят", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void Server_DataReceived(object sender, SimpleTCP.Message e)
@@ -63,8 +60,6 @@ namespace Kuzbass_Project
                 Status_TB.AppendText($"Получение QR..." + Environment.NewLine);//Тест
                 System.Threading.Thread.Sleep(100);//Тест
                 Status_TB.AppendText($"QR {e.MessageString} => Получен" + Environment.NewLine);
-
-                //e.ReplyLine(e.MessageString);
             });
         }
 
@@ -114,16 +109,16 @@ namespace Kuzbass_Project
 
         private void Cancel_B_Click(object sender, EventArgs e)
         {
-            //Закрытие сервера
-            if (Server != null)
-            {
-                if (Server.IsStarted)
+                //Закрытие сервера
+                if (Server != null)
                 {
-                    Server.Stop();
-                    Status_TB.AppendText("Закрытие сервера...");
-                    System.Threading.Thread.Sleep(1000);
+                    if (Server.IsStarted)
+                    {
+                        Server.Stop();
+                        Status_TB.AppendText("Закрытие сервера...");
+                        System.Threading.Thread.Sleep(1000);
+                    }
                 }
-            }   
         }
 
         private void AddDocument_FormClosing(object sender, FormClosingEventArgs e)
@@ -199,10 +194,6 @@ namespace Kuzbass_Project
                         MessageBox.Show("Невозможно сформировать акт, закройте все книги Excel", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                }
-                else
-                {
-                    return;
                 }
             }
             else

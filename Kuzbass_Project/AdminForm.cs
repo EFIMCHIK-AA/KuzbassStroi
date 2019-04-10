@@ -135,13 +135,13 @@ namespace Kuzbass_Project
                 {
                     Int32 port = Convert.ToInt32(Port_TB.Text);
 
-                    if (port <= 1023 || port > 65535)
+                    if (port <= 48654 || port > 65535)
                     {
                         Port_TB.Focus();
-                        throw new Exception("Использование системных портов в диапазоне [0..1023] не предусмотрено. Рекомендуется использовать порты в диапазоне [48654..48999] или [49152..65535]");
+                        throw new Exception("Использование портов в диапазоне [0..48654] не предусмотрено. Рекомендуется использовать порты в диапазоне [48654..48999] или [49152..65535]");
                     }
 
-                    if(File.Exists(@"Connect\Port.txt"))
+                    if (File.Exists(@"Connect\Port.txt"))
                     {
                         //Удаляем старый файл
                         File.Delete(@"Connect\Port.txt");

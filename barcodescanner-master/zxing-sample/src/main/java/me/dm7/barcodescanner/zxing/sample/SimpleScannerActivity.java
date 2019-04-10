@@ -121,6 +121,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
             } catch (IOException e) {
                 Log.d("time", "no worky X");
                 e.printStackTrace();
+
             }
             try {
                 socket.setSoTimeout(3000);
@@ -140,7 +141,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
 
 
             output.print(msg);
-            output.flush();
+            //output.flush();
 
 //read
             String str = "waiting";

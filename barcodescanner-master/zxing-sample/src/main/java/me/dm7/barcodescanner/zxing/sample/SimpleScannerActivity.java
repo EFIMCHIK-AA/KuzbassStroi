@@ -81,25 +81,13 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
                 this.finish();
         }
         else {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Результат сканирования QR");
-            builder.setPositiveButton("Подтвердить", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
                     msg = result.getText();
                     sendMessage();
-
-                }
-            }).setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    msg, Toast.LENGTH_LONG);
+            toast.show();
                     mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
-                }
-            }).setMessage(result.getText());
-            AlertDialog alert1 = builder.create();
-            alert1.setCanceledOnTouchOutside(false);
-            alert1.show();
+
         }
 
     }

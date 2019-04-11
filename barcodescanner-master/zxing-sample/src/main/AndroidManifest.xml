@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
   <application android:allowBackup="true"
-        android:label="QR сканер"
+        android:label="QR сканер no dialog"
         android:icon="@drawable/icon">
         <activity android:name=".MainActivity"
                   android:theme="@style/AppTheme"

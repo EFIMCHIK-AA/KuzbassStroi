@@ -47,6 +47,7 @@ namespace Kuzbass_Project
             {
                 confirm = true;
                 this.Close();
+                Program.InitializationForm.Pass_TB.Clear();
                 Program.InitializationForm.Show();
             }
         }

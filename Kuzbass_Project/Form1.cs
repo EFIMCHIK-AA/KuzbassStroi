@@ -226,12 +226,12 @@ namespace Kuzbass_Project
                     ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(PathRegistry));
                     ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
 
-                    try
-                    {
+                    //try
+                    //{
                         workbook.Save();
 
                         //Вызываем форму
-                        AddDocument Dialog = new AddDocument(port_server, Host_server);
+                        AddDocument Dialog = new AddDocument(port_server, Host_server, Host_BD, Port_BD.ToString());
 
                         if (Dialog.ShowDialog() == DialogResult.OK)
                         {
@@ -319,11 +319,11 @@ namespace Kuzbass_Project
                             //Обновляем данные
                             RefreshSpisok_B.PerformClick();
                         }
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Перед добавлением чертежей, закройте все книги Excel", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                    //}
+                    //catch (Exception)
+                    //{
+                    //    MessageBox.Show("Перед добавлением чертежей, закройте все книги Excel", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //}
                 }
                 else
                 {
@@ -641,7 +641,9 @@ namespace Kuzbass_Project
             {
                 confirm = true;
                 this.Close();
+                Program.InitializationForm.Pass_TB.Clear();
                 Program.InitializationForm.Show();
+                
             }
         }
     }

@@ -135,6 +135,7 @@ namespace Kuzbass_Project
                 ClearSpisok_B.Enabled = false;
                 Change_B.Enabled = false;
                 Delete_B.Enabled = false;
+                RefreshSpisok_B.PerformClick();
             }
             else if (Mode_CB.SelectedItem.ToString() == "Подтвержденные документы")
             {
@@ -144,6 +145,7 @@ namespace Kuzbass_Project
                 ClearSpisok_B.Enabled = false;
                 Change_B.Enabled = false;
                 Delete_B.Enabled = false;
+                RefreshSpisok_B.PerformClick();
             }
             else
             {

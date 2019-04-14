@@ -214,52 +214,77 @@ namespace Kuzbass_Project
 
                 date = date.Replace(".", "_");
                 date = date.Replace(":", "_");
-                saveFileDialog1.FileName = "Акт " + date;
-                saveFileDialog1.Filter = "Microsoft Excel Worksheet (*.xlsx)|*.xlsx";
-
+                saveFileDialog1.FileName = date;
                 System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонАкт.xlsx");
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    System.IO.FileInfo file = new System.IO.FileInfo(saveFileDialog1.FileName);
-                    var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName);
+                    Directory.CreateDirectory(saveFileDialog1.FileName.Replace(".xlsx", ""));
+                    var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName + @"\Акт от " + date + ".xlsx");
+                    wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName.Replace(".xlsx", "") + @"\Акт от "+ date +" не уникальный.xlsx");
 
                     try
                     {
-                        ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName));
-                        ExcelWorksheet ws2 = workbook1.Workbook.Worksheets[1];
-                        var rowCntAct = ws2.Dimension.End.Row;
+                        ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName+ @"\Акт от " + date+".xlsx"));
+                        ExcelWorksheet ws1 = workbook1.Workbook.Worksheets[1];
+                        var rowCntAct = ws1.Dimension.End.Row;
                         Excel excel = new Excel();
-                        Document Temp = new Document();
+                    
                         if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
                         {
-                            for (Int32 i = 0; i < Spisok_LB.Items.Count; i++)
+                            Document Temp = new Document();
+                            for (Int32 i = 0; i < UnigueYES.Count; i++)
                             {
-                                excel.SplitData(Temp, Spisok_LB.Items[i] as String);
-                                ws2.Cells[i + rowCntAct + 1, 1].Value = Temp.Number;
-                                ws2.Cells[i + rowCntAct + 1, 2].Value = Temp.List;
-                                ws2.Cells[i + rowCntAct + 1, 3].Value = Temp.Name;
-                                ws2.Cells[i + rowCntAct + 1, 4].Value = Temp.Executor;
-                                ws2.Cells[i + rowCntAct + 1, 5].Value = Temp.Lenght;
-                                ws2.Cells[i + rowCntAct + 1, 6].Value = Temp.Weight;
-                                ws2.Cells[i + rowCntAct + 1, 7].Value = Temp.DateCreate;
+                                excel.SplitData(Temp, UnigueYES[i]);
+                                ws1.Cells[i + rowCntAct + 1, 1].Value = Temp.Number;
+                                ws1.Cells[i + rowCntAct + 1, 2].Value = Temp.List;
+                                ws1.Cells[i + rowCntAct + 1, 3].Value = Temp.Name;
+                                ws1.Cells[i + rowCntAct + 1, 4].Value = Temp.Executor;
+                                ws1.Cells[i + rowCntAct + 1, 5].Value = Temp.Lenght;
+                                ws1.Cells[i + rowCntAct + 1, 6].Value = Temp.Weight;
+                                ws1.Cells[i + rowCntAct + 1, 7].Value = Temp.DateCreate;
                             }
-                            int last = ws2.Dimension.End.Row;
-                            ws2.Cells[last + 2, 4].Value = "Принял";
-                            ws2.Cells[last + 3, 4].Value = "Сдал";
-                            ws2.Cells[last + 2, 6].Value = "______________";
-                            ws2.Cells[last + 3, 6].Value = "______________";
-                            ws2.Cells[last + 2, 7].Value = "Линник О.В.";
-                            ws2.Cells[last + 3, 7].Value = "/______________/";
+                            int last = ws1.Dimension.End.Row;
+                            ws1.Cells[last + 2, 4].Value = "Принял";
+                            ws1.Cells[last + 3, 4].Value = "Сдал";
+                            ws1.Cells[last + 2, 6].Value = "______________";
+                            ws1.Cells[last + 3, 6].Value = "______________";
+                            ws1.Cells[last + 2, 7].Value = "Линник О.В.";
+                            ws1.Cells[last + 3, 7].Value = "/______________/";
                             workbook1.Save();
+                            ExcelPackage workbook2 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName.Replace(".xlsx", "") + @"\Акт от " + date + " не уникальный.xlsx"));
+                            ExcelWorksheet ws2 = workbook2.Workbook.Worksheets[1];
+                            rowCntAct = ws2.Dimension.End.Row;
+                        if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
+                        {
+                            for (Int32 i = 0; i < UnigueNO.Count; i++)
+                                {
+                                    excel.SplitData(Temp, UnigueNO[i]);
+                                    ws2.Cells[i + rowCntAct + 1, 1].Value = Temp.Number;
+                                    ws2.Cells[i + rowCntAct + 1, 2].Value = Temp.List;
+                                    ws2.Cells[i + rowCntAct + 1, 3].Value = Temp.Name;
+                                    ws2.Cells[i + rowCntAct + 1, 4].Value = Temp.Executor;
+                                    ws2.Cells[i + rowCntAct + 1, 5].Value = Temp.Lenght;
+                                    ws2.Cells[i + rowCntAct + 1, 6].Value = Temp.Weight;
+                                    ws2.Cells[i + rowCntAct + 1, 7].Value = Temp.DateCreate;
+                                }
+                                last = ws2.Dimension.End.Row;
+                                ws2.Cells[last + 2, 4].Value = "Принял";
+                                ws2.Cells[last + 3, 4].Value = "Сдал";
+                                ws2.Cells[last + 2, 6].Value = "______________";
+                                ws2.Cells[last + 3, 6].Value = "______________";
+                                ws2.Cells[last + 2, 7].Value = "Линник О.В.";
+                                ws2.Cells[last + 3, 7].Value = "/______________/";
+                                workbook2.Save();
                         }
                     }
-                    catch
-                    {
-                        MessageBox.Show("Невозможно сформировать акт, закройте все книги Excel", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
                 }
+                    catch
+                {
+                    MessageBox.Show("Невозможно сформировать акт, закройте все книги Excel", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
             }
             else
             {

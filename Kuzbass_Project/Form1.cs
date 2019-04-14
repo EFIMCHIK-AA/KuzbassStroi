@@ -21,7 +21,6 @@ namespace Kuzbass_Project
 {
     public partial class Form1 : Form
     {
-        private String[,] values = null;
         private String Mode;
         private String Host_BD;
         private Int32 Port_BD;
@@ -574,19 +573,6 @@ namespace Kuzbass_Project
             catch (Exception Npgsql)
             {
                 MessageBox.Show(Npgsql.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void GetValues(string path)
-        {
-            values = CSV.GetStringsFromFile(path, 7);
-
-            for (int i = 1; i < values.GetLength(0); i++)
-            {
-                for (int j = 0; j < values.GetLength(1); j++)
-                {
-                    values[i, j] = values[i, j].Replace(@"""", string.Empty);
-                }
             }
         }
 

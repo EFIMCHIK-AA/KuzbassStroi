@@ -568,6 +568,7 @@ namespace Kuzbass_Project
                 else
                 {
                     Status_TB.AppendText("Документы для подтвердения не обнаружены" + Environment.NewLine);
+                    Confirm_B.Enabled = false; //Блокируем кнопку
                 }
             }
             catch (Exception Npgsql)

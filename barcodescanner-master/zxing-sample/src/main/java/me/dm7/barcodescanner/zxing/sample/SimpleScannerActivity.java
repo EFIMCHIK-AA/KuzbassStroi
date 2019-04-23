@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -65,12 +66,17 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
         //Проверка на доступ записи айпи и порта или отправка данных на сервер
         if(ChangeIpAndPort.writeIpAndPort)
         {
+            try
+            {
                 String Temp = result.getText();
                 String[] Item = Temp.split(Pattern.quote("_"));
                 server_address = Item[0];
+                String[] check = Item[0].split(Pattern.quote("."));
+                String ResultString =  check[0] + check[1] + check[2] + check[3];
+                Long num = Long.parseLong(ResultString);
                 server_port = Integer.parseInt(Item[1]);
                 Toast toast = Toast.makeText(getApplicationContext(),
-                    "Успешное сохранение ip "+Item[0]+" и port "+Item[1], Toast.LENGTH_LONG);
+                                "Успешное сохранение ip " + Item[0] + " и port " + Item[1], Toast.LENGTH_LONG);
                 toast.show();
                 SharedPreferences.Editor editor = getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE).edit();
                 editor.putString("server", SimpleScannerActivity.server_address);
@@ -79,14 +85,43 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
                 Intent intent = new Intent(this, ChangeIpAndPort.class);
                 startActivity(intent);
                 this.finish();
+            }
+            catch (Exception e)
+            {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Ошибка сохранения ip и port, неправельно введен ip или port. Например, ip "+"192.168.0.1"+",port "+"48677", Toast.LENGTH_LONG);
+            toast.show();
+            mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
+            }
         }
         else {
-                    msg = result.getText();
-                    sendMessage();
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    msg, Toast.LENGTH_LONG);
-            toast.show();
-                    mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
+
+            msg = result.getText();
+            String[] protect = msg.split("_");
+            Integer check = protect.length;
+            if (check == 6)
+            {
+                sendMessage();
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        msg, Toast.LENGTH_LONG);
+                toast.show();
+                mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
+            }
+            else
+            {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Ошибка QR кода");
+                builder.setPositiveButton("Подтвердить", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
+
+                    }
+                }).setMessage(result.getText()+ "\nQR выполнен не по шаблону");
+                AlertDialog alert1 = builder.create();
+                alert1.setCanceledOnTouchOutside(false);
+                alert1.show();
+            }
 
         }
 

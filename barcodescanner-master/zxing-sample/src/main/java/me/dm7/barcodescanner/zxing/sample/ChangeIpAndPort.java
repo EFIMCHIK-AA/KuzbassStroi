@@ -104,7 +104,7 @@ public class ChangeIpAndPort extends MainActivity {
         catch (Exception e)
         {
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "Ошибка сохранения ip и port, непровельно введен ip или port. Например, ip "+"192.168.0.1"+",port "+"48677", Toast.LENGTH_LONG);
+                    "Ошибка сохранения ip и port, неправельно введен ip или port. Например, ip "+"192.168.0.1"+",port "+"48677", Toast.LENGTH_LONG);
             toast.show();
         }
     }

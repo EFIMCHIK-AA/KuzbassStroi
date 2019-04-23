@@ -90,8 +90,8 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
             {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Ошибка сохранения ip и port, неправельно введен ip или port. Например, ip "+"192.168.0.1"+",port "+"48677", Toast.LENGTH_LONG);
-            toast.show();
-            mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
+                toast.show();
+                mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
             }
         }
         else {
@@ -111,7 +111,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
             {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Ошибка QR кода");
-                builder.setPositiveButton("Подтвердить", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Пропустить", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mScannerView.resumeCameraPreview(SimpleScannerActivity.this);

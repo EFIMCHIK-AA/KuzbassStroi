@@ -38,7 +38,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     TempList.Items.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -59,7 +59,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     TempList.Items.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -80,7 +80,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     TempList.Items.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -101,7 +101,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     TempList.Items.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -122,7 +122,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     TempList.Items.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -166,7 +166,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     TempList.Items.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -187,7 +187,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     TempList.Items.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -208,7 +208,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     TempList.Items.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -229,7 +229,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     TempList.Items.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -250,7 +250,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     TempList.Items.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }

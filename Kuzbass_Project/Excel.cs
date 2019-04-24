@@ -15,8 +15,10 @@ namespace Kuzbass_Project
     {
         public void SplitData(Document Temp, string values)
         {
-            Temp.DateCreate = DateTime.Now.ToString();
+            Temp.DateCreate = DateTime.Now;
+
             Temp.QR = values;
+
             if (values.IndexOf("_") != -1)
             {
                 Temp.Number = values.Remove(values.IndexOf("_"), values.Length - values.IndexOf("_"));
@@ -56,9 +58,8 @@ namespace Kuzbass_Project
             ws1.Cells[i + rowCnt, 4].Value = Name.Executor;
             ws1.Cells[i + rowCnt, 5].Value = Name.Lenght;
             ws1.Cells[i + rowCnt, 6].Value = Name.Weight;
-            ws1.Cells[i + rowCnt, 7].Value = Name.DateCreate;
+            ws1.Cells[i + rowCnt, 7].Value = Name.DateCreate.ToString();
             workbook.Save();
-
         }
     }
 }

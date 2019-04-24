@@ -10,12 +10,13 @@ namespace Kuzbass_Project
     class Document
     {
         //Поля
-        private String _Name, _Number,_Status, _QR, _NumberDoc, _Executor,_List,_Lenght,_Weight, _DateCreate; //name - марка
+        private String _Name, _Number,_Status, _QR, _NumberDoc, _Executor,_List,_Lenght,_Weight; //name - марка
+        DateTime _DateCreate;
 
         //Конструкторы
-        public Document() : this("Не задано", "Нет номера", "Нет статуса", "Нет QR", "Нет длины", "Нет веса", "Нет листа","Нет исполнителя","Нет даты","Нет номера бланка") { }
+        public Document() : this("Не задано", "Нет номера", "Нет статуса", "Нет QR", "Нет длины", "Нет веса", "Нет листа","Нет исполнителя",new DateTime(),"Нет номера бланка") { }
 
-        public Document(String _Name, String _Number, String _Status, String _QR, String _Lenght, String _Weight, String _List, String _Executor, String _DateCreate, String _NumberDoc)
+        public Document(String _Name, String _Number, String _Status, String _QR, String _Lenght, String _Weight, String _List, String _Executor, DateTime _DateCreate, String _NumberDoc)
         {   
             this._Name = _Name.Trim() != "" ? _Name.Trim() : "Нет марки";
             this._Number = _Number.Trim() != "" ? _Number.Trim() : "Нет номера";
@@ -25,7 +26,7 @@ namespace Kuzbass_Project
             this._Weight = _Weight.Trim() != "" ? _Weight.Trim() : "Нет веса";
             this._List = _List.Trim() != "" ? _List.Trim() : "Нет листа";
             this._Executor = _Executor.Trim() != "" ? _Executor.Trim() : "Нет исполнителя";
-            this._DateCreate = _DateCreate.Trim() != "" ? _DateCreate.Trim() : "Нет даты";
+            this._DateCreate = _DateCreate.ToString().Trim() != "" ? _DateCreate : new DateTime();
             this._NumberDoc = _NumberDoc.Trim() != "" ? _NumberDoc.Trim() : "Нет номера бланка";
         }
 
@@ -165,7 +166,7 @@ namespace Kuzbass_Project
             }
         }
 
-        public String DateCreate
+        public DateTime DateCreate
         {
             get
             {
@@ -173,10 +174,7 @@ namespace Kuzbass_Project
             }
             set
             {
-                if(value.Trim() != "")
-                {
-                    _DateCreate = value.Trim();
-                }
+                _DateCreate = value;
             }
         }
 

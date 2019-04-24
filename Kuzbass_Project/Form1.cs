@@ -176,8 +176,8 @@ namespace Kuzbass_Project
                 Int32 port_server = Convert.ToInt32(strPort);
 
                 //Получаем список всех портов
-                IPGlobalProperties iPGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
-                TcpConnectionInformation[] tcpConnectionInformation = iPGlobalProperties.GetActiveTcpConnections();
+                //IPGlobalProperties iPGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
+                //TcpConnectionInformation[] tcpConnectionInformation = iPGlobalProperties.GetActiveTcpConnections();
 
                 //Перебираем и находим совпадение
                 //foreach (TcpConnectionInformation tcpi in tcpConnectionInformation)
@@ -225,8 +225,8 @@ namespace Kuzbass_Project
                     ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(PathRegistry));
                     ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
 
-                    //try
-                    //{
+                    try
+                    {
                         workbook.Save();
 
                         //Вызываем форму
@@ -318,11 +318,11 @@ namespace Kuzbass_Project
                             //Обновляем данные
                             RefreshSpisok_B.PerformClick();
                         }
-                    //}
-                    //catch (Exception)
-                    //{
-                    //    MessageBox.Show("Перед добавлением чертежей, закройте все книги Excel", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    //}
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Перед добавлением чертежей, закройте все книги Excel", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 else
                 {
@@ -370,6 +370,10 @@ namespace Kuzbass_Project
             NumberDoc_TB.Enabled = false;
             Exit_B.Enabled = false;
             Operations_B.Enabled = false;
+
+            Report_CB.Items.AddRange(new String[] { "Нет задано", "За текущий день", "За текущий месяц", "За предыдущий месяц"});
+            Report_CB.SelectedIndex = 0;
+
 
             if (Mode == "Архивариус")
             {
@@ -463,7 +467,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     Documents.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7),reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7),reader.GetString(9)));
                                 }
                             }
                         }
@@ -484,7 +488,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     Documents.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -505,7 +509,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     Documents.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -526,7 +530,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     Documents.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -547,7 +551,7 @@ namespace Kuzbass_Project
                                 while (reader.Read())
                                 {
                                     Documents.Add(new Document(reader.GetString(4), reader.GetString(2), reader.GetString(8), reader.GetString(0), reader.GetString(5),
-                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetString(7), reader.GetString(9)));
+                                                               reader.GetString(6), reader.GetString(3), reader.GetString(1), reader.GetDateTime(7), reader.GetString(9)));
                                 }
                             }
                         }
@@ -631,6 +635,103 @@ namespace Kuzbass_Project
                 Program.InitializationForm.Pass_TB.Clear();
                 Program.InitializationForm.Show();
                 
+            }
+        }
+
+        private void Report_CB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(Report_CB.SelectedIndex != 0)
+            {
+                CreateReport_B.Enabled = true;
+            }
+            else
+            {
+                CreateReport_B.Enabled = false;
+            }
+        }
+
+        private void CreateReport_B_Click(object sender, EventArgs e)
+        {
+            List<Document> Temp = new List<Document>();
+
+            String connString = $"Server = {Host_BD}; Port = {Port_BD}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+
+            if (Report_CB.SelectedIndex == 1)
+            {
+                DateTime TodayDate = DateTime.Now;
+
+                using (var conn = new NpgsqlConnection(connString))
+                {
+                    conn.Open();
+
+                    using (var cmd = new NpgsqlCommand($"SELECT * FROM \"Orders\"" +
+                                                       $"WHERE \"DateCreate_Order\" = '{TodayDate}'" +
+                                                       $"ORDER BY \"Number_Order\"", conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Temp.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(9), reader.GetString(1), reader.GetString(6),
+                                                               reader.GetString(7), reader.GetString(4), reader.GetString(2), reader.GetDateTime(8), reader.GetString(10)));
+                            }
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            else if(Report_CB.SelectedIndex == 2)
+            {
+                Int32 Month = DateTime.Now.Month;
+                Int32 Year = DateTime.Now.Year;
+
+                using (var conn = new NpgsqlConnection(connString))
+                {
+                    conn.Open();
+
+                    using (var cmd = new NpgsqlCommand($"SELECT * FROM \"Orders\"" +
+                                                       $"WHERE EXTRACT(year from \"DateCreate_Order\") = {Year} AND EXTRACT(month from \"DateCreate_Order\") = {Month}" +
+                                                       $"ORDER BY \"Number_Order\"", conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Temp.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(9), reader.GetString(1), reader.GetString(6),
+                                                               reader.GetString(7), reader.GetString(4), reader.GetString(2), reader.GetDateTime(8), reader.GetString(10)));
+                            }
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            else
+            {
+                Int32 Month = DateTime.Now.Month - 1;
+                Int32 Year = DateTime.Now.Year;
+
+                using (var conn = new NpgsqlConnection(connString))
+                {
+                    conn.Open();
+
+                    using (var cmd = new NpgsqlCommand($"SELECT * FROM \"Orders\"" +
+                                                       $"WHERE EXTRACT(year from \"DateCreate_Order\") = {Year} AND EXTRACT(month from \"DateCreate_Order\") = {Month}" +
+                                                       $"ORDER BY \"Number_Order\"", conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Temp.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(9), reader.GetString(1), reader.GetString(6),
+                                                               reader.GetString(7), reader.GetString(4), reader.GetString(2), reader.GetDateTime(8), reader.GetString(10)));
+                            }
+                        }
+                    }
+
+                    conn.Close();
+                }
             }
         }
     }

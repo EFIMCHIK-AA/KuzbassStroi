@@ -763,24 +763,24 @@ namespace Kuzbass_Project
 
                 date = date.Replace(".", "_");
                 date = date.Replace(":", "_");
-                saveFileDialog1.FileName = date;
-                System.IO.FileInfo fInfoSrcUnique = new System.IO.FileInfo(@"Шаблоны\ШаблонАктУникальный.xlsx");
+                string NameReport = "";
+                if (Report_CB.SelectedIndex == 1)
+                    NameReport = "Отчет от ";
+                else if (Report_CB.SelectedIndex == 2)
+                    NameReport = "Отчет за текущий месяц ";
+                else if (Report_CB.SelectedIndex == 3)
+                    NameReport = "Отчет за прошедший месяц ";
+                saveFileDialog1.FileName = NameReport+date;
+                saveFileDialog1.Filter= "Excel Files .xlsx|*.xlsx";
+                System.IO.FileInfo fInfoSrcUnique = new System.IO.FileInfo(@"Шаблоны\ШаблонОтчет.xlsx");
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    Directory.CreateDirectory(saveFileDialog1.FileName.Replace(".xlsx", ""));
-                    string NameReport = "";
-                    if (Report_CB.SelectedIndex == 1)
-                        NameReport = "Отчет от ";
-                    else if (Report_CB.SelectedIndex == 2)
-                        NameReport = "Отчет за текущий месяц ";
-                    else if (Report_CB.SelectedIndex == 3)
-                        NameReport = "Отчет за прошедший месяц ";
-                        var wb1 = new ExcelPackage(fInfoSrcUnique).File.CopyTo(saveFileDialog1.FileName + @"\"+ NameReport + date + ".xlsx");
+                        var wb1 = new ExcelPackage(fInfoSrcUnique).File.CopyTo(saveFileDialog1.FileName);
 
                     try
                     {
-                        ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName + @"\" + NameReport + date + ".xlsx"));
+                        ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName));
                         ExcelWorksheet ws1 = workbook1.Workbook.Worksheets[1];
                         var rowCntAct = ws1.Dimension.End.Row;
                         Excel excel = new Excel();

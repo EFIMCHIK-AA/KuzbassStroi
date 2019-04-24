@@ -733,6 +733,69 @@ namespace Kuzbass_Project
                     conn.Close();
                 }
             }
+            if (File.Exists(@"Шаблоны\ШаблонОтчет.xlsx"))
+            {
+                string date = DateTime.Now.ToString();
+
+                date = date.Replace(".", "_");
+                date = date.Replace(":", "_");
+                saveFileDialog1.FileName = date;
+                System.IO.FileInfo fInfoSrcUnique = new System.IO.FileInfo(@"Шаблоны\ШаблонАктУникальный.xlsx");
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    Directory.CreateDirectory(saveFileDialog1.FileName.Replace(".xlsx", ""));
+                    string NameReport = "";
+                    if (Report_CB.SelectedIndex == 1)
+                        NameReport = "Отчет от ";
+                    else if (Report_CB.SelectedIndex == 2)
+                        NameReport = "Отчет за текущий месяц ";
+                    else if (Report_CB.SelectedIndex == 3)
+                        NameReport = "Отчет за прошедший месяц ";
+                        var wb1 = new ExcelPackage(fInfoSrcUnique).File.CopyTo(saveFileDialog1.FileName + @"\"+ NameReport + date + ".xlsx");
+
+                    try
+                    {
+                        ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName + @"\Отчет от " + date + ".xlsx"));
+                        ExcelWorksheet ws1 = workbook1.Workbook.Worksheets[1];
+                        var rowCntAct = ws1.Dimension.End.Row;
+                        Excel excel = new Excel();
+
+                        if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
+                        {
+                            for (Int32 i = 0; i < Temp.Count; i++)
+                            {
+                                ws1.Cells[i + rowCntAct + 1, 1].Value = Temp[i].Number;
+                                ws1.Cells[i + rowCntAct + 1, 2].Value = Temp[i].List;
+                                ws1.Cells[i + rowCntAct + 1, 3].Value = Temp[i].Name;
+                                ws1.Cells[i + rowCntAct + 1, 4].Value = Temp[i].Executor;
+                                ws1.Cells[i + rowCntAct + 1, 5].Value = Temp[i].Lenght;
+                                ws1.Cells[i + rowCntAct + 1, 6].Value = Temp[i].Weight;
+                                ws1.Cells[i + rowCntAct + 1, 7].Value = Temp[i].DateCreate;
+                            }
+                            int last = ws1.Dimension.End.Row;
+                            ws1.Cells[last + 2, 4].Value = "Принял";
+                            ws1.Cells[last + 3, 4].Value = "Сдал";
+                            ws1.Cells[last + 2, 6].Value = "______________";
+                            ws1.Cells[last + 3, 6].Value = "______________";
+                            ws1.Cells[last + 2, 7].Value = "Линник О.В.";
+                            ws1.Cells[last + 3, 7].Value = "/______________/";
+                            workbook1.Save();
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Невозможно сформировать отчет, закройте все книги Excel", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Шаблон отчета не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
         }
     }
 }

@@ -208,20 +208,21 @@ namespace Kuzbass_Project
                 return;
             }
 
-            if(File.Exists(@"Шаблоны\ШаблонАкт.xlsx"))
+            if(File.Exists(@"Шаблоны\ШаблонАктУникальный.xlsx"))
             {
                 string date = DateTime.Now.ToString();
 
                 date = date.Replace(".", "_");
                 date = date.Replace(":", "_");
                 saveFileDialog1.FileName = date;
-                System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонАкт.xlsx");
+                System.IO.FileInfo fInfoSrcUnique = new System.IO.FileInfo(@"Шаблоны\ШаблонАктУникальный.xlsx");
+                System.IO.FileInfo fInfoSrcNoUnique = new System.IO.FileInfo(@"Шаблоны\ШаблонАктУникальный.xlsx");
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     Directory.CreateDirectory(saveFileDialog1.FileName.Replace(".xlsx", ""));
-                    var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName + @"\Акт от " + date + ".xlsx");
-                    wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(saveFileDialog1.FileName.Replace(".xlsx", "") + @"\Акт от "+ date +" не уникальный.xlsx");
+                    var wb1 = new ExcelPackage(fInfoSrcUnique).File.CopyTo(saveFileDialog1.FileName + @"\Акт от " + date + ".xlsx");
+                    wb1 = new ExcelPackage(fInfoSrcNoUnique).File.CopyTo(saveFileDialog1.FileName.Replace(".xlsx", "") + @"\Акт от "+ date +" не уникальный.xlsx");
 
                     try
                     {

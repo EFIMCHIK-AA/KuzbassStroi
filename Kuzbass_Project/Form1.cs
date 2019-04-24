@@ -672,8 +672,16 @@ namespace Kuzbass_Project
                         {
                             while (reader.Read())
                             {
-                                Temp.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(9), reader.GetString(1), reader.GetString(6),
-                                                               reader.GetString(7), reader.GetString(4), reader.GetString(2), reader.GetDateTime(8), reader.GetString(10)));
+                                Document Item = new Document();
+                                Item.Name = reader.GetString(5);
+                                Item.Lenght = reader.GetString(6);
+                                Item.Number = reader.GetString(3);
+                                Item.Weight = reader.GetString(7);
+                                Item.List = reader.GetString(4);
+                                Item.Executor = reader.GetString(2);
+                                Item.DateCreate = reader.GetDateTime(8);
+
+                                Temp.Add(Item);
                             }
                         }
                     }
@@ -698,8 +706,16 @@ namespace Kuzbass_Project
                         {
                             while (reader.Read())
                             {
-                                Temp.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(9), reader.GetString(1), reader.GetString(6),
-                                                               reader.GetString(7), reader.GetString(4), reader.GetString(2), reader.GetDateTime(8), reader.GetString(10)));
+                                Document Item = new Document();
+                                Item.Name = reader.GetString(5);
+                                Item.Lenght = reader.GetString(6);
+                                Item.Number = reader.GetString(3);
+                                Item.Weight = reader.GetString(7);
+                                Item.List = reader.GetString(4);
+                                Item.Executor = reader.GetString(2);
+                                Item.DateCreate = reader.GetDateTime(8);
+
+                                Temp.Add(Item);
                             }
                         }
                     }
@@ -724,8 +740,16 @@ namespace Kuzbass_Project
                         {
                             while (reader.Read())
                             {
-                                Temp.Add(new Document(reader.GetString(5), reader.GetString(3), reader.GetString(9), reader.GetString(1), reader.GetString(6),
-                                                               reader.GetString(7), reader.GetString(4), reader.GetString(2), reader.GetDateTime(8), reader.GetString(10)));
+                                Document Item = new Document();
+                                Item.Name = reader.GetString(5);
+                                Item.Lenght = reader.GetString(6);
+                                Item.Number = reader.GetString(3);
+                                Item.Weight = reader.GetString(7);
+                                Item.List = reader.GetString(4);
+                                Item.Executor = reader.GetString(2);
+                                Item.DateCreate = reader.GetDateTime(8);
+
+                                Temp.Add(Item);
                             }
                         }
                     }
@@ -756,7 +780,7 @@ namespace Kuzbass_Project
 
                     try
                     {
-                        ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName + @"\Отчет от " + date + ".xlsx"));
+                        ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName + @"\" + NameReport + date + ".xlsx"));
                         ExcelWorksheet ws1 = workbook1.Workbook.Worksheets[1];
                         var rowCntAct = ws1.Dimension.End.Row;
                         Excel excel = new Excel();
@@ -771,7 +795,7 @@ namespace Kuzbass_Project
                                 ws1.Cells[i + rowCntAct + 1, 4].Value = Temp[i].Executor;
                                 ws1.Cells[i + rowCntAct + 1, 5].Value = Temp[i].Lenght;
                                 ws1.Cells[i + rowCntAct + 1, 6].Value = Temp[i].Weight;
-                                ws1.Cells[i + rowCntAct + 1, 7].Value = Temp[i].DateCreate;
+                                ws1.Cells[i + rowCntAct + 1, 7].Value = Temp[i].DateCreate.ToShortDateString().ToString();
                             }
                             int last = ws1.Dimension.End.Row;
                             ws1.Cells[last + 2, 4].Value = "Принял";

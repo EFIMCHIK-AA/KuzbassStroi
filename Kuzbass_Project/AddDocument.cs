@@ -243,7 +243,7 @@ namespace Kuzbass_Project
                                 ws1.Cells[i + rowCntAct + 1, 4].Value = Temp.Executor;
                                 ws1.Cells[i + rowCntAct + 1, 5].Value = Temp.Lenght;
                                 ws1.Cells[i + rowCntAct + 1, 6].Value = Temp.Weight;
-                                ws1.Cells[i + rowCntAct + 1, 7].Value = Temp.DateCreate;
+                                ws1.Cells[i + rowCntAct + 1, 7].Value = Temp.DateCreate.ToString();
                             }
                             int last = ws1.Dimension.End.Row;
                             ws1.Cells[last + 2, 4].Value = "Принял";
@@ -267,7 +267,7 @@ namespace Kuzbass_Project
                                     ws2.Cells[i + rowCntAct + 1, 4].Value = Temp.Executor;
                                     ws2.Cells[i + rowCntAct + 1, 5].Value = Temp.Lenght;
                                     ws2.Cells[i + rowCntAct + 1, 6].Value = Temp.Weight;
-                                    ws2.Cells[i + rowCntAct + 1, 7].Value = Temp.DateCreate;
+                                    ws2.Cells[i + rowCntAct + 1, 7].Value = Temp.DateCreate.ToString();
                                 }
                                 last = ws2.Dimension.End.Row;
                                 ws2.Cells[last + 2, 4].Value = "Принял";

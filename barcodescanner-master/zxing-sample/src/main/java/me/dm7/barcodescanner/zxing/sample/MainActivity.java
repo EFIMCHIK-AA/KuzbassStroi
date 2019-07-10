@@ -85,7 +85,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
     //Метод перехода к сканеру
-    public void launchSimpleActivity(View v) {
+    public void launchSimpleActivityBlank(View v) {
+
+        SimpleScannerActivity.scan=false;
+        launchActivity(SimpleScannerActivity.class);
+    }
+    public void launchSimpleActivityChert(View v) {
+
+        SimpleScannerActivity.scan=true;
         launchActivity(SimpleScannerActivity.class);
     }
 //Запуск класса и проверка прав на использование камеры

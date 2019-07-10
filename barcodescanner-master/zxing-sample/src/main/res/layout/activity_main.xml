@@ -24,10 +24,17 @@
                   android:layout_height="match_parent">
 
             <Button
+                android:id="@+id/button1"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:onClick="launchSimpleActivity"
-                android:text="Сканировать" />
+                android:onClick="launchSimpleActivityChert"
+                android:text="Сканировать чертеж" />
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:onClick="launchSimpleActivityBlank"
+                android:text="Сканировать номер бланка" />
 
             <Button
                 android:layout_width="match_parent"

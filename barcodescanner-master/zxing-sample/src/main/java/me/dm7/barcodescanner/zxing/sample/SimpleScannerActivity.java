@@ -10,9 +10,11 @@ import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.util.Xml;
+import android.view.View;
 import android.view.ViewGroup;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -39,6 +41,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
     public static Boolean Abort = false;
     public static LongOperation lo = null;
     public static Socket socket = null;
+    public static boolean scan=true;
     @Override
     public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -97,15 +100,14 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
             }
         }
         else {
-
             msg = result.getText();
-            try{
-                String str=new String(msg.getBytes("ISO-8859-1"),"Cp1251");
-                msg=str;
-            }
-            catch(UnsupportedEncodingException e)
-            {
-                e.printStackTrace();
+            if(scan) {
+                try {
+                    String str = new String(msg.getBytes("ISO-8859-1"), "Cp1251");
+                    msg = str;
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
 
             String[] protect = msg.split("_");

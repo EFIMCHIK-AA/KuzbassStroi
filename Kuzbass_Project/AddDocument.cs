@@ -17,6 +17,7 @@ namespace Kuzbass_Project
         {
             InitializeComponent();
             this.port = Port;
+
             this.Host = Host;
             this.Host_DB = Host_DB;
             this.Port_DB = Port_DB;

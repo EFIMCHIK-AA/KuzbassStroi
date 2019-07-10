@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.util.Xml;
 import android.view.ViewGroup;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -97,6 +99,15 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
         else {
 
             msg = result.getText();
+            try{
+                String str=new String(msg.getBytes("ISO-8859-1"),"Cp1251");
+                msg=str;
+            }
+            catch(UnsupportedEncodingException e)
+            {
+                e.printStackTrace();
+            }
+
             String[] protect = msg.split("_");
             Integer check = protect.length;
             if (check == 6)
@@ -117,7 +128,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
                         mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
 
                     }
-                }).setMessage(result.getText()+ "\nQR выполнен не по шаблону");
+                }).setMessage(msg+ "\nQR выполнен не по шаблону");
                 AlertDialog alert1 = builder.create();
                 alert1.setCanceledOnTouchOutside(false);
                 alert1.show();

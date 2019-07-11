@@ -8,7 +8,7 @@
         android:label="QR сканер no dialog"
         android:icon="@drawable/icon">
         <activity android:name=".MainActivity"
-                  android:theme="@style/AppTheme"
+                  android:theme="@style/AppOverlayTheme"
                   android:label="QR сканер">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
         </activity>
       <activity android:name=".ChangeIpAndPort"
           android:theme="@style/AppOverlayTheme"
-          android:label="Настройки ip и port">
+          android:label="Настройки">
       </activity>
 
   </application>

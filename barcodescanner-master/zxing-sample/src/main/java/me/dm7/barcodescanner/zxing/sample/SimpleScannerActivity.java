@@ -109,10 +109,21 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
                     e.printStackTrace();
                 }
             }
-
+            String [] protectmas= {"а", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я"};
+            boolean endofgame=false;
             String[] protect = msg.split("_");
+            String stringprot=Character.toString(protect[3].charAt(0));
+            for(int i=0;i<protectmas.length;i++)
+            {
+                if(stringprot.toLowerCase().equals(protectmas[i]))
+                {
+                    endofgame=true;
+                    break;
+                }
+
+            }
             Integer check = protect.length;
-            if (check == 6)
+            if (check == 6&&endofgame)
             {
                 sendMessage();
                 Toast toast = Toast.makeText(getApplicationContext(),
@@ -122,18 +133,34 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
             }
             else
             {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Ошибка QR кода");
-                builder.setPositiveButton("Пропустить", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
+                if(endofgame) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Ошибка штрихкода");
+                    builder.setPositiveButton("Пропустить", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
 
-                    }
-                }).setMessage(msg+ "\nQR выполнен не по шаблону");
-                AlertDialog alert1 = builder.create();
-                alert1.setCanceledOnTouchOutside(false);
-                alert1.show();
+                        }
+                    }).setMessage(msg + "\nШтрихкод выполнен не по шаблону");
+                    AlertDialog alert1 = builder.create();
+                    alert1.setCanceledOnTouchOutside(false);
+                    alert1.show();
+                }
+                else {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Ошибка штрихкода");
+                    builder.setPositiveButton("Пропустить", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
+
+                        }
+                    }).setMessage(msg + "\nдля регистрации данного штрихкода выбран неправильный тип ");
+                    AlertDialog alert1 = builder.create();
+                    alert1.setCanceledOnTouchOutside(false);
+                    alert1.show();
+                }
             }
 
         }

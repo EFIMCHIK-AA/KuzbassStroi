@@ -821,5 +821,255 @@ namespace Kuzbass_Project
             }
 
         }
+        private void Recognize_B_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog Opd = new OpenFileDialog
+            {
+                Multiselect = true,
+                Title = "Выберите сканы чертежей",
+                InitialDirectory = @"C:\",
+                Filter = "TIFF|*.tiff|TIFF|*.tif"
+            };
+
+
+            if (Opd.ShowDialog() == DialogResult.OK)
+            {
+                if (Opd.FileName == String.Empty)
+                {
+                    return;
+                }
+
+                foreach (String NameFile in Opd.FileNames)
+                {
+                    Image Current = Image.FromFile(NameFile);
+
+                    String CurrentInfoDataMatrix = "";
+
+                    //Создашь класс, в него кинешь метод, здесь метод активируешь и передашь в него Current. Current - это текущее изображение из списка в Bitmap
+
+                    CurrentInfoDataMatrix = ""; //Запихаешь сюда то, что у тебя функция дала на выходе, то есть расщифрованный DataMatrix
+
+                    Current.Dispose();
+
+                    String[] Temp = CurrentInfoDataMatrix.Split('_');
+
+                    if (Temp.Length == 6)
+                    {
+                        Int32 j = 0;
+
+                        Document CurrentDocument = new Document(Temp[2], Temp[0], "Нет статуса", CurrentInfoDataMatrix, Temp[4], Temp[5], Temp[1], Temp[3], DateTime.Now, "Нет номера");
+
+                        String MyHost = Dns.GetHostName();
+                        Host_server = Dns.GetHostByName(MyHost).AddressList[0].ToString();
+                        Status_TB.Clear();
+                        Documents.Clear();
+
+                        if (File.Exists(@"Connect\Port.txt"))
+                        {
+                            //Считываем порт из файла
+                            String strPort = null;
+
+                            //Считываем стандартный порт
+                            try
+                            {
+                                using (StreamReader sr = new StreamReader(File.Open(@"Connect\Port.txt", FileMode.Open)))
+                                {
+                                    strPort = sr.ReadLine();
+                                }
+                            }
+                            catch
+                            {
+                                MessageBox.Show("При считывании порта произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            //Проверяем доступен ли порт
+                            Int32 port_server = Convert.ToInt32(strPort);
+
+                            String PathRegistry = null;
+
+                            if (File.Exists(@"SavePath\Registry.txt"))
+                            {
+
+                                try
+                                {
+                                    using (StreamReader sr = new StreamReader(File.Open(@"SavePath\Registry.txt", FileMode.Open)))
+                                    {
+                                        PathRegistry = sr.ReadLine();
+                                    }
+
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("При считывании места реестра произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Отсутствует файл Registry.txt. Введите порт в соответствующее поле и подтвердите сохранение, - файл Registry.txt будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                        //Метка для возврата
+                        Tag:
+
+                            if (File.Exists(PathRegistry))
+                            {
+                                ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(PathRegistry));
+                                ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
+
+                                try
+                                {
+                                    workbook.Save();
+
+                                    //Документ для работы
+                                    Excel excel = new Excel();
+
+                                    workbook.Save();
+                                    var rowCnt = ws1.Dimension.End.Row;
+
+                                    //Строка подлючения
+                                    String connString = $"Server = {Host_BD}; Port = {Port_BD}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+
+                                    using (var connect = new NpgsqlConnection(connString))
+                                    {
+                                        //Открытие потока
+                                        connect.Open();
+
+                                        //Для хранения не уникальных QR
+                                        List<String> CheckUnigueQR = new List<String>();
+
+                                        CheckUnigueQR.Clear();
+
+                                        //Чтение
+                                        using (var cmd = new NpgsqlCommand($"SELECT \"QR_Order\" FROM \"Orders\"" +
+                                                                           $"WHERE \"QR_Order\" = '{CurrentDocument.QR}'", connect))
+                                        {
+                                            using (var reader = cmd.ExecuteReader())
+                                            {
+                                                //Вывод в компонент
+                                                while (reader.Read())
+                                                {
+                                                    CheckUnigueQR.Add(reader.GetString(0));
+                                                }
+                                            }
+                                        }
+
+                                        if (CheckUnigueQR.Count == 0)
+                                        {
+                                            //Вытаскиваешь данные с документа
+                                            Document Temp2 = new Document();
+
+                                            //Заполнение данных
+                                            excel.SplitData(Temp2, CurrentDocument.QR);
+
+                                            //Добавление
+                                            using (var cmd = new NpgsqlCommand())
+                                            {
+                                                cmd.Connection = connect;
+                                                cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_Order\", \"Executor_Order\", \"Number_Order\", \"List_Order\", \"Mark_Order\"," +
+                                                                  $"\"Lenght_Order\",\"Weight_Order\",\"DateCreate_Order\")" +
+                                                                  $"VALUES('{Temp2.QR}', '{Temp2.Executor}', '{Temp2.Number}', '{Temp2.List}', '{Temp2.Name}', '{Temp2.Lenght}', '{Temp2.Weight}', '{Temp2.DateCreate}');" +
+                                                                  $"INSERT INTO \"StatusOrders\"(\"id_Order\", \"Status_Order\")" +
+                                                                  $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp2.QR}'),'{Temp2.Status}');" +
+                                                                  $"INSERT INTO \"NumberDocOrders\"(\"id_Order\", \"NumberDoc\")" +
+                                                                  $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp2.QR}'),'{Temp2.NumberDoc}');";
+                                                cmd.ExecuteNonQuery();
+                                            }
+
+                                            Spisok_LB.Items.Add(CurrentDocument);
+
+                                            String TempName = $"{CurrentDocument.Number}_{CurrentDocument.List}_{CurrentDocument.Name}_{CurrentDocument.DateCreate.ToString().Replace(" ", "T").Replace(":", "")}";
+
+                                            Path.GetPathArchive();
+
+                                            if (Directory.Exists($@"{Path.PathArchive}\{CurrentDocument.Number}"))
+                                            {
+                                                if (!File.Exists($@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff"))
+                                                {
+                                                    File.Copy(NameFile, $@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff");
+                                                    Status_TB.AppendText($"Файл {TempName}.tiff помещен в директорию {CurrentDocument.Number}" + Environment.NewLine);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Directory.CreateDirectory($@"{Path.PathArchive}\{CurrentDocument.Number}");
+
+                                                if (!File.Exists($@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff"))
+                                                {
+                                                    File.Copy(NameFile, $@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff");
+                                                    Status_TB.AppendText($"Директория {CurrentDocument.Number} создана. Файл {TempName}.tiff помещен в директорию" + Environment.NewLine);
+                                                }
+                                            }
+
+                                            //Запись реестра
+                                            excel.WriteReg(Temp2, j + 1, rowCnt, workbook, ws1);
+                                            j++;
+
+                                            //Вывод в компонент сообщения об удачном добавлении
+                                            Status_TB.AppendText($"Номер заказа {Temp2.Number} Марка: {Temp2.Name} Лист: {Temp2.List} => Добавлен в базу отслеживания" + Environment.NewLine);
+                                        }
+                                        else
+                                        {
+                                            Status_TB.AppendText($"QR {CurrentDocument.QR} существует => Добавление не произведено" + Environment.NewLine);
+                                        }
+
+                                        //Закрытие потока
+                                        connect.Close();
+                                    }
+
+                                    //Обновляем данные
+                                    RefreshSpisok_B.PerformClick();
+                                }
+                                catch (Exception)
+                                {
+                                    MessageBox.Show("Перед добавлением чертежей, закройте все книги Excel", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                            else
+                            {
+                                if (File.Exists(@"Шаблоны\ШаблонРеестр.xlsx"))
+                                {
+                                    //Считываем порт из файла
+                                    String path = null;
+
+                                    //Считываем место реестра
+                                    try
+                                    {
+                                        using (StreamReader sr = new StreamReader(File.Open(@"SavePath\Registry.txt", FileMode.Open)))
+                                        {
+                                            path = sr.ReadLine();
+                                        }
+
+                                        System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонРеестр.xlsx");
+                                        var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(path);
+                                        goto Tag;
+                                    }
+                                    catch
+                                    {
+                                        MessageBox.Show("Ошибка при создании реестра", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Создание реестра невозможно. Шаблон реестра отсутствует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Отсутствует файл Port.txt. Введите порт в соответствующее поле и подтвердите сохранение, - файл Port.txt будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Обнаружен DataMatrix неправильного формата", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        continue;
+                    }
+                }
+            }
+        }
     }
 }

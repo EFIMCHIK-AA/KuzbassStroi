@@ -52,12 +52,17 @@
             this.label5 = new System.Windows.Forms.Label();
             this.HostDB_TB = new System.Windows.Forms.TextBox();
             this.SaveBD_B = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.PathArchive_TB = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.QR_PB)).BeginInit();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox4
@@ -68,9 +73,9 @@
             this.groupBox4.Controls.Add(this.label1);
             this.groupBox4.Controls.Add(this.Host_TB);
             this.groupBox4.Location = new System.Drawing.Point(9, 9);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox4.Size = new System.Drawing.Size(256, 93);
             this.groupBox4.TabIndex = 7;
             this.groupBox4.TabStop = false;
@@ -79,7 +84,7 @@
             // SavePort_B
             // 
             this.SavePort_B.Location = new System.Drawing.Point(6, 62);
-            this.SavePort_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SavePort_B.Margin = new System.Windows.Forms.Padding(2);
             this.SavePort_B.Name = "SavePort_B";
             this.SavePort_B.Size = new System.Drawing.Size(246, 24);
             this.SavePort_B.TabIndex = 2;
@@ -100,7 +105,7 @@
             // Port_TB
             // 
             this.Port_TB.Location = new System.Drawing.Point(38, 40);
-            this.Port_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Port_TB.Margin = new System.Windows.Forms.Padding(2);
             this.Port_TB.Name = "Port_TB";
             this.Port_TB.Size = new System.Drawing.Size(212, 20);
             this.Port_TB.TabIndex = 1;
@@ -118,7 +123,7 @@
             // Host_TB
             // 
             this.Host_TB.Location = new System.Drawing.Point(38, 17);
-            this.Host_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Host_TB.Margin = new System.Windows.Forms.Padding(2);
             this.Host_TB.Name = "Host_TB";
             this.Host_TB.ReadOnly = true;
             this.Host_TB.Size = new System.Drawing.Size(212, 20);
@@ -127,7 +132,7 @@
             // ChangePath_B
             // 
             this.ChangePath_B.Location = new System.Drawing.Point(6, 38);
-            this.ChangePath_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ChangePath_B.Margin = new System.Windows.Forms.Padding(2);
             this.ChangePath_B.Name = "ChangePath_B";
             this.ChangePath_B.Size = new System.Drawing.Size(246, 24);
             this.ChangePath_B.TabIndex = 4;
@@ -142,9 +147,9 @@
             this.groupBox1.Controls.Add(this.Path_TB);
             this.groupBox1.Controls.Add(this.ChangePath_B);
             this.groupBox1.Location = new System.Drawing.Point(9, 106);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(256, 97);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
@@ -153,7 +158,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(6, 67);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(246, 24);
             this.button1.TabIndex = 5;
@@ -174,7 +179,7 @@
             // Path_TB
             // 
             this.Path_TB.Location = new System.Drawing.Point(38, 16);
-            this.Path_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Path_TB.Margin = new System.Windows.Forms.Padding(2);
             this.Path_TB.Name = "Path_TB";
             this.Path_TB.Size = new System.Drawing.Size(212, 20);
             this.Path_TB.TabIndex = 3;
@@ -183,10 +188,10 @@
             // 
             this.groupBox3.Controls.Add(this.Exit_B);
             this.groupBox3.Controls.Add(this.ChangeUser_B);
-            this.groupBox3.Location = new System.Drawing.Point(9, 309);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Location = new System.Drawing.Point(9, 409);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(450, 73);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
@@ -196,7 +201,7 @@
             // 
             this.Exit_B.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Exit_B.Location = new System.Drawing.Point(7, 43);
-            this.Exit_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Exit_B.Margin = new System.Windows.Forms.Padding(2);
             this.Exit_B.Name = "Exit_B";
             this.Exit_B.Size = new System.Drawing.Size(438, 24);
             this.Exit_B.TabIndex = 10;
@@ -208,7 +213,7 @@
             // 
             this.ChangeUser_B.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.ChangeUser_B.Location = new System.Drawing.Point(7, 15);
-            this.ChangeUser_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ChangeUser_B.Margin = new System.Windows.Forms.Padding(2);
             this.ChangeUser_B.Name = "ChangeUser_B";
             this.ChangeUser_B.Size = new System.Drawing.Size(438, 24);
             this.ChangeUser_B.TabIndex = 9;
@@ -220,9 +225,9 @@
             // 
             this.groupBox2.Controls.Add(this.QR_PB);
             this.groupBox2.Location = new System.Drawing.Point(269, 9);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(190, 206);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
@@ -231,7 +236,7 @@
             // QR_PB
             // 
             this.QR_PB.Location = new System.Drawing.Point(4, 17);
-            this.QR_PB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.QR_PB.Margin = new System.Windows.Forms.Padding(2);
             this.QR_PB.Name = "QR_PB";
             this.QR_PB.Size = new System.Drawing.Size(181, 184);
             this.QR_PB.TabIndex = 0;
@@ -258,9 +263,9 @@
             this.groupBox5.Controls.Add(this.HostDB_TB);
             this.groupBox5.Controls.Add(this.SaveBD_B);
             this.groupBox5.Location = new System.Drawing.Point(9, 208);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox5.Size = new System.Drawing.Size(256, 97);
             this.groupBox5.TabIndex = 13;
             this.groupBox5.TabStop = false;
@@ -279,7 +284,7 @@
             // PortDB_TB
             // 
             this.PortDB_TB.Location = new System.Drawing.Point(38, 37);
-            this.PortDB_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PortDB_TB.Margin = new System.Windows.Forms.Padding(2);
             this.PortDB_TB.Name = "PortDB_TB";
             this.PortDB_TB.Size = new System.Drawing.Size(212, 20);
             this.PortDB_TB.TabIndex = 7;
@@ -297,7 +302,7 @@
             // HostDB_TB
             // 
             this.HostDB_TB.Location = new System.Drawing.Point(38, 16);
-            this.HostDB_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.HostDB_TB.Margin = new System.Windows.Forms.Padding(2);
             this.HostDB_TB.Name = "HostDB_TB";
             this.HostDB_TB.Size = new System.Drawing.Size(212, 20);
             this.HostDB_TB.TabIndex = 6;
@@ -305,7 +310,7 @@
             // SaveBD_B
             // 
             this.SaveBD_B.Location = new System.Drawing.Point(4, 63);
-            this.SaveBD_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SaveBD_B.Margin = new System.Windows.Forms.Padding(2);
             this.SaveBD_B.Name = "SaveBD_B";
             this.SaveBD_B.Size = new System.Drawing.Size(248, 24);
             this.SaveBD_B.TabIndex = 8;
@@ -313,11 +318,50 @@
             this.SaveBD_B.UseVisualStyleBackColor = true;
             this.SaveBD_B.Click += new System.EventHandler(this.SaveBD_B_Click);
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label7);
+            this.groupBox6.Controls.Add(this.button2);
+            this.groupBox6.Controls.Add(this.PathArchive_TB);
+            this.groupBox6.Location = new System.Drawing.Point(9, 310);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(256, 78);
+            this.groupBox6.TabIndex = 14;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Путь к архиву чертежей";
+            // 
+            // PathArchive_TB
+            // 
+            this.PathArchive_TB.Location = new System.Drawing.Point(38, 19);
+            this.PathArchive_TB.Name = "PathArchive_TB";
+            this.PathArchive_TB.Size = new System.Drawing.Size(212, 20);
+            this.PathArchive_TB.TabIndex = 0;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(3, 46);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(248, 24);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Сохранить";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(5, 22);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(31, 13);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Путь";
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 392);
+            this.ClientSize = new System.Drawing.Size(470, 493);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox2);
@@ -326,7 +370,7 @@
             this.Controls.Add(this.groupBox4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "AdminForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -342,6 +386,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.QR_PB)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -372,5 +418,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox HostDB_TB;
         private System.Windows.Forms.Button SaveBD_B;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox PathArchive_TB;
     }
 }

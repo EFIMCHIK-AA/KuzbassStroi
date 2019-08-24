@@ -57,7 +57,26 @@ namespace Kuzbass_Project
             String MyHost = Dns.GetHostName();
             Host_TB.Text = Dns.GetHostByName(MyHost).AddressList[0].ToString();
 
-            if(File.Exists(@"Connect\Port.txt"))
+            if (File.Exists($@"SavePath\Archive.txt"))
+            {
+                try
+                {
+                    using (StreamReader sr = new StreamReader(File.Open($@"SavePath\Archive.txt", FileMode.Open)))
+                    {
+                        PathArchive_TB.Text = sr.ReadLine();
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("При считывании местонаждении архива произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Отсутствует файл Archive.txt. Введите порт в соответствующее поле и подтвердите сохранение, - файл Port.txt будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (File.Exists(@"Connect\Port.txt"))
             {
                 try
                 {
@@ -76,7 +95,7 @@ namespace Kuzbass_Project
                 MessageBox.Show("Отсутствует файл Port.txt. Введите порт в соответствующее поле и подтвердите сохранение, - файл Port.txt будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            if(File.Exists(@"SavePath\Registry.txt"))
+            if (File.Exists(@"SavePath\Registry.txt"))
             {
 
                 try
@@ -126,7 +145,7 @@ namespace Kuzbass_Project
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(String.IsNullOrWhiteSpace(Port_TB.Text))
+            if (String.IsNullOrWhiteSpace(Port_TB.Text))
             {
                 MessageBox.Show("Необходимо ввести порт для подлючения", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -183,7 +202,7 @@ namespace Kuzbass_Project
             }
             else
             {
-                if(File.Exists(@"SavePath\Registry.txt"))
+                if (File.Exists(@"SavePath\Registry.txt"))
                 {
                     //Удаляем старый файл
                     File.Delete(@"SavePath\Registry.txt");
@@ -192,7 +211,7 @@ namespace Kuzbass_Project
                 //Записываем новый порт
                 using (StreamWriter sw = new StreamWriter(File.Open(@"SavePath\Registry.txt", FileMode.Create)))
                 {
-                    if(Path_TB.Text.LastIndexOf(@"\Реестр.xlsx") == -1)
+                    if (Path_TB.Text.LastIndexOf(@"\Реестр.xlsx") == -1)
                     {
                         sw.WriteLine(Path_TB.Text.Trim() + @"\Реестр.xlsx");
                     }
@@ -238,7 +257,7 @@ namespace Kuzbass_Project
                     MessageBox.Show("Ошибка при создании реестра", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-        }
+            }
             else
             {
                 MessageBox.Show("Создание реестра невозможно. Шаблон реестра отсутствует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -252,7 +271,6 @@ namespace Kuzbass_Project
                 if (String.IsNullOrWhiteSpace(HostDB_TB.Text))
                 {
                     throw new Exception("Необходимо ввести хост базы данных");
-
                 }
 
                 if (String.IsNullOrWhiteSpace(PortDB_TB.Text))
@@ -275,7 +293,41 @@ namespace Kuzbass_Project
 
                 MessageBox.Show("Параметры подлючения успешно обновлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch(Exception E)
+            catch (Exception E)
+            {
+                MessageBox.Show(E.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (String.IsNullOrWhiteSpace(PathArchive_TB.Text))
+                {
+                    throw new Exception("Необходимо ввести местонаждение архива");
+                }
+
+                if (File.Exists($@"SavePath\Archive.txt"))
+                {
+                    //Удаляем старый файл
+                    File.Delete($@"SavePath\Archive.txt");
+                }
+
+                //Записываем новый
+                using (StreamWriter sw = new StreamWriter(File.Open($@"SavePath\Archive.txt", FileMode.Create)))
+                {
+                    sw.WriteLine(PathArchive_TB.Text.Trim());
+                }
+
+                MessageBox.Show("Параметры подлючения успешно обновлены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception E)
             {
                 MessageBox.Show(E.Message, "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }

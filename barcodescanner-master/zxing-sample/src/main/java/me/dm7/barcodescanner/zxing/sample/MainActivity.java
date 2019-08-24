@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     public void launchSimpleActivityBlank(View v) {
 
         SimpleScannerActivity.scan=false;
-        launchActivity(SimpleScannerActivity.class);
+       launchActivity(SimpleScannerActivity.class);
     }
     public void launchSimpleActivityChert(View v) {
 

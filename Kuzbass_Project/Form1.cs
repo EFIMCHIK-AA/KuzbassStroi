@@ -841,15 +841,12 @@ namespace Kuzbass_Project
 
                 foreach (String NameFile in Opd.FileNames)
                 {
-                    Image Current = Image.FromFile(NameFile);
-
+                    int i = 0;
                     String CurrentInfoDataMatrix = "";
-
+                    Decode_tiff decode_Tiff = new Decode_tiff();
                     //Создашь класс, в него кинешь метод, здесь метод активируешь и передашь в него Current. Current - это текущее изображение из списка в Bitmap
 
-                    CurrentInfoDataMatrix = ""; //Запихаешь сюда то, что у тебя функция дала на выходе, то есть расщифрованный DataMatrix
-
-                    Current.Dispose();
+                    CurrentInfoDataMatrix = decode_Tiff.Decode(NameFile,i); //Запихаешь сюда то, что у тебя функция дала на выходе, то есть расщифрованный DataMatrix
 
                     String[] Temp = CurrentInfoDataMatrix.Split('_');
 
@@ -1068,6 +1065,7 @@ namespace Kuzbass_Project
                         MessageBox.Show("Обнаружен DataMatrix неправильного формата", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         continue;
                     }
+                    i++;
                 }
             }
         }

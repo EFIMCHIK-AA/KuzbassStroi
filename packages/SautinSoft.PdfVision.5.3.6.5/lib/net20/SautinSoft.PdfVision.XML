@@ -1,0 +1,1699 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>SautinSoft.PdfVision</name>
+  </assembly>
+  <members>
+    <member name="T:SautinSoft.PdfVision">
+      <summary>
+            Main class of the PDF Vision .Net component. This class contains methods and properties to convert HTML to PDF, multipage TIFF to PDF, any images to PDF, split and merge PDF documents.
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/pdfvision_features800x450.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="T:SautinSoft.PdfVision.eImageFormat">
+      <summary>
+            Allows to specify resulting format for HTML to Image converting
+            </summary>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert HTML to PNG\sample.cs" title="How to convert HTML file to PNG file in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert HTML to PNG\sample.vb" title="How to convert HTML file to PNG file in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="F:SautinSoft.PdfVision.eImageFormat.Jpeg">
+      <summary>
+            Jpeg image
+            </summary>
+    </member>
+    <member name="F:SautinSoft.PdfVision.eImageFormat.Png">
+      <summary>
+            Png image
+            </summary>
+    </member>
+    <member name="F:SautinSoft.PdfVision.eImageFormat.Gif">
+      <summary>
+            Gif image
+            </summary>
+    </member>
+    <member name="F:SautinSoft.PdfVision.eImageFormat.Bmp24">
+      <summary>
+            Bitmap 24-bits
+            </summary>
+    </member>
+    <member name="P:SautinSoft.PdfVision.Cookies">
+      <summary>
+            Allows to set a credentials to work with password protected HTML documents, e.g. set userName and password
+            </summary>
+      <example>
+        <code>
+            SautinSoft.PdfVision v = new SautinSoft.PdfVision();
+            string url = "http://www.google.com";
+            CookieContainer myCookies = new CookieContainer();
+            Cookie userName = new Cookie("username", "bob");
+            myCookies.Add(new Uri(url), userName);
+            Cookie password = new Cookie("password", "bobpassword");
+            myCookies.Add(new Uri(url), password);
+            v.Cookies = myCookies;
+            </code>
+      </example>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CSizeType">
+      <summary>
+            Allows to set values in mm, inches and pixels for the component's properties
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/csizetype-methods.jpg" />
+        <br />
+        <br />
+        <example>
+          <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert multipage TIFF file to PDF file\sample.cs" title="How to convert HTML file to JPEG file in C#">
+          </code>
+          <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert multipage TIFF file to PDF file\sample.vb" title="How to convert HTML file to JPEG file in VB.Net">
+          </code>
+        </example>
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CSizeType.Inch(System.Single)">
+      <summary>
+            Set value in inches
+            </summary>
+      <param name="valueInch">Value in inches with floating point</param>
+      <remarks>
+        <img src="../Overview/pictures/csizetype-methods.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CSizeType.Mm(System.Single)">
+      <summary>
+            Set value in mm
+            </summary>
+      <param name="valueMm">Value in mm with floating point</param>
+      <remarks>
+        <img src="../Overview/pictures/csizetype-methods.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CSizeType.Auto">
+      <summary>
+            Default value
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/csizetype-methods.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CSizeType.ValuePx">
+      <summary>
+            Allows to set/get value in pixels
+            </summary>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CImageStyle">
+      <summary>
+            Class which allows to specify various image parameters using the property <see cref="P:SautinSoft.PdfVision.ImageStyle" />. For example, set single width for all images, set compression type and converting speed etc.
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/imagestyle-property.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CImageStyle.#ctor">
+      <summary>
+            Creates an object of the <see cref="T:SautinSoft.PdfVision.CImageStyle" /> class
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/imagestyle-property.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.JPEGQuality">
+      <summary>
+            Allows to specify jpeg compression ratio and reduce PDF document size
+            </summary>
+      <remarks>
+            Typically the only thing that the user can control in Jpeg compression is the quality setting. The value chosen is used in quantisation stage above, where less common values are discarded by using tables tuned to visual perception. This reduces the amount of information while preserving the perceived quality.
+            </remarks>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert JPG file to PDF file\sample.cs" title="How to convert JPG file to PDF file in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert JPG file to PDF file\Sample.vb" title="How to convert JPG file to PDF file in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.Scale">
+      <summary>
+            Set scale for all images which will be converted to PDF, default: 100%
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cimagestyle-scale-property.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.Width">
+      <summary>
+            Set custom width for all images which will be converted to PDF
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cimagestyle-width-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.Height">
+      <summary>
+            Set custom height for all images which will be converted to PDF
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cimagestyle-height-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.HtmlWidth">
+      <summary>
+            Set a width in pixels for default browser which will process your HTML
+            </summary>
+      <remarks>
+            Default value: 1366 px
+            <img src="../Overview/pictures/cimagestyle-htmlwidth-property.jpg" /><br /><br /></remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.HtmlHeight">
+      <summary>
+            Helps to set internal browser height
+            </summary>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.HtmlRepeat">
+      <summary>
+            Allows to set page portion which will be repeated on next page
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/htmlrepeat.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CImageStyle.eCompressionType">
+      <summary>
+            Specify image compression type to decrease PDF size or to increase speed of converting
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cimage-style-ecompressiontype-enumeration.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="F:SautinSoft.PdfVision.CImageStyle.eCompressionType.Fast">
+      <summary>
+            Fast deflate compression
+            </summary>
+    </member>
+    <member name="F:SautinSoft.PdfVision.CImageStyle.eCompressionType.Maximal">
+      <summary>
+            Deflate compression, slow but good compression
+            </summary>
+    </member>
+    <member name="F:SautinSoft.PdfVision.CImageStyle.eCompressionType.Fastest">
+      <summary>
+            Fastest compression, JPEG compression
+            </summary>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.CompressionType">
+      <summary>
+            Specify image compression type to decrease PDF size or to increase speed of converting
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cimage-style-ecompressiontype-enumeration.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.HtmlTimeOut">
+      <summary>
+            Allows to set maximal time of HTML page loading in seconds
+            </summary>
+      <remarks>This property is helpful during converting HTML urls to PDF from Internet, especially for slow Internet connection.<br /><br /><img src="../Overview/pictures/cimagestyle-htmltimeout-property.jpg" /><br /><br />
+            If HTML page will be loaded in less time than specified in 'HtmlTimeOut' you don't have to wait end of time.
+            <br /><br />
+            If HTML page will not be loaded in time than specified in 'HtmlTimeOut' you may see non complete HTML inside PDF.
+            <br /><br />
+            Default value: 20 seconds
+            </remarks>
+      <example>
+        <code>
+            SautinSoft.PdfVision v = new SautinSoft.PdfVision();
+            v.ImageStyle.HtmlTimeOut = 10;
+            </code>
+        <code lang="vbnet">
+            Dim v As New SautinSoft.PdfVision()
+            v.ImageStyle.HtmlTimeOut = 10
+            </code>
+      </example>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.HtmlTimeOutForScripts">
+      <summary>
+            Set extra time after loading page in seconds for launching all JavaScript on page
+            </summary>
+      <remarks>This property will be helpful to convert Web-pages containing a lot of Javascript which require extra time to render page. For example, to convert pages with google maps set this property to 2-3 seconds.<br /><br />
+            Default value: 2.5 seconds. <br /><br /><img src="../Overview/pictures/cimagestyle-htmltimeout-property.jpg" /><br /><br />
+            If your Web-page doesn't have Javascript you may increase converting speed by setting this property to 0.
+            </remarks>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert HTML string to PDF bytes\sample.cs" title="How to convert HTML string to PDF bytes in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert HTML string to PDF bytes\Sample.vb" title="How to convert HTML string to PDF bytes in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.ImageInterval">
+      <summary>
+            Allows to specify horizontal and vertical space interval between images in pixels for all images in PDF document
+            </summary>
+      <remarks>Default value: 10 pixels<br /><br /><img src="../Overview/pictures/cimagestyle-imageinterval-property.jpg" /></remarks>
+      <example>
+        <code>
+            SautinSoft.PdfVision v = new SautinSoft.PdfVision();
+            v.ImageStyle.ImageInterval = 20;
+            </code>
+        <code lang="vbnet">
+            Dim v As New SautinSoft.PdfVision()
+            v.ImageStyle.ImageInterval = 20
+            </code>
+      </example>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.HorizontalOrder">
+      <summary>
+            Allows to specify the order (horizontal or vertical) how images will be placed in PDF document
+            </summary>
+      <remarks>
+            Possible values: false or true<br /><br />
+            Default value: false<br /><br /><img src="../Overview/pictures/cimagestyle-horizontalorder-property.jpg" /><br /><br /></remarks>
+      <example>
+        <code>
+            SautinSoft.PdfVision v = new SautinSoft.PdfVision();
+            v.ImageStyle.HorizontalOrder = true;
+            </code>
+        <code lang="vbnet">
+            Dim v As New SautinSoft.PdfVision()
+            v.ImageStyle.HorizontalOrder = True
+            </code>
+      </example>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CImageStyle.FitImageToPageSize">
+      <summary>
+            Makes image the same size as page, but keeps image proportions
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/fitimagetopagesize-property.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CPageStyle">
+      <summary>
+            Allows to specify page properties for output document: page header, footer, page size, orientation, margins and page numbers
+            </summary>
+      <remarks>
+            Allows to set page Header using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageHeader" /><br /><br /><img src="../Overview/pictures/header-property.png" /><br /><br />        
+            Allows to set page Footer using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageFooter" /><br /><br /><img src="../Overview/pictures/footer-property.png" /><br /><br />
+            Allows to set page size using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageSize" /><br /><br /><img src="../Overview/pictures/cpagestyle-pagesize-property.png" /><br /><br />        
+            Allows to set page orientation using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageOrientation" /><br /><br /><img src="../Overview/pictures/cpagestyle-pageorientation-property.png" /><br /><br />
+            Allows to set page margins size using properties: <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginLeft" />, <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginTop" />, <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginRight" /> and <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginBottom" /><br /><br /><img src="../Overview/pictures/cpagestyle-pagemarginleft-property.png" /><br /><br /></remarks>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CPageStyle.CPageSize">
+      <summary>
+            Set page size for output document
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.#ctor">
+      <summary>
+            Creates an instance of <see cref="T:SautinSoft.PdfVision.CPageStyle.CPageSize" /></summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.Widthmm(System.Single)">
+      <summary>
+            Set page width in Mm
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="valuePageWidth">Page width in Mm</param>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.WidthInch(System.Single)">
+      <summary>
+            Set page width in inches
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="valuePageWidth">Page width in inches</param>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.Heightmm(System.Single)">
+      <summary>
+            Set page height in Mm
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="valuePageHeight">Page height in Mm</param>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.HeightInch(System.Single)">
+      <summary>
+            Set page height in inches
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="valuePageHeight">Page height in inches</param>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.Auto">
+      <summary>
+            Set auto page size
+            </summary>
+      <remarks>For HTML to PDF converting the default page size is Letter format. For images to PDF converting the page size will be the same as image size.
+            <img src="../Overview/pictures/cpagestyle-pagesize-property.png" /><br /><br /></remarks>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert TIFF to PDF in memory\sample.cs" title="How to convert TIFF to PDF in memory in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert TIFF to PDF in memory\Sample.vb" title="How to convert TIFF to PDF in memory in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.A3">
+      <summary>
+            Set A3 page size, 297 x 420 Mm, 11.69 x 16.54 In
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.A4">
+      <summary>
+            Set A4 page size, 210 x 297 Mm, 8.26 x 11.69 In
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.A5">
+      <summary>
+            Set A5 page size, 148 x 210 Mm, 5.82 x 8.26 In
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.A6">
+      <summary>
+            Set A6 page size, 105 x 148 Mm, 4.13 x 5.82 In 
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.B5Jis">
+      <summary>
+            Set B5Jis page size, 182 x 257 Mm, 7.16 x 10.11 In
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.B5Iso">
+      <summary>
+            Set B5Iso page size, 176 x 250 Mm, 6.93 x 9.83 In
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.B6">
+      <summary>
+            Set B6 page size, 128 x 182 Mm, 5.04 x 7.16 In 
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.Folio">
+      <summary>
+            Set Folio page size, 210 x 330 Mm, 8.26 x 12.99 In 
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.Letter">
+      <summary>
+            Set Letter size, 216 x 279 Mm, 8.5 x 11 In
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.Legal">
+      <summary>
+            Set Legal page size, 216 x 356 Mm, 8.5 x 14 In
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.Statement">
+      <summary>
+            Set Statement page size, 140 x 216 Mm, 5.5 x 8.5 In
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.Executive">
+      <summary>
+            Set Executive page size, 184 x 267 Mm, 7.25 x 10.5 In 
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageSize.Oficio2">
+      <summary>
+            Set Oficio2 page size, 216 x 330 Mm, 8.5 x 13 In
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagesize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CPageStyle.CPageOrientation">
+      <summary>
+            Set page orientation
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pageorientation-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageOrientation.#ctor">
+      <summary>
+            Creates a new instance of <see cref="T:SautinSoft.PdfVision.CPageStyle.CPageOrientation" /> class 
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pageorientation-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageOrientation.Portrait">
+      <summary>
+            Set portrait page orientation
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pageorientation-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageOrientation.Landscape">
+      <summary>
+            Set landscape page orientation
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pageorientation-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.CPageOrientation.Auto">
+      <summary>
+            Set default page orientation, Portrait
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pageorientation-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageStyle.PageHeader">
+      <summary>
+            Setup page header in any format: Html or image
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/header-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageStyle.PageNumbers">
+      <summary>
+            Allows to place any text or page numbers at the top and bottom of PDF page
+            </summary>
+      <remarks>Also you may specify custom font name, size and color for page numbers and text.<br /><br />
+            This text or page numbers will placed on each page of PDF document.
+            </remarks>
+      <example>
+        <code>
+            SautinSoft.PdfVision v = new SautinSoft.PdfVision();
+            v.PageNumbers.FontSize = 12;
+            v.PageNumbers.FontColor.SetRGB(0, 0, 0);
+            //Place text at the top of each page
+            v.PageNumbers.PageNumbersInTop = "Web page snapshots at " + DateTime.Now.ToString();
+            //Place page numbers at the bottom of each page
+            v.PageNumbers.PageNumbersInBottom = "Page {page} of {numpages}";
+            </code>
+        <code lang="vbnet">
+            Dim v As New SautinSoft.PdfVision()
+            v.PageNumbers.FontSize = 12
+            v.PageNumbers.FontColor.SetRGB(0, 0, 0)
+            'Place text at the top of each page
+            v.PageNumbers.PageNumbersInTop = "Web page snapshots at " &amp; DateTime.Now.ToString()
+            'Place page numbers at the bottom of each page
+            v.PageNumbers.PageNumbersInBottom = "Page {page} of {numpages}"
+            </code>
+      </example>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageStyle.PageFooter">
+      <summary>
+            Setup page footer in any format: Html or image
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/footer-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageStyle.PageSize">
+      <summary>
+            Set page size
+            </summary>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageStyle.PageOrientation">
+      <summary>
+            Set page orientation
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pageorientation-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageStyle.PageMarginLeft">
+      <summary>
+            Set left page margin
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagemarginleft-property.png" />
+        <br />
+        <br />
+        <img src="../Overview/pictures/csizetype-methods.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageStyle.PageMarginRight">
+      <summary>
+            Set right page margin
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagemarginright-property.png" />
+        <br />
+        <br />
+        <img src="../Overview/pictures/csizetype-methods.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageStyle.PageMarginTop">
+      <summary>
+            Set top page margin
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagemargintop-property.png" />
+        <br />
+        <br />
+        <img src="../Overview/pictures/csizetype-methods.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageStyle.PageMarginBottom">
+      <summary>
+            Set bottom page margin
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagestyle-pagemarginbottom-property.png" />
+        <br />
+        <br />
+        <img src="../Overview/pictures/csizetype-methods.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageStyle.#ctor">
+      <summary>
+            Creates a new instance of <see cref="T:SautinSoft.PdfVision.CPageStyle" /> class 
+            </summary>
+      <remarks>
+            Allows to set page Header using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageHeader" /><br /><br /><img src="../Overview/pictures/header-property.png" /><br /><br />        
+            Allows to set page Footer using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageFooter" /><br /><br /><img src="../Overview/pictures/footer-property.png" /><br /><br />
+            Allows to set page size using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageSize" /><br /><br /><img src="../Overview/pictures/cpagestyle-pagesize-property.png" /><br /><br />        
+            Allows to set page orientation using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageOrientation" /><br /><br /><img src="../Overview/pictures/cpagestyle-pageorientation-property.png" /><br /><br />
+            Allows to set page margins size using properties: <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginLeft" />, <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginTop" />, <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginRight" /> and <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginBottom" /><br /><br /><img src="../Overview/pictures/cpagestyle-pagemarginleft-property.png" /><br /><br /></remarks>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CPageNumbers">
+      <summary>
+            Class which allows to place any text or page numbers at the top and bottom of PDF page
+            </summary>
+      <remarks>Also you may specify custom font name, size and color for page numbers and text.<br /><br /><img src="../Overview/pictures/cpagenumbers-pagenumbersintop-property.png" /><br /><br />
+            This text or page numbers will placed on each page of PDF document.
+            </remarks>
+      <example>
+        <code>
+            SautinSoft.PdfVision v = new SautinSoft.PdfVision();
+            v.PageNumbers.FontSize = 12;
+            v.PageNumbers.FontColor.SetRGB(0, 0, 0);
+            //Place text at the top of each page
+            v.PageNumbers.PageNumbersInTop = "Web page snapshots at " + DateTime.Now.ToString();
+            //Place page numbers at the bottom of each page
+            v.PageNumbers.PageNumbersInBottom = "Page {page} of {numpages}";
+            </code>
+        <code lang="vbnet">
+            Dim v As New SautinSoft.PdfVision()
+            v.PageNumbers.FontSize = 12
+            v.PageNumbers.FontColor.SetRGB(0, 0, 0)
+            'Place text at the top of each page
+            v.PageNumbers.PageNumbersInTop = "Web page snapshots at " &amp; DateTime.Now.ToString()
+            'Place page numbers at the bottom of each page
+            v.PageNumbers.PageNumbersInBottom = "Page {page} of {numpages}"
+            </code>
+      </example>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CPageNumbers.CFontColor">
+      <summary>
+            Set color for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-pagenumbersintop-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontColor.#ctor">
+      <summary>
+            Constructor, sets default (black) color for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-fontcolor-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontColor.SetRGB(System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Set color for page numbers text in RGB format
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-fontcolor-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontColor.GetRGB(System.Int32@,System.Int32@,System.Int32@)">
+      <summary>
+            Set color for page numbers text in RGB format
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-fontcolor-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontColor.Auto">
+      <summary>
+            Set default (black) color for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-fontcolor-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CPageNumbers.CFontFace">
+      <summary>
+            Set font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-fontface-property.png " />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.GetFontFace">
+      <summary>
+            Get font name for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.#ctor">
+      <summary>
+            Constructor, sets "Helvetica" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.Courier">
+      <summary>
+            Set "Courier" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.CourierBoldOblique">
+      <summary>
+            Set "Courier Bold Italic" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.CourierBold">
+      <summary>
+            Set "Courier Bold" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.CourierOblique">
+      <summary>
+            Set "Courier Italic" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.Helvetica">
+      <summary>
+            Set "Helvetica" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.HelveticaBoldOblique">
+      <summary>
+            Set "Helvetica Bold Italic" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.HelveticaOblique">
+      <summary>
+            Set "Helvetica Italic" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.TimesNewRoman">
+      <summary>
+            Set "Times New Roman" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.TimesBoldItalic">
+      <summary>
+            Set "Times New Roman Bold Italic" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.TimesBold">
+      <summary>
+            Set "Times New Roman Bold" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.TimesItalic">
+      <summary>
+            Set "Times New Roman Italic" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.Symbol">
+      <summary>
+            Set "Symbol" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CFontFace.ZapfDingbats">
+      <summary>
+            Set "Zapf" font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-сfontface-methods.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CPageNumbers.CTextAlignment">
+      <summary>
+            Set alignment for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-pagenumbersinbottom-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CTextAlignment.GetTextAlignment">
+      <summary>
+            Get alignment of page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-pagenumbersinbottom-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CTextAlignment.#ctor">
+      <summary>
+            Constructor, sets default (center) alignment for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-pagenumbersinbottom-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CTextAlignment.Left">
+      <summary>
+            Align page numbers by left
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-pagenumbersinbottom-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CTextAlignment.Center">
+      <summary>
+            Align page numbers by center
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-pagenumbersinbottom-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.CTextAlignment.Right">
+      <summary>
+            Align page numbers by right
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-pagenumbersinbottom-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageNumbers.Aligment">
+      <summary>
+            Allows to set align for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-pagenumbersinbottom-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageNumbers.PageNumbersInTop">
+      <summary>
+            Allows to place custom page numbers or any text at the top of each PDF page
+            </summary>
+      <remarks>You may place any text here and also use special keywords to specify page numbers.<br /><br /><img src="../Overview/pictures/cpagenumbers-pagenumbersintop-property.png" /><br /><br />
+            These are special keywords to custom page numbers:<br /><br /><b>{page}</b> - current page number<br /><b>{numpages}</b> - total pages<br /></remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageNumbers.PageNumbersInBottom">
+      <summary>
+            Allows to place custom page numbers or any text at the bottom of each PDF page
+            </summary>
+      <remarks>You may place any text here and also use special keywords to specify page numbers.<br /><br /><img src="../Overview/pictures/cpagenumbers-pagenumbersinbottom-property.png" /><br /><br />
+            These are special keywords to custom page numbers:<br /><br /><b>{page}</b> - current page number<br /><b>{numpages}</b> - total pages<br /></remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageNumbers.FontSize">
+      <summary>
+            Set font size for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-fontsize-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageNumbers.FontColor">
+      <summary>
+            Set color for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-fontcolor-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.CPageNumbers.FontFace">
+      <summary>
+            Set font for page numbers text
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-fontface-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CPageNumbers.#ctor">
+      <summary>
+            Allows to place custom page numbers or any text for every PDF page
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cpagenumbers-pagenumbersintop-property.png" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="T:SautinSoft.PdfVision.CHeaderFooter">
+      <summary>
+            Class to create header and footer in produced PDF document in any of formats: HTML, URL or Image
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cheaderfooter.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CHeaderFooter.Clear">
+      <summary>
+            Clear page header or footer
+            </summary>
+      <remarks>This method may be helpful during converting in a loop. <br /><img src="../Overview/pictures/cheaderfooter-clear-method.png" /><br /><br /></remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CHeaderFooter.FromImage(System.Drawing.Image)">
+      <summary>
+            Set header/footer from object of <see cref="T:System.Drawing.Image" /> class
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cheaderfooter-fromimage-method.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="image">Image as object of <see cref="T:System.Drawing.Image" /> class</param>
+      <example>
+        <code>
+            SautinSoft.PdfVision v = new SautinSoft.PdfVision();
+            v.PageHeader.FromImage(System.Drawing.Image.FromFile(@"d:\image.png"));
+            </code>
+        <code lang="vbnet">
+            Dim v As New SautinSoft.PdfVision()
+            v.PageHeader.FromImage(System.Drawing.Image.FromFile("d:\image.png"))
+            </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CHeaderFooter.FromHtmlString(System.String)">
+      <summary>
+            Set header/footer from any HTML string
+            </summary>
+      <remarks>You may use here any string in HTML format or even simple text.<br /><br />
+            If HTML string contains links to .css files or to images, please be sure that links are not relative. Links have to be full, like this: &lt;img src="http://www.mysite.com/images/picture1.jpg" &gt;.
+            <img src="../Overview/pictures/cheaderfooter-fromhtmlstring-method.png" /><br /><br /></remarks>
+      <param name="html">Any string in HTML format or even simple text</param>
+      <example>
+        <code>
+            SautinSoft.PdfVision v = new SautinSoft.PdfVision();
+            v.PageHeader.FromHtmlString("Some text");
+            </code>
+        <code lang="vbnet">
+            Dim v As New SautinSoft.PdfVision()
+            v.PageHeader.FromHtmlString("Some text")
+            </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CHeaderFooter.FromHtmlFile(System.String)">
+      <summary>
+            Set header/footer from HTML file or URL
+            </summary>
+      <img src="../Overview/pictures/cheaderfooter-fromhtmlfile-method.png" />
+      <br />
+      <br />
+      <param name="htmlFile">Full path to HTML file or URL</param>
+      <example>
+        <code>
+            SautinSoft.PdfVision v = new SautinSoft.PdfVision();
+            v.PageHeader.FromHtmlFile(@"d:\header.htm");
+            </code>
+        <code lang="vbnet">
+            Dim v As New SautinSoft.PdfVision()
+            v.PageHeader.FromHtmlFile("d:\header.htm")
+            </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.CHeaderFooter.FromHtmlUrl(System.String)">
+      <summary>
+            Set header/footer from HTML file or URL
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/cheaderfooter-fromhtmlfile-method.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="html">Full path to HTML file or URL</param>
+      <example>
+        <code>
+            SautinSoft.PdfVision v = new SautinSoft.PdfVision();
+            v.PageHeader.FromHtmlFile(@"d:\header.htm");
+            </code>
+        <code lang="vbnet">
+            Dim v As New SautinSoft.PdfVision()
+            v.PageHeader.FromHtmlFile("d:\header.htm")
+            </code>
+      </example>
+    </member>
+    <member name="P:SautinSoft.PdfVision.PageStyle">
+      <summary>
+            Allows to specify page properties for output document: page header, footer, page size, orientation, margins and page numbers
+            </summary>
+      <remarks>
+            Allows to set page Header using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageHeader" /><br /><br /><img src="../Overview/pictures/header-property.png" /><br /><br />        
+            Allows to set page Footer using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageFooter" /><br /><br /><img src="../Overview/pictures/footer-property.png" /><br /><br />
+            Allows to set page size using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageSize" /><br /><br /><img src="../Overview/pictures/cpagestyle-pagesize-property.png" /><br /><br />        
+            Allows to set page orientation using the property <see cref="P:SautinSoft.PdfVision.CPageStyle.PageOrientation" /><br /><br /><img src="../Overview/pictures/cpagestyle-pageorientation-property.png" /><br /><br />
+            Allows to set page margins size using properties: <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginLeft" />, <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginTop" />, <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginRight" /> and <see cref="P:SautinSoft.PdfVision.CPageStyle.PageMarginBottom" /><br /><br /><img src="../Overview/pictures/cpagestyle-pagemarginleft-property.png" /><br /><br /></remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.ImageStyle">
+      <summary>
+            Allows to specify various image parameters. For example, set single width for all images, set compression type and converting speed etc.
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/imagestyle-property.jpg" />
+        <br />
+        <br />
+      </remarks>
+    </member>
+    <member name="P:SautinSoft.PdfVision.Serial">
+      <summary>
+            Property to activate your copy, doesn't work in trial version
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/serial-property.png" />
+        <br />
+        <br />
+      </remarks>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Activate the component after purchasing\sample.cs" title="How to activate the component after purchasing in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Activate the component after purchasing\Sample.vb" title="How to activate the component after purchasing in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.#ctor">
+      <summary>
+            Creates a new instance of the <see cref="T:SautinSoft.PdfVision">SautinSoft.PdfVision</see> class
+            </summary>
+      <remarks>This is constructor of the PDF Vision .Net. The component enably any .Net app to:<br /><img src="../Overview/pictures/pdfvision_features800x450.jpg" /><br /><br /><ul><li>Convert HTML, ASPX to PDF</li><li>Convert HTML, ASPX to Image</li><li>Convert Images (JPEG, PNG, Multipage-TIFF, Bitmap, GIF etc) to PDF</li><li>Merge and split PDF documents</li></ul></remarks>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert many TIFF files to PDF files\sample.cs" title="How to convert many TIFF files to PDF files in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert many TIFF files to PDF files\Sample.vb" title="How to convert many TIFF files to PDF files in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.TrySetBrowserModeEdgeInRegistry">
+      <summary>
+            Set "Edge" mode for webbrowser component.
+            </summary>
+      <remarks>
+            See: http://www.cyotek.com/blog/configuring-the-emulation-mode-of-an-internet-explorer-webbrowser-control.
+            </remarks>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertHtmlFileToPDFFile(System.String,System.String)">
+      <summary>
+            Converts HTML/ASPX file or url to PDF file. Output file will be overwritten. 
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/converthtmlfiletopdffile-method.jpg" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputHtmlFile">Path or url to HTML/ASPX page</param>
+      <param name="outputPdfFile">Local path to output PDF file</param>
+      <returns>
+            0 - converting successfully<br />
+            1 - can't open input HTML file, check the input path<br />
+            2 - can't create output file, check the output path<br />
+            3 - converting failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert HTML file to PDF file\sample.cs" title="How to convert HTML file to PDF file in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert HTML file to PDF file\sample.vb" title="How to convert HTML file to PDF file in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertHtmlFileToBitmap(System.String)">
+      <summary>
+            Converts HTML/ASPX file or url to <see cref="T:System.Drawing.Bitmap" /> object
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/converthtmlfiletobitmap.jpg" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputHtmlFile">Path or url to HTML/ASPX page</param>
+      <returns>
+        <see cref="T:System.Drawing.Bitmap" /> object - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertHtmlFileToImageFile(System.String,System.String,SautinSoft.PdfVision.eImageFormat)">
+      <summary>
+            Converts HTML/ASPX file or url to Image file
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/converthtmlfiletobitmap.jpg" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputHtmlFile">Path or url to HTML/ASPX page</param>
+      <param name="outputImageFile">Local path to output Image file</param>
+      <param name="imageFormat">Allows to set <see cref="T:SautinSoft.PdfVision.eImageFormat" /> for resulting image</param>
+      <returns>
+            0 - converting successfully<br />
+            1 - can't open input HTML file, check the input path<br />
+            2 - can't create output file, check the output path<br />
+            3 - converting failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert HTML to JPEG\sample.cs" title="How to convert HTML file to JPEG file in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert HTML to JPEG\sample.vb" title="How to convert HTML file to JPEG file in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertHtmlFileToImageStream(System.String,SautinSoft.PdfVision.eImageFormat)">
+      <summary>
+            Converts HTML/ASPX file or url to Image as byte array
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/converthtmlfiletoimagestream.jpg" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputHtmlFile">Path or url to HTML/ASPX page</param>
+      <param name="imageFormat">Allows to set <see cref="T:SautinSoft.PdfVision.eImageFormat" /> for resulting image</param>
+      <returns>
+            byte array containing resulting image - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertHtmlStringToImageFile(System.String,System.String,SautinSoft.PdfVision.eImageFormat)">
+      <summary>
+            Converts HTML string to Image file
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/converthtmlstringtoimagefile.jpg" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputHtmlString">Any string in HTML format, framed by &lt;html&gt; ... &lt;/html&gt; tags</param>
+      <param name="outputPdfFile">Local path to output Image file</param>
+      <param name="imageFormat">Allows to set <see cref="T:SautinSoft.PdfVision.eImageFormat" /> for resulting image</param>
+      <returns>
+            0 - converting successfully<br />
+            2 - can't create output file, check the output path<br />
+            3 - converting failed
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertHtmlFileToPDFStream(System.String)">
+      <summary>
+            Converts HTML/ASPX file or url to PDF bytes
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/converthtmlfiletopdfstream-method.jpg" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputHtmlFile">Path or url to HTML/ASPX page</param>
+      <returns>
+            PDF document as byte array - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\ASP.Net - Convert HTML-URL to PDF\Default.aspx.cs" title="ASP.Net - Convert HTML-URL to PDF in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\ASP.Net - Convert HTML-URL to PDF\Default.aspx.vb" title="ASP.Net - Convert HTML-URL to PDF in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertHtmlStringToPDFFile(System.String,System.String)">
+      <summary>
+            Converts HTML string to PDF file
+            </summary>
+      <remarks>If HTML string contains links to .css files or to images, please be sure that links are not relative.<br />Links have to be full, like this: &lt;img src="http://www.mysite.com/images/picture1.jpg" &gt;.<br /><img src="../Overview/pictures/converthtmlstringtopdffile-method.jpg" /><br /><br /></remarks>
+      <param name="inputHtmlString">Any string in HTML format, framed by &lt;html&gt; ... &lt;/html&gt; tags</param>
+      <param name="outputPdfFile">Local path to output PDF file</param>
+      <returns>
+            0 - converting successfully<br />
+            2 - can't create output file, check the output path<br />
+            3 - converting failed
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertHtmlStringToPDFStream(System.String)">
+      <summary>
+            Converts HTML string to PDF byte array
+            </summary>
+      <remarks>If HTML string contains links to .css files or to images, please be sure that links are not relative.<br />Links have to be full, like this: &lt;img src="http://www.mysite.com/images/picture1.jpg" &gt;.
+            <img src="../Overview/pictures/converthtmlstringtopdfstream-method.jpg" /><br /><br /></remarks>
+      <param name="inputHtmlString">Any string in HTML format, framed by &lt;html&gt; ... &lt;/html&gt; tags</param>
+      <returns>
+            PDF document as byte array - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\ASP.Net - Print ASPX to PDF\Default.aspx.cs" title="ASP.Net - Print ASPX to PDF in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\ASP.Net - Print ASPX to PDF\Default.aspx.vb" title="ASP.Net - Print ASPX to PDF in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertHtmlStringToImageStream(System.String,SautinSoft.PdfVision.eImageFormat)">
+      <summary>
+            Converts HTML string to Image byte array
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/converthtmlstringtoimagestream.jpg" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputHtmlString">Any string in HTML format, framed by &lt;html&gt; ... &lt;/html&gt; tags</param>
+      <param name="imageFormat">Allows to set <see cref="T:SautinSoft.PdfVision.eImageFormat" /> for resulting image</param>
+      <returns>
+            byte array containing resulting image - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertHtmlStringToBitmap(System.String)">
+      <summary>
+            Converts HTML string to <see cref="T:System.Drawing.Bitmap" /> object
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/converthtmlstringtobitmap.jpg" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputHtmlString">Any string in HTML format, framed by &lt;html&gt; ... &lt;/html&gt; tags</param>
+      <returns>
+        <see cref="T:System.Drawing.Bitmap" /> object - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertImageStreamToPDFFile(System.Byte[],System.String)">
+      <summary>
+            Converts array of image bytes to PDF file
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/convertimagestreamtopdffile-method.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="bImage">Array of image bytes</param>
+      <param name="outputPdfFile">Local path to output PDF file</param>
+      <returns>
+            0 - converting successfully<br />
+            1 - can't open input file, check the input path<br />
+            2 - can't create output file, check the output path<br />
+            3 - converting failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert Image class to PDF file\sample.cs" title="How to convert Image class to PDF file in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert Image class to PDF file\Sample.vb" title="How to convert Image class to PDF file in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertImageStreamToPdfStream(System.Byte[])">
+      <summary>
+            Converts array of image bytes to PDF byte array
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/convertimagestreamtopdfstream-method.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="bImage">Array of image bytes</param>
+      <returns>
+            PDF document as byte array - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\ASP.Net - View TIFF as PDF\Default.aspx.cs" title="ASP.Net - View TIFF as PDF in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\ASP.Net - View TIFF as PDF\Default.aspx.vb" title="ASP.Net - View TIFF as PDF in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertImageFileToPDFFile(System.String,System.String)">
+      <summary>
+            Converts image file to PDF file
+            </summary>
+      <param name="inputImageFile">Local path to any image file</param>
+      <param name="outputPdfFile">Local path to output PDF file</param>
+      <remarks>Image file can be in any format: JPG, GIF, PNG, TIF, multi-page TIFF, BMP, WMF, ICO etc.<br /><img src="../Overview/pictures/convertimagefiletopdffile-method.png" /><br /><br /></remarks>
+      <returns>
+            0 - converting successfully<br />
+            1 - can't open input file, check the input path<br />
+            2 - can't create output file, check the output path<br />
+            3 - converting failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert PNG file to PDF file\sample.cs" title="How to convert PNG file to PDF file C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert PNG file to PDF file\Sample.vb" title="How to convert PNG file to PDF file in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertImageFileToPDFStream(System.String)">
+      <summary>
+            Converts image file to PDF byte array
+            </summary>
+      <remarks>Image file can be in any format: JPG, GIF, PNG, TIF, multi-page TIFF, BMP, WMF, ICO etc.<br /><img src="../Overview/pictures/convertimagefiletopdfstream-method.png" /><br /><br /></remarks>
+      <param name="inputImageFile">Local path to any image file</param>
+      <returns>
+            PDF document as byte array - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertImageFolderToPDFFile(System.String,System.String)">
+      <summary>
+            Converts all image files from directory to single PDF file
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/convertimagefoldertopdffile-method.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputImagesDirectory">Full path to directory which contains image files: *.jpg, *.bmp, *.gif, *.tiff, *.tif, *.png, *.ico, *.emf, *.exif, *.jpeg, *.jpe, *.jfif, *.photocd, *.flashpix</param>
+      <param name="outputPdfFile">Local path to output PDF file</param>
+      <returns>
+            0 - converting successfully<br />
+            1 - directory doesn't contain any image file<br />
+            2 - can't create output file, check the output path<br />
+            3 - converting failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Convert folder with images to PDF file\sample.cs" title="How to convert folder with images to PDF files in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Convert folder with images to PDF file\Sample.vb" title="How to convert folder with images to PDF files in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertImageFolderToPDFStream(System.String)">
+      <summary>
+            Converts all image files from directory to PDF byte array
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/convertimagefoldertopdfstream-method.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputImagesDirectory">Full path to directory which contains image files: *.jpg, *.bmp, *.gif, *.tiff, *.tif, *.png, *.ico, *.emf, *.exif, *.jpeg, *.jpe, *.jfif, *.photocd, *.flashpix</param>
+      <returns>
+            PDF document as byte array - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertImageFileArrayToPDFFile(System.String[],System.String)">
+      <summary>
+            Converts array of image files to single PDF file
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/convertimagefilearraytopdffile-method.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="arrayInputImagesFiles">Array which contains paths to image files</param>
+      <param name="outputPdfFile">Local path to output PDF file</param>
+      <returns>
+            0 - converting successfully<br />
+            1 - array is empty, doesn't contain any path to image file<br />
+            2 - can't create output file, check the output path<br />
+            3 - converting failed
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertImageFileArrayToPDFStream(System.String[])">
+      <summary>
+            Converts array of image files to PDF byte array
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/convertimagefilearraytopdfstream-method.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="inputArrayFiles">Array which contains paths to image files</param>
+      <returns>
+            PDF document as byte array - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.ConvertImageStreamArrayToPDFStream(System.Collections.Generic.List{System.Byte[]})">
+      <summary>
+            Converts all images stored in ArrayList to PDF byte array
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/convertimagestreamarraytopdfstream-method.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="imageBytesList">List with image bytes.v.ImageStyle.Quality=100;</param>
+      <returns>
+            PDF document as byte array - in case of converting successfully<br />
+            null - in case of converting failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\ASP.Net - Convert different images to PDF\Default.aspx.cs" title="ASP.Net - Convert different images to PDF in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\ASP.Net - Convert different images to PDF\Default.aspx.vb" title="ASP.Net - Convert different images to PDF in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.SplitPDFFileToPDFFolder(System.String,System.String)">
+      <summary>
+            Splits PDF document by pages
+            </summary>
+      <remarks>
+        <img src="../Overview/pictures/splitpdffiletopdffolder-method.png" />
+        <br />
+        <br />
+      </remarks>
+      <param name="SourceFile">Path to PDF file which you want to split by pages</param>
+      <param name="OutputPath">Path to directory where to store each PDF page as single file after splitting</param>
+      <returns>0 - split successfully<br />
+            1 - error, can't open input file<br />
+            2 - error, output directory doesn't exist<br /></returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Split PDF document\sample.cs" title="How to split PDF document using C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Split PDF document\Sample.vb" title="How to split PDF document using VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="T:SautinSoft.PdfVision.ePdfVersion">
+      <summary>
+            Output PDF format for split/merge functions enumeration.
+            </summary>
+    </member>
+    <member name="F:SautinSoft.PdfVision.ePdfVersion.PDF_A">
+      <summary>
+            PDF/A - <a href="http://en.wikipedia.org/wiki/PDF/A" target="_blank">http://en.wikipedia.org/wiki/PDF/A</a></summary>
+    </member>
+    <member name="F:SautinSoft.PdfVision.ePdfVersion.PDF_13">
+      <summary>
+            PDF 1.3 version
+            </summary>
+    </member>
+    <member name="F:SautinSoft.PdfVision.ePdfVersion.PDF_14">
+      <summary>
+            PDF 1.4 version
+            </summary>
+    </member>
+    <member name="F:SautinSoft.PdfVision.ePdfVersion.PDF_15">
+      <summary>
+            PDF 1.5 version
+            </summary>
+    </member>
+    <member name="F:SautinSoft.PdfVision.ePdfVersion.PDF_16">
+      <summary>
+            PDF 1.6 version
+            </summary>
+    </member>
+    <member name="P:SautinSoft.PdfVision.PdfVersion">
+      <summary>
+            Output PDF format for split/merge functions.
+            </summary>
+    </member>
+    <member name="M:SautinSoft.PdfVision.MergePDFFileArrayToPDFFile(System.String[],System.String)">
+      <summary>
+            Merges different PDF files into single PDF file
+            </summary>
+      <param name="Files">Array with paths to PDF documents</param>
+      <param name="DestFile">Path to a new single PDF, it will be created by the component or overwritten in case of PDF is already exist</param>
+      <returns>0 - merged successfully<br />
+            1 - error, can't merge PDF documents<br />
+            2 - error, can't create output file, probably it used by another application<br />
+            3 - merging failed<br />
+            4 - merged successfully, but some files were not merged
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Merge PDF files\sample.cs" title="How to merge PDF files in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Merge PDF files\Sample.vb" title="How to merge PDF files in VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.MergePDFFileToPDFFile(System.String,System.String)">
+      <summary>
+            Merges two PDF files. Merges File1Path and DestFile file into single DestFile.
+            </summary>
+      <param name="File1Path">Path to an existing PDF file</param>
+      <param name="DestFile">Path to a second PDF file to merge the first file into</param>
+      <remarks>If the second file does not already exist the component just copies the first file to a new name</remarks>
+      <returns>0 - merged successfully<br />
+            1 - error, can't merge PDF documents<br />
+            2 - error, can't create output file, probably it used by another application<br />
+            3 - merging failed        
+            </returns>
+    </member>
+    <member name="M:SautinSoft.PdfVision.MergePDFFileArrayToPDFStream(System.String[])">
+      <summary>
+            Merges different PDF files into single PDF
+            </summary>
+      <param name="Files">Array with paths to PDF documents</param>
+      <returns>
+            Single PDF document as byte array - in case of merging successfully<br />
+            null - in case of merging failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Merge PDF in memory\sample.cs" title="How to merge PDF in memory using C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Merge PDF in memory\Sample.vb" title="How to merge PDF in memory using VB.Net">
+        </code>
+      </example>
+    </member>
+    <member name="M:SautinSoft.PdfVision.MergePDFStreamArrayToPDFStream(System.Collections.Generic.List{System.Byte[]})">
+      <summary>
+            Merges different PDF documents into single PDF in memory
+            </summary>
+      <param name="pdfList">List which contains PDF documents as array of bytes</param>
+      <returns>
+            Single PDF document as byte array - in case of merging successfully<br />
+            null - in case of merging failed
+            </returns>
+      <example>
+        <code lang="cs" source="..\Packages\PDF Vision .Net\Code samples\CSharp\Console - Merge PDF in memory\sample.cs" title="How to merge PDF in memory in C#">
+        </code>
+        <code lang="vbnet" source="..\Packages\PDF Vision .Net\Code samples\VB.Net\Console - Merge PDF in memory\Sample.vb" title="How to merge PDF in memory in VB.Net">
+        </code>
+      </example>
+    </member>
+  </members>
+</doc>

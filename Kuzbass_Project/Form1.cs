@@ -838,7 +838,7 @@ namespace Kuzbass_Project
                 {
                     return;
                 }
-
+                Directory.CreateDirectory("Temp");
                 foreach (String NameFile in Opd.FileNames)
                 {
                     int i = 0;
@@ -1067,6 +1067,7 @@ namespace Kuzbass_Project
                     }
                     i++;
                 }
+                Directory.Delete("Temp");
             }
         }
     }

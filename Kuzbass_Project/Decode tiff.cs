@@ -25,7 +25,7 @@ namespace Kuzbass_Project
                             myImage.Width - myImage.Width / 2,
                             myImage.Height - myImage.Height/2),
                         System.Drawing.Imaging.PixelFormat.DontCare);
-            string path = @"C:\Users\Tom\Desktop\temp\" + index + ".tif";
+            string path = @"Temp\" + index + ".tif";
             croppedBitmap.Save(path);
             try
             {
@@ -42,10 +42,13 @@ namespace Kuzbass_Project
                     }
                     if (cash != null)
                     {
-                        var fromEncodind = Encoding.GetEncoding(1251);//из какой кодировки
+                        var fromEncodind = Encoding.GetEncoding("ISO-8859-1");//из какой кодировки
                         var bytes = fromEncodind.GetBytes(cash);
-                        var toEncoding = Encoding.GetEncoding(866);//в какую кодировку
+                        var toEncoding = Encoding.GetEncoding(1251);//в какую кодировку
                         cash = toEncoding.GetString(bytes);
+                        while (cash.IndexOf("<FNC1>") != -1)
+                        cash = cash.Replace("<FNC1>", "");
+                        cash = cash.Remove(cash.IndexOf('>'), cash.IndexOf('<') - cash.IndexOf('>')+1);
                         return cash;
                     }
                     else

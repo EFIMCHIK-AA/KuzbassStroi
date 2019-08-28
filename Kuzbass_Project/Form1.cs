@@ -1067,6 +1067,11 @@ namespace Kuzbass_Project
                     }
                     i++;
                 }
+                System.IO.DirectoryInfo di = new DirectoryInfo("Temp");
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
                 Directory.Delete("Temp");
             }
         }

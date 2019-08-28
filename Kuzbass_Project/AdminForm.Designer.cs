@@ -53,9 +53,9 @@
             this.HostDB_TB = new System.Windows.Forms.TextBox();
             this.SaveBD_B = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.PathArchive_TB = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.PathArchive_TB = new System.Windows.Forms.TextBox();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -330,22 +330,6 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Путь к архиву чертежей";
             // 
-            // PathArchive_TB
-            // 
-            this.PathArchive_TB.Location = new System.Drawing.Point(38, 19);
-            this.PathArchive_TB.Name = "PathArchive_TB";
-            this.PathArchive_TB.Size = new System.Drawing.Size(212, 20);
-            this.PathArchive_TB.TabIndex = 0;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(3, 46);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(248, 24);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Сохранить";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -355,6 +339,23 @@
             this.label7.Size = new System.Drawing.Size(31, 13);
             this.label7.TabIndex = 10;
             this.label7.Text = "Путь";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(3, 46);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(248, 24);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Сохранить";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // PathArchive_TB
+            // 
+            this.PathArchive_TB.Location = new System.Drawing.Point(38, 19);
+            this.PathArchive_TB.Name = "PathArchive_TB";
+            this.PathArchive_TB.Size = new System.Drawing.Size(212, 20);
+            this.PathArchive_TB.TabIndex = 0;
             // 
             // AdminForm
             // 

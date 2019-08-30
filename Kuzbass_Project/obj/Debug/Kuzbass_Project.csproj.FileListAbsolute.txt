@@ -150,3 +150,37 @@ C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\PdfSharp.xml
 C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\PdfSharp.Charting.xml
 C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\de\PdfSharp.resources.dll
 C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\de\PdfSharp.Charting.resources.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\Kuzbass_Project.exe.config
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\Kuzbass_Project.exe
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\Kuzbass_Project.pdb
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\DevOne.Security.Cryptography.BCrypt.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\itextsharp.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\PdfSharp.Charting.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\PdfSharp.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\SautinSoft.PdfVision.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\SimpleTCP.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\Zen.Barcode.Core.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\Bytescout.BarCodeReader.xml
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.xml
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\itextsharp.xml
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\PdfSharp.xml
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\PdfSharp.Charting.xml
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\SautinSoft.PdfVision.xml
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\de\PdfSharp.resources.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\de\PdfSharp.Charting.resources.dll
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\bin\Debug\policy.2.0.Npgsql.config
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.csprojAssemblyReference.cache
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.AddDocument.resources
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.AdminForm.resources
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.Change.resources
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.Form1.resources
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.OperationForFiles.resources
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.PassForm.resources
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.Properties.Resources.resources
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.csproj.GenerateResource.cache
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.csproj.CoreCompileInputs.cache
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.csproj.CopyComplete
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.exe
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.pdb
+C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.IsOKFiles_Form.resources

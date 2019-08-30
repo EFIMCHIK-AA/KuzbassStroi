@@ -16,6 +16,7 @@ using OfficeOpenXml.Style;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Table;
 using System.Net.NetworkInformation;
+using System.Threading;
 
 namespace Kuzbass_Project
 {
@@ -592,6 +593,7 @@ namespace Kuzbass_Project
         private void Operations_B_Click(object sender, EventArgs e)
         {
             OperationForFiles Dialog = new OperationForFiles(Mode,Host_BD,Port_BD);
+
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
                 RefreshSpisok_B.PerformClick();
@@ -821,6 +823,40 @@ namespace Kuzbass_Project
             }
 
         }
+
+        IsOKFiles_Form TempFormIsOK;
+
+        CancellationTokenSource CancelToken;
+
+        private CancellationTokenSource GetCancelToken()
+        {
+            return new CancellationTokenSource();
+        }
+
+        private void ShowProcessForm(CancellationToken Token)
+        {
+            if(Token.IsCancellationRequested)
+            {
+                TempFormIsOK.Status_L.BeginInvoke(new MethodInvoker(delegate
+                {
+                    TempFormIsOK.Status_L.Text = "Обработка завершена";
+                }));
+
+                return;
+            }
+            else
+            {
+                TempFormIsOK = new IsOKFiles_Form();
+
+                TempFormIsOK.ShowDialog();
+            }
+        }
+
+        private async void ShowProcessFormAsync(CancellationToken Token)
+        {
+            await Task.Run(() => ShowProcessForm(Token));
+        }
+
         private void Recognize_B_Click(object sender, EventArgs e)
         {
             OpenFileDialog Opd = new OpenFileDialog
@@ -830,17 +866,22 @@ namespace Kuzbass_Project
                 InitialDirectory = @"C:\",
                 Filter = "TIFF|*.tiff|TIFF|*.tif"
             };
+
             bool Act = false;
+
             string date = DateTime.Now.ToString();
-            date = date.Replace(".", "_");
-            date = date.Replace(":", "_");
+
+            date = date.Replace(".", "_").Replace(":", "_");
+
             if (Opd.ShowDialog() == DialogResult.OK)
             {
                 if (Opd.FileName == String.Empty)
                 {
                     return;
                 }
+
                 DialogResult rez_Act = MessageBox.Show("Создать акт?", "Формирование акта", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+
                 if (rez_Act == DialogResult.Yes)
                 {
                     if (File.Exists(@"Шаблоны\ШаблонАктУникальный.xlsx"))
@@ -855,7 +896,6 @@ namespace Kuzbass_Project
                             wb1 = new ExcelPackage(fInfoSrcNoUnique).File.CopyTo(saveFileDialog1.FileName.Replace(".xlsx", "") + @"\Акт от " + date + " не уникальный.xlsx");
                             Act = true;
                         }
-
                     }
                     else
                     {
@@ -863,35 +903,55 @@ namespace Kuzbass_Project
                         return;
                     }
                 }
+
                 Directory.CreateDirectory("Temp");
+
+                //CancelToken = GetCancelToken();
+
+                //CancellationToken Token = CancelToken.Token;
+
+                //ShowProcessFormAsync(Token);
+
                 foreach (String NameFile in Opd.FileNames)
                 {
-                    int i = 0;
-                    String CurrentInfoDataMatrix = "";
-                    Decode_tiff decode_Tiff = new Decode_tiff();
-                    //Создашь класс, в него кинешь метод, здесь метод активируешь и передашь в него Current. Current - это текущее изображение из списка в Bitmap
+                    Status_TB.AppendText($"Файл {NameFile} обрабатывается, пожалуйста подождите..." + Environment.NewLine);
 
-                    CurrentInfoDataMatrix = decode_Tiff.Decode(NameFile,i); //Запихаешь сюда то, что у тебя функция дала на выходе, то есть расщифрованный DataMatrix
+                    IsOKFiles_Form Dialog = new IsOKFiles_Form();
+
+                    Dialog.NameFile_L.Text = NameFile;
+
+                    Dialog.Show();
+
+                    Int32 i = 0;
+
+                    String CurrentInfoDataMatrix = "";
+
+                    Decode_tiff decode_Tiff = new Decode_tiff();
+
+                    CurrentInfoDataMatrix = decode_Tiff.Decode(NameFile,i);
 
                     String[] Temp = CurrentInfoDataMatrix.Split('_');
 
+                    Status_TB.AppendText($"Файл {NameFile} обработка завершена" + Environment.NewLine);
+
                     if (Temp.Length == 6)
                     {
+                        Status_TB.AppendText($"Файл {NameFile} сохранение файла, пожалуйста подождите..." + Environment.NewLine);
+
                         Int32 j = 0;
 
                         Document CurrentDocument = new Document(Temp[2], Temp[0], "Нет статуса", CurrentInfoDataMatrix, Temp[4], Temp[5], Temp[1], Temp[3], DateTime.Now, "Нет номера");
 
                         String MyHost = Dns.GetHostName();
                         Host_server = Dns.GetHostByName(MyHost).AddressList[0].ToString();
+
                         Status_TB.Clear();
                         Documents.Clear();
 
                         if (File.Exists(@"Connect\Port.txt"))
                         {
-                            //Считываем порт из файла
                             String strPort = null;
 
-                            //Считываем стандартный порт
                             try
                             {
                                 using (StreamReader sr = new StreamReader(File.Open(@"Connect\Port.txt", FileMode.Open)))
@@ -905,7 +965,6 @@ namespace Kuzbass_Project
                                 return;
                             }
 
-                            //Проверяем доступен ли порт
                             Int32 port_server = Convert.ToInt32(strPort);
 
                             String PathRegistry = null;
@@ -941,7 +1000,6 @@ namespace Kuzbass_Project
                                 ExcelPackage workbook = new ExcelPackage(new System.IO.FileInfo(PathRegistry));
                                 ExcelWorksheet ws1 = workbook.Workbook.Worksheets[1];
 
-
                                 try
                                 {
                                     workbook.Save();
@@ -952,37 +1010,32 @@ namespace Kuzbass_Project
                                     workbook.Save();
                                     var rowCnt = ws1.Dimension.End.Row;
 
-                                    //Строка подлючения
                                     String connString = $"Server = {Host_BD}; Port = {Port_BD}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
 
                                     using (var connect = new NpgsqlConnection(connString))
                                     {
-                                        //Открытие потока
                                         connect.Open();
 
-                                        //Для хранения не уникальных QR
                                         List<String> CheckUnigueQR = new List<String>();
 
                                         CheckUnigueQR.Clear();
 
-                                        //Чтение
                                         using (var cmd = new NpgsqlCommand($"SELECT \"QR_Order\" FROM \"Orders\"" +
                                                                            $"WHERE \"QR_Order\" = '{CurrentDocument.QR}'", connect))
                                         {
                                             using (var reader = cmd.ExecuteReader())
                                             {
-                                                //Вывод в компонент
                                                 while (reader.Read())
                                                 {
                                                     CheckUnigueQR.Add(reader.GetString(0));
                                                 }
                                             }
                                         }
+
                                         Document Temp2 = new Document();
+
                                         if (CheckUnigueQR.Count == 0)
                                         {
-
-                                            //Вытаскиваешь данные с документа
                                             if (Act)
                                             {
                                                 try
@@ -1010,10 +1063,9 @@ namespace Kuzbass_Project
                                                     return;
                                                 }
                                             }
-                                            //Заполнение данных
+
                                             excel.SplitData(Temp2, CurrentDocument.QR);
 
-                                            //Добавление
                                             using (var cmd = new NpgsqlCommand())
                                             {
                                                 cmd.Connection = connect;
@@ -1067,7 +1119,8 @@ namespace Kuzbass_Project
                                                 {
                                                     ExcelPackage workbook2 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName.Replace(".xlsx", "") + @"\Акт от " + date + " не уникальный.xlsx"));
                                                     ExcelWorksheet ws3 = workbook2.Workbook.Worksheets[1];
-                                                    int rowCntAct1 = ws3.Dimension.End.Row;
+
+                                                    Int32 rowCntAct1 = ws3.Dimension.End.Row;
 
                                                     if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
                                                     {
@@ -1088,6 +1141,7 @@ namespace Kuzbass_Project
                                                     return;
                                                 }
                                             }
+
                                             Status_TB.AppendText($"QR {CurrentDocument.QR} существует => Добавление не произведено" + Environment.NewLine);
                                         }
 
@@ -1107,10 +1161,8 @@ namespace Kuzbass_Project
                             {
                                 if (File.Exists(@"Шаблоны\ШаблонРеестр.xlsx"))
                                 {
-                                    //Считываем порт из файла
                                     String path = null;
 
-                                    //Считываем место реестра
                                     try
                                     {
                                         using (StreamReader sr = new StreamReader(File.Open(@"SavePath\Registry.txt", FileMode.Open)))
@@ -1119,7 +1171,9 @@ namespace Kuzbass_Project
                                         }
 
                                         System.IO.FileInfo fInfoSrc = new System.IO.FileInfo(@"Шаблоны\ШаблонРеестр.xlsx");
+
                                         var wb1 = new ExcelPackage(fInfoSrc).File.CopyTo(path);
+
                                         goto Tag;
                                     }
                                     catch
@@ -1142,15 +1196,24 @@ namespace Kuzbass_Project
                     else
                     {
                         MessageBox.Show("Обнаружен DataMatrix неправильного формата", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Status_TB.AppendText($"Файл {NameFile} обнаружен некорректный формат DataMatrix" + Environment.NewLine);
                         continue;
                     }
+
                     i++;
+
+                    Status_TB.AppendText($"Файл {NameFile} сохранение файла завершено" + Environment.NewLine);
+
+                    Dialog.Close();
                 }
+
                 if (Act)
                 {
                     ExcelPackage wb = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName.Replace(".xlsx", "") + @"\Акт от " + date + " не уникальный.xlsx"));
                     ExcelWorksheet wsheet3 = wb.Workbook.Worksheets[1];
+
                     int last = wsheet3.Dimension.End.Row;
+
                     wsheet3.Cells[last + 2, 4].Value = "Принял";
                     wsheet3.Cells[last + 3, 4].Value = "Сдал";
                     wsheet3.Cells[last + 2, 6].Value = "______________";
@@ -1158,9 +1221,12 @@ namespace Kuzbass_Project
                     wsheet3.Cells[last + 2, 7].Value = "Линник О.В.";
                     wsheet3.Cells[last + 3, 7].Value = "/______________/";
                     wb.Save();
+
                     ExcelPackage wb2 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName + @"\Акт от " + date + ".xlsx"));
                     ExcelWorksheet wsheet2 = wb2.Workbook.Worksheets[1];
+
                     int last1 = wsheet2.Dimension.End.Row;
+
                     wsheet2.Cells[last1 + 2, 4].Value = "Принял";
                     wsheet2.Cells[last1 + 3, 4].Value = "Сдал";
                     wsheet2.Cells[last1 + 2, 6].Value = "______________";
@@ -1169,12 +1235,17 @@ namespace Kuzbass_Project
                     wsheet2.Cells[last1 + 3, 7].Value = "/______________/";
                     wb2.Save();
                 }
+
                 System.IO.DirectoryInfo di = new DirectoryInfo("Temp");
+
                 foreach (FileInfo file in di.GetFiles())
                 {
                     file.Delete();
                 }
+
                 Directory.Delete("Temp");
+
+                //CancelToken.Cancel();
             }
         }
     }

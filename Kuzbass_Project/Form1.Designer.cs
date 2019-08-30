@@ -43,13 +43,13 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Recognize_B = new System.Windows.Forms.Button();
             this.Exit_B = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ChangeUser_B = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.Report_CB = new System.Windows.Forms.ComboBox();
             this.CreateReport_B = new System.Windows.Forms.Button();
-            this.Recognize_B = new System.Windows.Forms.Button();
             this.Spisok_GB.SuspendLayout();
             this.Operation_GB.SuspendLayout();
             this.Status_GB.SuspendLayout();
@@ -62,7 +62,7 @@
             // 
             this.Spisok_LB.FormattingEnabled = true;
             this.Spisok_LB.Location = new System.Drawing.Point(4, 17);
-            this.Spisok_LB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Spisok_LB.Margin = new System.Windows.Forms.Padding(2);
             this.Spisok_LB.Name = "Spisok_LB";
             this.Spisok_LB.Size = new System.Drawing.Size(319, 290);
             this.Spisok_LB.TabIndex = 2;
@@ -71,7 +71,7 @@
             // Confirm_B
             // 
             this.Confirm_B.Location = new System.Drawing.Point(4, 17);
-            this.Confirm_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Confirm_B.Margin = new System.Windows.Forms.Padding(2);
             this.Confirm_B.Name = "Confirm_B";
             this.Confirm_B.Size = new System.Drawing.Size(188, 24);
             this.Confirm_B.TabIndex = 3;
@@ -84,9 +84,9 @@
             this.Spisok_GB.Controls.Add(this.RefreshSpisok_B);
             this.Spisok_GB.Controls.Add(this.Spisok_LB);
             this.Spisok_GB.Location = new System.Drawing.Point(9, 9);
-            this.Spisok_GB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Spisok_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Spisok_GB.Name = "Spisok_GB";
-            this.Spisok_GB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Spisok_GB.Padding = new System.Windows.Forms.Padding(2);
             this.Spisok_GB.Size = new System.Drawing.Size(326, 343);
             this.Spisok_GB.TabIndex = 4;
             this.Spisok_GB.TabStop = false;
@@ -95,7 +95,7 @@
             // RefreshSpisok_B
             // 
             this.RefreshSpisok_B.Location = new System.Drawing.Point(4, 311);
-            this.RefreshSpisok_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RefreshSpisok_B.Margin = new System.Windows.Forms.Padding(2);
             this.RefreshSpisok_B.Name = "RefreshSpisok_B";
             this.RefreshSpisok_B.Size = new System.Drawing.Size(319, 24);
             this.RefreshSpisok_B.TabIndex = 1;
@@ -110,9 +110,9 @@
             this.Operation_GB.Controls.Add(this.OpenDocument_B);
             this.Operation_GB.Controls.Add(this.Operations_B);
             this.Operation_GB.Location = new System.Drawing.Point(339, 85);
-            this.Operation_GB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Operation_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Operation_GB.Name = "Operation_GB";
-            this.Operation_GB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Operation_GB.Padding = new System.Windows.Forms.Padding(2);
             this.Operation_GB.Size = new System.Drawing.Size(196, 98);
             this.Operation_GB.TabIndex = 6;
             this.Operation_GB.TabStop = false;
@@ -121,7 +121,7 @@
             // NumberDoc_TB
             // 
             this.NumberDoc_TB.Location = new System.Drawing.Point(86, 73);
-            this.NumberDoc_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.NumberDoc_TB.Margin = new System.Windows.Forms.Padding(2);
             this.NumberDoc_TB.Name = "NumberDoc_TB";
             this.NumberDoc_TB.Size = new System.Drawing.Size(108, 20);
             this.NumberDoc_TB.TabIndex = 4;
@@ -140,7 +140,7 @@
             // 
             this.OpenDocument_B.BackColor = System.Drawing.SystemColors.ControlLight;
             this.OpenDocument_B.Location = new System.Drawing.Point(4, 18);
-            this.OpenDocument_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.OpenDocument_B.Margin = new System.Windows.Forms.Padding(2);
             this.OpenDocument_B.Name = "OpenDocument_B";
             this.OpenDocument_B.Size = new System.Drawing.Size(188, 24);
             this.OpenDocument_B.TabIndex = 5;
@@ -151,7 +151,7 @@
             // Operations_B
             // 
             this.Operations_B.Location = new System.Drawing.Point(4, 46);
-            this.Operations_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Operations_B.Margin = new System.Windows.Forms.Padding(2);
             this.Operations_B.Name = "Operations_B";
             this.Operations_B.Size = new System.Drawing.Size(188, 24);
             this.Operations_B.TabIndex = 6;
@@ -162,7 +162,7 @@
             // Status_TB
             // 
             this.Status_TB.Location = new System.Drawing.Point(4, 17);
-            this.Status_TB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Status_TB.Margin = new System.Windows.Forms.Padding(2);
             this.Status_TB.Multiline = true;
             this.Status_TB.Name = "Status_TB";
             this.Status_TB.ReadOnly = true;
@@ -174,9 +174,9 @@
             // 
             this.Status_GB.Controls.Add(this.Status_TB);
             this.Status_GB.Location = new System.Drawing.Point(10, 355);
-            this.Status_GB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Status_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Status_GB.Name = "Status_GB";
-            this.Status_GB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Status_GB.Padding = new System.Windows.Forms.Padding(2);
             this.Status_GB.Size = new System.Drawing.Size(526, 131);
             this.Status_GB.TabIndex = 8;
             this.Status_GB.TabStop = false;
@@ -191,18 +191,29 @@
             this.groupBox1.Controls.Add(this.Recognize_B);
             this.groupBox1.Controls.Add(this.Confirm_B);
             this.groupBox1.Location = new System.Drawing.Point(340, 9);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(196, 72);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Операции с файлом из списка";
             // 
+            // Recognize_B
+            // 
+            this.Recognize_B.Location = new System.Drawing.Point(4, 44);
+            this.Recognize_B.Margin = new System.Windows.Forms.Padding(2);
+            this.Recognize_B.Name = "Recognize_B";
+            this.Recognize_B.Size = new System.Drawing.Size(188, 24);
+            this.Recognize_B.TabIndex = 4;
+            this.Recognize_B.Text = "&Распознать";
+            this.Recognize_B.UseVisualStyleBackColor = true;
+            this.Recognize_B.Click += new System.EventHandler(this.Recognize_B_Click);
+            // 
             // Exit_B
             // 
             this.Exit_B.Location = new System.Drawing.Point(4, 45);
-            this.Exit_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Exit_B.Margin = new System.Windows.Forms.Padding(2);
             this.Exit_B.Name = "Exit_B";
             this.Exit_B.Size = new System.Drawing.Size(188, 24);
             this.Exit_B.TabIndex = 7;
@@ -215,9 +226,9 @@
             this.groupBox2.Controls.Add(this.ChangeUser_B);
             this.groupBox2.Controls.Add(this.Exit_B);
             this.groupBox2.Location = new System.Drawing.Point(340, 275);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(196, 76);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
@@ -227,7 +238,7 @@
             // 
             this.ChangeUser_B.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.ChangeUser_B.Location = new System.Drawing.Point(4, 17);
-            this.ChangeUser_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ChangeUser_B.Margin = new System.Windows.Forms.Padding(2);
             this.ChangeUser_B.Name = "ChangeUser_B";
             this.ChangeUser_B.Size = new System.Drawing.Size(188, 24);
             this.ChangeUser_B.TabIndex = 8;
@@ -240,9 +251,9 @@
             this.groupBox3.Controls.Add(this.Report_CB);
             this.groupBox3.Controls.Add(this.CreateReport_B);
             this.groupBox3.Location = new System.Drawing.Point(339, 187);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(196, 87);
             this.groupBox3.TabIndex = 18;
             this.groupBox3.TabStop = false;
@@ -253,7 +264,7 @@
             this.Report_CB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Report_CB.FormattingEnabled = true;
             this.Report_CB.Location = new System.Drawing.Point(6, 16);
-            this.Report_CB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Report_CB.Margin = new System.Windows.Forms.Padding(2);
             this.Report_CB.Name = "Report_CB";
             this.Report_CB.Size = new System.Drawing.Size(186, 21);
             this.Report_CB.TabIndex = 4;
@@ -262,24 +273,13 @@
             // CreateReport_B
             // 
             this.CreateReport_B.Location = new System.Drawing.Point(4, 45);
-            this.CreateReport_B.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CreateReport_B.Margin = new System.Windows.Forms.Padding(2);
             this.CreateReport_B.Name = "CreateReport_B";
             this.CreateReport_B.Size = new System.Drawing.Size(188, 24);
             this.CreateReport_B.TabIndex = 3;
             this.CreateReport_B.Text = "&Сформировать";
             this.CreateReport_B.UseVisualStyleBackColor = true;
             this.CreateReport_B.Click += new System.EventHandler(this.CreateReport_B_Click);
-            // 
-            // Recognize_B
-            // 
-            this.Recognize_B.Location = new System.Drawing.Point(4, 44);
-            this.Recognize_B.Margin = new System.Windows.Forms.Padding(2);
-            this.Recognize_B.Name = "Recognize_B";
-            this.Recognize_B.Size = new System.Drawing.Size(188, 24);
-            this.Recognize_B.TabIndex = 4;
-            this.Recognize_B.Text = "&Распознать";
-            this.Recognize_B.UseVisualStyleBackColor = true;
-            this.Recognize_B.Click += new System.EventHandler(this.Recognize_B_Click);
             // 
             // Form1
             // 
@@ -294,7 +294,7 @@
             this.Controls.Add(this.Spisok_GB);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -320,7 +320,6 @@
         private System.Windows.Forms.GroupBox Spisok_GB;
         private System.Windows.Forms.Button RefreshSpisok_B;
         private System.Windows.Forms.GroupBox Operation_GB;
-        private System.Windows.Forms.TextBox Status_TB;
         private System.Windows.Forms.GroupBox Status_GB;
         private System.Windows.Forms.Button OpenDocument_B;
         private System.Windows.Forms.Label label2;
@@ -336,6 +335,7 @@
         private System.Windows.Forms.ComboBox Report_CB;
         private System.Windows.Forms.Button CreateReport_B;
         private System.Windows.Forms.Button Recognize_B;
+        public System.Windows.Forms.TextBox Status_TB;
     }
 }
 

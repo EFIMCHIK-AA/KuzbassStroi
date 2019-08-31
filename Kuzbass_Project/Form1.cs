@@ -821,40 +821,6 @@ namespace Kuzbass_Project
                 MessageBox.Show("Шаблон отчета не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-        }
-
-        IsOKFiles_Form TempFormIsOK;
-
-        CancellationTokenSource CancelToken;
-
-        private CancellationTokenSource GetCancelToken()
-        {
-            return new CancellationTokenSource();
-        }
-
-        private void ShowProcessForm(CancellationToken Token)
-        {
-            if(Token.IsCancellationRequested)
-            {
-                TempFormIsOK.Status_L.BeginInvoke(new MethodInvoker(delegate
-                {
-                    TempFormIsOK.Status_L.Text = "Обработка завершена";
-                }));
-
-                return;
-            }
-            else
-            {
-                TempFormIsOK = new IsOKFiles_Form();
-
-                TempFormIsOK.ShowDialog();
-            }
-        }
-
-        private async void ShowProcessFormAsync(CancellationToken Token)
-        {
-            await Task.Run(() => ShowProcessForm(Token));
         }
 
         private void Recognize_B_Click(object sender, EventArgs e)
@@ -863,11 +829,8 @@ namespace Kuzbass_Project
             {
                 Multiselect = true,
                 Title = "Выберите сканы чертежей",
-                InitialDirectory = @"C:\",
-                Filter = "TIFF|*.tiff|TIFF|*.tif"
+                Filter = "TIFF|*.tif|TIFF|*.tiff"
             };
-
-            bool Act = false;
 
             string date = DateTime.Now.ToString();
 
@@ -880,49 +843,17 @@ namespace Kuzbass_Project
                     return;
                 }
 
-                DialogResult rez_Act = MessageBox.Show("Создать акт?", "Формирование акта", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-
-                if (rez_Act == DialogResult.Yes)
-                {
-                    if (File.Exists(@"Шаблоны\ШаблонАктУникальный.xlsx"))
-                    {
-                        saveFileDialog1.FileName = date;
-                        System.IO.FileInfo fInfoSrcUnique = new System.IO.FileInfo(@"Шаблоны\ШаблонАктУникальный.xlsx");
-                        System.IO.FileInfo fInfoSrcNoUnique = new System.IO.FileInfo(@"Шаблоны\ШаблонАктУникальный.xlsx");
-                        if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                        {
-                            Directory.CreateDirectory(saveFileDialog1.FileName.Replace(".xlsx", ""));
-                            var wb1 = new ExcelPackage(fInfoSrcUnique).File.CopyTo(saveFileDialog1.FileName + @"\Акт от " + date + ".xlsx");
-                            wb1 = new ExcelPackage(fInfoSrcNoUnique).File.CopyTo(saveFileDialog1.FileName.Replace(".xlsx", "") + @"\Акт от " + date + " не уникальный.xlsx");
-                            Act = true;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Шаблон акта не найден", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-
                 Directory.CreateDirectory("Temp");
 
-                //CancelToken = GetCancelToken();
+                Int32 CountFile = Opd.FileNames.Length;
 
-                //CancellationToken Token = CancelToken.Token;
-
-                //ShowProcessFormAsync(Token);
+                Int32 i = 0;
 
                 foreach (String NameFile in Opd.FileNames)
                 {
                     Status_TB.AppendText($"Файл {NameFile} обрабатывается, пожалуйста подождите..." + Environment.NewLine);
 
-                    IsOKFiles_Form Dialog = new IsOKFiles_Form();
-
-                    Dialog.NameFile_L.Text = NameFile;
-
-                    Dialog.Show();
-
-                    Int32 i = 0;
+                    Status_TB.AppendText($"------------------------------------------------------------------------------------------------------------------------->{i + 1}|{CountFile}<--------------------------------------------------------------------------------------------------------------------------" + Environment.NewLine);
 
                     String CurrentInfoDataMatrix = "";
 
@@ -1036,34 +967,6 @@ namespace Kuzbass_Project
 
                                         if (CheckUnigueQR.Count == 0)
                                         {
-                                            if (Act)
-                                            {
-                                                try
-                                                {
-                                                    ExcelPackage workbook1 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName + @"\Акт от " + date + ".xlsx"));
-                                                    ExcelWorksheet ws2 = workbook1.Workbook.Worksheets[1];
-                                                    var rowCntAct = ws2.Dimension.End.Row;
-
-                                                    if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
-                                                    {
-                                                        excel.SplitData(Temp2, CurrentDocument.QR);
-                                                        ws2.Cells[i + rowCntAct + 1, 1].Value = Temp2.Number;
-                                                        ws2.Cells[i + rowCntAct + 1, 2].Value = Temp2.List;
-                                                        ws2.Cells[i + rowCntAct + 1, 3].Value = Temp2.Name;
-                                                        ws2.Cells[i + rowCntAct + 1, 4].Value = Temp2.Executor;
-                                                        ws2.Cells[i + rowCntAct + 1, 5].Value = Temp2.Lenght;
-                                                        ws2.Cells[i + rowCntAct + 1, 6].Value = Temp2.Weight;
-                                                        ws2.Cells[i + rowCntAct + 1, 7].Value = Temp2.DateCreate.ToString();
-                                                        workbook1.Save();
-                                                    }
-                                                }
-                                                catch
-                                                {
-                                                    MessageBox.Show("Невозможно сформировать акт, закройте все книги Excel", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                                    return;
-                                                }
-                                            }
-
                                             excel.SplitData(Temp2, CurrentDocument.QR);
 
                                             using (var cmd = new NpgsqlCommand())
@@ -1110,38 +1013,11 @@ namespace Kuzbass_Project
 
                                             //Вывод в компонент сообщения об удачном добавлении
                                             Status_TB.AppendText($"Номер заказа {Temp2.Number} Марка: {Temp2.Name} Лист: {Temp2.List} => Добавлен в базу отслеживания" + Environment.NewLine);
+
+                                            Status_TB.AppendText($"Файл {NameFile} сохранение файла завершено" + Environment.NewLine);
                                         }
                                         else
                                         {
-                                            if (Act)
-                                            {
-                                                try
-                                                {
-                                                    ExcelPackage workbook2 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName.Replace(".xlsx", "") + @"\Акт от " + date + " не уникальный.xlsx"));
-                                                    ExcelWorksheet ws3 = workbook2.Workbook.Worksheets[1];
-
-                                                    Int32 rowCntAct1 = ws3.Dimension.End.Row;
-
-                                                    if (saveFileDialog1.FileName.IndexOf(@":\") != -1)
-                                                    {
-                                                        excel.SplitData(Temp2, CurrentDocument.QR);
-                                                        ws3.Cells[i + rowCntAct1 + 1, 1].Value = Temp2.Number;
-                                                        ws3.Cells[i + rowCntAct1 + 1, 2].Value = Temp2.List;
-                                                        ws3.Cells[i + rowCntAct1 + 1, 3].Value = Temp2.Name;
-                                                        ws3.Cells[i + rowCntAct1 + 1, 4].Value = Temp2.Executor;
-                                                        ws3.Cells[i + rowCntAct1 + 1, 5].Value = Temp2.Lenght;
-                                                        ws3.Cells[i + rowCntAct1 + 1, 6].Value = Temp2.Weight;
-                                                        ws3.Cells[i + rowCntAct1 + 1, 7].Value = Temp2.DateCreate.ToString();
-                                                        workbook2.Save();
-                                                    }
-                                                }
-                                                catch
-                                                {
-                                                    MessageBox.Show("Невозможно сформировать акт, закройте все книги Excel", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                                    return;
-                                                }
-                                            }
-
                                             Status_TB.AppendText($"QR {CurrentDocument.QR} существует => Добавление не произведено" + Environment.NewLine);
                                         }
 
@@ -1201,41 +1077,8 @@ namespace Kuzbass_Project
                     }
 
                     i++;
-
-                    Status_TB.AppendText($"Файл {NameFile} сохранение файла завершено" + Environment.NewLine);
-
-                    Dialog.Close();
                 }
-
-                if (Act)
-                {
-                    ExcelPackage wb = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName.Replace(".xlsx", "") + @"\Акт от " + date + " не уникальный.xlsx"));
-                    ExcelWorksheet wsheet3 = wb.Workbook.Worksheets[1];
-
-                    int last = wsheet3.Dimension.End.Row;
-
-                    wsheet3.Cells[last + 2, 4].Value = "Принял";
-                    wsheet3.Cells[last + 3, 4].Value = "Сдал";
-                    wsheet3.Cells[last + 2, 6].Value = "______________";
-                    wsheet3.Cells[last + 3, 6].Value = "______________";
-                    wsheet3.Cells[last + 2, 7].Value = "Линник О.В.";
-                    wsheet3.Cells[last + 3, 7].Value = "/______________/";
-                    wb.Save();
-
-                    ExcelPackage wb2 = new ExcelPackage(new System.IO.FileInfo(saveFileDialog1.FileName + @"\Акт от " + date + ".xlsx"));
-                    ExcelWorksheet wsheet2 = wb2.Workbook.Worksheets[1];
-
-                    int last1 = wsheet2.Dimension.End.Row;
-
-                    wsheet2.Cells[last1 + 2, 4].Value = "Принял";
-                    wsheet2.Cells[last1 + 3, 4].Value = "Сдал";
-                    wsheet2.Cells[last1 + 2, 6].Value = "______________";
-                    wsheet2.Cells[last1 + 3, 6].Value = "______________";
-                    wsheet2.Cells[last1 + 2, 7].Value = "Линник О.В.";
-                    wsheet2.Cells[last1 + 3, 7].Value = "/______________/";
-                    wb2.Save();
-                }
-
+               
                 System.IO.DirectoryInfo di = new DirectoryInfo("Temp");
 
                 foreach (FileInfo file in di.GetFiles())
@@ -1245,7 +1088,8 @@ namespace Kuzbass_Project
 
                 Directory.Delete("Temp");
 
-                //CancelToken.Cancel();
+                Status_TB.AppendText($"ОБРАБОТКА ЗАВЕРШЕНА!" + Environment.NewLine);
+                Status_TB.AppendText($"-------------------------------------------------------------------------------------------------------------------------->{i}|{CountFile}<-------------------------------------------------------------------------------------------------------------------------" + Environment.NewLine);
             }
         }
     }

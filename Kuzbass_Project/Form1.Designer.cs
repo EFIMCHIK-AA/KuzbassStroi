@@ -64,7 +64,7 @@
             this.Spisok_LB.Location = new System.Drawing.Point(4, 17);
             this.Spisok_LB.Margin = new System.Windows.Forms.Padding(2);
             this.Spisok_LB.Name = "Spisok_LB";
-            this.Spisok_LB.Size = new System.Drawing.Size(319, 290);
+            this.Spisok_LB.Size = new System.Drawing.Size(522, 290);
             this.Spisok_LB.TabIndex = 2;
             this.Spisok_LB.SelectedIndexChanged += new System.EventHandler(this.Spisok_LB_SelectedIndexChanged);
             // 
@@ -73,7 +73,7 @@
             this.Confirm_B.Location = new System.Drawing.Point(4, 17);
             this.Confirm_B.Margin = new System.Windows.Forms.Padding(2);
             this.Confirm_B.Name = "Confirm_B";
-            this.Confirm_B.Size = new System.Drawing.Size(188, 24);
+            this.Confirm_B.Size = new System.Drawing.Size(240, 24);
             this.Confirm_B.TabIndex = 3;
             this.Confirm_B.Text = "&Подтвердить";
             this.Confirm_B.UseVisualStyleBackColor = true;
@@ -87,7 +87,7 @@
             this.Spisok_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Spisok_GB.Name = "Spisok_GB";
             this.Spisok_GB.Padding = new System.Windows.Forms.Padding(2);
-            this.Spisok_GB.Size = new System.Drawing.Size(326, 343);
+            this.Spisok_GB.Size = new System.Drawing.Size(532, 343);
             this.Spisok_GB.TabIndex = 4;
             this.Spisok_GB.TabStop = false;
             this.Spisok_GB.Text = "Документы в режиме ожидания";
@@ -97,7 +97,7 @@
             this.RefreshSpisok_B.Location = new System.Drawing.Point(4, 311);
             this.RefreshSpisok_B.Margin = new System.Windows.Forms.Padding(2);
             this.RefreshSpisok_B.Name = "RefreshSpisok_B";
-            this.RefreshSpisok_B.Size = new System.Drawing.Size(319, 24);
+            this.RefreshSpisok_B.Size = new System.Drawing.Size(522, 24);
             this.RefreshSpisok_B.TabIndex = 1;
             this.RefreshSpisok_B.Text = "&Обновить список";
             this.RefreshSpisok_B.UseVisualStyleBackColor = true;
@@ -109,11 +109,11 @@
             this.Operation_GB.Controls.Add(this.label2);
             this.Operation_GB.Controls.Add(this.OpenDocument_B);
             this.Operation_GB.Controls.Add(this.Operations_B);
-            this.Operation_GB.Location = new System.Drawing.Point(339, 85);
+            this.Operation_GB.Location = new System.Drawing.Point(544, 87);
             this.Operation_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Operation_GB.Name = "Operation_GB";
             this.Operation_GB.Padding = new System.Windows.Forms.Padding(2);
-            this.Operation_GB.Size = new System.Drawing.Size(196, 98);
+            this.Operation_GB.Size = new System.Drawing.Size(248, 98);
             this.Operation_GB.TabIndex = 6;
             this.Operation_GB.TabStop = false;
             this.Operation_GB.Text = "Модификация файлов";
@@ -123,7 +123,7 @@
             this.NumberDoc_TB.Location = new System.Drawing.Point(86, 73);
             this.NumberDoc_TB.Margin = new System.Windows.Forms.Padding(2);
             this.NumberDoc_TB.Name = "NumberDoc_TB";
-            this.NumberDoc_TB.Size = new System.Drawing.Size(108, 20);
+            this.NumberDoc_TB.Size = new System.Drawing.Size(158, 20);
             this.NumberDoc_TB.TabIndex = 4;
             // 
             // label2
@@ -142,7 +142,7 @@
             this.OpenDocument_B.Location = new System.Drawing.Point(4, 18);
             this.OpenDocument_B.Margin = new System.Windows.Forms.Padding(2);
             this.OpenDocument_B.Name = "OpenDocument_B";
-            this.OpenDocument_B.Size = new System.Drawing.Size(188, 24);
+            this.OpenDocument_B.Size = new System.Drawing.Size(240, 24);
             this.OpenDocument_B.TabIndex = 5;
             this.OpenDocument_B.Text = "&Добавить";
             this.OpenDocument_B.UseVisualStyleBackColor = false;
@@ -153,7 +153,7 @@
             this.Operations_B.Location = new System.Drawing.Point(4, 46);
             this.Operations_B.Margin = new System.Windows.Forms.Padding(2);
             this.Operations_B.Name = "Operations_B";
-            this.Operations_B.Size = new System.Drawing.Size(188, 24);
+            this.Operations_B.Size = new System.Drawing.Size(240, 24);
             this.Operations_B.TabIndex = 6;
             this.Operations_B.Text = "&Изменить файлы";
             this.Operations_B.UseVisualStyleBackColor = true;
@@ -167,7 +167,7 @@
             this.Status_TB.Name = "Status_TB";
             this.Status_TB.ReadOnly = true;
             this.Status_TB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Status_TB.Size = new System.Drawing.Size(519, 110);
+            this.Status_TB.Size = new System.Drawing.Size(778, 186);
             this.Status_TB.TabIndex = 7;
             // 
             // Status_GB
@@ -177,7 +177,7 @@
             this.Status_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Status_GB.Name = "Status_GB";
             this.Status_GB.Padding = new System.Windows.Forms.Padding(2);
-            this.Status_GB.Size = new System.Drawing.Size(526, 131);
+            this.Status_GB.Size = new System.Drawing.Size(783, 207);
             this.Status_GB.TabIndex = 8;
             this.Status_GB.TabStop = false;
             this.Status_GB.Text = "Статус операции";
@@ -190,11 +190,11 @@
             // 
             this.groupBox1.Controls.Add(this.Recognize_B);
             this.groupBox1.Controls.Add(this.Confirm_B);
-            this.groupBox1.Location = new System.Drawing.Point(340, 9);
+            this.groupBox1.Location = new System.Drawing.Point(545, 11);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(196, 72);
+            this.groupBox1.Size = new System.Drawing.Size(248, 72);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Операции с файлом из списка";
@@ -204,7 +204,7 @@
             this.Recognize_B.Location = new System.Drawing.Point(4, 44);
             this.Recognize_B.Margin = new System.Windows.Forms.Padding(2);
             this.Recognize_B.Name = "Recognize_B";
-            this.Recognize_B.Size = new System.Drawing.Size(188, 24);
+            this.Recognize_B.Size = new System.Drawing.Size(240, 24);
             this.Recognize_B.TabIndex = 4;
             this.Recognize_B.Text = "&Распознать";
             this.Recognize_B.UseVisualStyleBackColor = true;
@@ -215,7 +215,7 @@
             this.Exit_B.Location = new System.Drawing.Point(4, 45);
             this.Exit_B.Margin = new System.Windows.Forms.Padding(2);
             this.Exit_B.Name = "Exit_B";
-            this.Exit_B.Size = new System.Drawing.Size(188, 24);
+            this.Exit_B.Size = new System.Drawing.Size(240, 24);
             this.Exit_B.TabIndex = 7;
             this.Exit_B.Text = "&Выйти";
             this.Exit_B.UseVisualStyleBackColor = true;
@@ -225,11 +225,11 @@
             // 
             this.groupBox2.Controls.Add(this.ChangeUser_B);
             this.groupBox2.Controls.Add(this.Exit_B);
-            this.groupBox2.Location = new System.Drawing.Point(340, 275);
+            this.groupBox2.Location = new System.Drawing.Point(545, 277);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(196, 76);
+            this.groupBox2.Size = new System.Drawing.Size(248, 76);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Завершение работы";
@@ -240,7 +240,7 @@
             this.ChangeUser_B.Location = new System.Drawing.Point(4, 17);
             this.ChangeUser_B.Margin = new System.Windows.Forms.Padding(2);
             this.ChangeUser_B.Name = "ChangeUser_B";
-            this.ChangeUser_B.Size = new System.Drawing.Size(188, 24);
+            this.ChangeUser_B.Size = new System.Drawing.Size(240, 24);
             this.ChangeUser_B.TabIndex = 8;
             this.ChangeUser_B.Text = "Сменить пользователя";
             this.ChangeUser_B.UseVisualStyleBackColor = true;
@@ -250,11 +250,11 @@
             // 
             this.groupBox3.Controls.Add(this.Report_CB);
             this.groupBox3.Controls.Add(this.CreateReport_B);
-            this.groupBox3.Location = new System.Drawing.Point(339, 187);
+            this.groupBox3.Location = new System.Drawing.Point(544, 189);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(196, 87);
+            this.groupBox3.Size = new System.Drawing.Size(248, 87);
             this.groupBox3.TabIndex = 18;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Формирование отчета";
@@ -266,7 +266,7 @@
             this.Report_CB.Location = new System.Drawing.Point(6, 16);
             this.Report_CB.Margin = new System.Windows.Forms.Padding(2);
             this.Report_CB.Name = "Report_CB";
-            this.Report_CB.Size = new System.Drawing.Size(186, 21);
+            this.Report_CB.Size = new System.Drawing.Size(238, 21);
             this.Report_CB.TabIndex = 4;
             this.Report_CB.SelectedIndexChanged += new System.EventHandler(this.Report_CB_SelectedIndexChanged);
             // 
@@ -275,7 +275,7 @@
             this.CreateReport_B.Location = new System.Drawing.Point(4, 45);
             this.CreateReport_B.Margin = new System.Windows.Forms.Padding(2);
             this.CreateReport_B.Name = "CreateReport_B";
-            this.CreateReport_B.Size = new System.Drawing.Size(188, 24);
+            this.CreateReport_B.Size = new System.Drawing.Size(240, 24);
             this.CreateReport_B.TabIndex = 3;
             this.CreateReport_B.Text = "&Сформировать";
             this.CreateReport_B.UseVisualStyleBackColor = true;
@@ -285,7 +285,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(544, 498);
+            this.ClientSize = new System.Drawing.Size(804, 571);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

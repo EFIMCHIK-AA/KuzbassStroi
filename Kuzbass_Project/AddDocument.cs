@@ -17,7 +17,6 @@ namespace Kuzbass_Project
         {
             InitializeComponent();
             this.port = Port;
-
             this.Host = Host;
             this.Host_DB = Host_DB;
             this.Port_DB = Port_DB;
@@ -28,13 +27,24 @@ namespace Kuzbass_Project
         Int32 port;
         String Host;
 
+
         SimpleTcpServer Server;
 
         private void AddDocument_Load(object sender, EventArgs e)
         {
             //Блокируем кнопки
-            Create_B.Enabled = true;
             OK_B.Enabled = true;
+            if (SystemArgs.AddedDocument)
+            {
+                OK_B.Text = "Добавить";
+                Create_B.Enabled = true;
+            }
+            else
+            {
+                OK_B.Text = "Подтвердить";
+                Create_B.Enabled = false;
+            }
+
 
             Status_TB.AppendText($"Получение хоста => Удачно" + Environment.NewLine);
             Status_TB.AppendText($"Получение порта => Удачно" + Environment.NewLine);
@@ -91,6 +101,7 @@ namespace Kuzbass_Project
             if (TempSession)
             {
                 Session.Add(e.MessageString);
+                string msg = e.MessageString;
 
                 try
                 {
@@ -99,14 +110,29 @@ namespace Kuzbass_Project
                     using (var connect = new NpgsqlConnection(connString))
                     {
                         connect.Open();
-
-                        using (var cmd = new NpgsqlCommand($"SELECT Count(\"Orders\".\"QR_Order\") FROM \"Orders\" WHERE \"QR_Order\" = '{e.MessageString}'", connect))
+                        if (SystemArgs.AddedDocument)
                         {
-                            using (var reader = cmd.ExecuteReader())
+                            using (var cmd = new NpgsqlCommand($"SELECT Count(\"Orders\".\"QR_Order\") FROM \"Orders\" WHERE \"QR_Order\" = '{msg}'", connect))
                             {
-                                while (reader.Read())
+                                using (var reader = cmd.ExecuteReader())
                                 {
-                                    Temp = reader.GetInt64(0);
+                                    while (reader.Read())
+                                    {
+                                        Temp = reader.GetInt64(0);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            using (var cmd = new NpgsqlCommand($"SELECT Count(\"Orders\".\"QR_Order\") FROM \"Orders\", \"StatusOrders\" WHERE \"QR_Order\" = '{msg}' AND \"StatusOrders\".\"Status_Order\"='{SystemArgs.SearchStatus}' AND \"Orders\".\"id_Order\"=\"StatusOrders\".\"id_Order\"", connect))
+                            {
+                                using (var reader = cmd.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        Temp = reader.GetInt64(0);
+                                    }
                                 }
                             }
                         }
@@ -121,30 +147,60 @@ namespace Kuzbass_Project
                 }
 
                 //Если уникален в БД
-                if (Temp == 0)
+                if (SystemArgs.AddedDocument)
                 {
-                    Spisok_LB.Invoke((MethodInvoker)delegate ()
+                    if (Temp == 0)
                     {
-                        Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
-                        UnigueYES.Add(e.MessageString);
-                        Spisok_LB.Items.Add(e.MessageString);
-                        SpisokCheck_LB.Items.Add("Уникален").BackColor = Color.Green;
-                        System.Threading.Thread.Sleep(100);
-                        Status_TB.AppendText($"QR {e.MessageString} => Получен" + Environment.NewLine);
-                    });
+                        Spisok_LB.Invoke((MethodInvoker)delegate ()
+                        {
+                            Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
+                            UnigueYES.Add(msg);
+                            Spisok_LB.Items.Add(msg);
+                            SpisokCheck_LB.Items.Add("Уникален").BackColor = Color.Green;
+                            System.Threading.Thread.Sleep(100);
+                            Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                        });
+                    }
+                    //Иначе
+                    else
+                    {
+                        Spisok_LB.Invoke((MethodInvoker)delegate ()
+                        {
+                            Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
+                            Spisok_LB.Items.Add(msg);
+                            UnigueNO.Add(msg);
+                            SpisokCheck_LB.Items.Add("Не уникален").BackColor = Color.Red;
+                            System.Threading.Thread.Sleep(100);
+                            Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                        });
+                    }
                 }
-                //Иначе
                 else
                 {
-                    Spisok_LB.Invoke((MethodInvoker)delegate ()
+                    if (Temp == 1)
                     {
-                        Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
-                        UnigueNO.Add(e.MessageString);
-                        Spisok_LB.Items.Add(e.MessageString);
-                        SpisokCheck_LB.Items.Add("Не уникален").BackColor = Color.Red;
-                        System.Threading.Thread.Sleep(100);
-                        Status_TB.AppendText($"QR {e.MessageString} => Получен" + Environment.NewLine);
-                    });
+                        Spisok_LB.Invoke((MethodInvoker)delegate ()
+                        {
+                            Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
+                            Spisok_LB.Items.Add(msg);
+                            SpisokCheck_LB.Items.Add("Найден").BackColor = Color.Green;
+                            System.Threading.Thread.Sleep(100);
+                            Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                        });
+                    }
+                    //Иначе
+                    else
+                    {
+                        
+                        Spisok_LB.Invoke((MethodInvoker)delegate ()
+                        {
+                            Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
+                            Spisok_LB.Items.Add(msg);
+                            SpisokCheck_LB.Items.Add("Не найден").BackColor = Color.Red;
+                            System.Threading.Thread.Sleep(100);
+                            Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                        });
+                    }
                 }
             }      
         }

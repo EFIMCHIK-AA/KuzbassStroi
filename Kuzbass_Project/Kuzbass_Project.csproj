@@ -140,6 +140,7 @@
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemArgs.cs" />
     <EmbeddedResource Include="AddDocument.resx">
       <DependentUpon>AddDocument.cs</DependentUpon>
     </EmbeddedResource>

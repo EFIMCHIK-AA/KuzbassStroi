@@ -154,6 +154,7 @@ namespace Kuzbass_Project
             Status_TB.Clear();
             Documents.Clear();
 
+
             if (File.Exists(@"Connect\Port.txt"))
             {
                 //Считываем порт из файла
@@ -263,53 +264,84 @@ namespace Kuzbass_Project
                                 {
                                     CheckUnigueQR.Clear();
 
-                                    //Чтение
-                                    using (var cmd = new NpgsqlCommand($"SELECT \"QR_Order\" FROM \"Orders\"" +
-                                                                       $"WHERE \"QR_Order\" = '{Dialog.Spisok_LB.Items[i]}'", connect))
+                                    if (SystemArgs.AddedDocument)
                                     {
-                                        using (var reader = cmd.ExecuteReader())
+                                        using (var cmd = new NpgsqlCommand($"SELECT \"QR_Order\" FROM \"Orders\"" +
+                                                           $"WHERE \"QR_Order\" = '{Dialog.Spisok_LB.Items[i]}'", connect))
                                         {
-                                            //Вывод в компонент
-                                            while (reader.Read())
+                                            using (var reader = cmd.ExecuteReader())
                                             {
-                                                CheckUnigueQR.Add(reader.GetString(0));
+                                                //Вывод в компонент
+                                                while (reader.Read())
+                                                {
+                                                    CheckUnigueQR.Add(reader.GetString(0));
+                                                }
                                             }
                                         }
-                                    }
-
-                                    if(CheckUnigueQR.Count == 0)
-                                    {
-                                        //Вытаскиваешь данные с документа
-                                        Document Temp = new Document();
-
-                                        //Заполнение данных
-                                        excel.SplitData(Temp, Dialog.Spisok_LB.Items[i] as String);
-
-                                        //Добавление
-                                        using (var cmd = new NpgsqlCommand())
+                                        if (CheckUnigueQR.Count == 0)
                                         {
-                                            cmd.Connection = connect;
-                                            cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_Order\", \"Executor_Order\", \"Number_Order\", \"List_Order\", \"Mark_Order\"," +
-                                                              $"\"Lenght_Order\",\"Weight_Order\",\"DateCreate_Order\")" +
-                                                              $"VALUES('{Temp.QR}', '{Temp.Executor}', '{Temp.Number}', '{Temp.List}', '{Temp.Name}', '{Temp.Lenght}', '{Temp.Weight}', '{Temp.DateCreate}');" +
-                                                              $"INSERT INTO \"StatusOrders\"(\"id_Order\", \"Status_Order\")" +
-                                                              $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.Status}');" +
-                                                              $"INSERT INTO \"NumberDocOrders\"(\"id_Order\", \"NumberDoc\")" +
-                                                              $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.NumberDoc}');";
-                                            cmd.ExecuteNonQuery();
+                                            //Вытаскиваешь данные с документа
+                                            Document Temp = new Document();
+
+                                            //Заполнение данных
+                                            excel.SplitData(Temp, Dialog.Spisok_LB.Items[i] as String);
+
+                                            //Добавление
+                                            using (var cmd = new NpgsqlCommand())
+                                            {
+                                                cmd.Connection = connect;
+                                                cmd.CommandText = $"INSERT INTO \"Orders\"(\"QR_Order\", \"Executor_Order\", \"Number_Order\", \"List_Order\", \"Mark_Order\"," +
+                                                                  $"\"Lenght_Order\",\"Weight_Order\",\"DateCreate_Order\")" +
+                                                                  $"VALUES('{Temp.QR}', '{Temp.Executor}', '{Temp.Number}', '{Temp.List}', '{Temp.Name}', '{Temp.Lenght}', '{Temp.Weight}', '{Temp.DateCreate}');" +
+                                                                  $"INSERT INTO \"StatusOrders\"(\"id_Order\", \"Status_Order\")" +
+                                                                  $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.Status}');" +
+                                                                  $"INSERT INTO \"NumberDocOrders\"(\"id_Order\", \"NumberDoc\")" +
+                                                                  $"VALUES((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Temp.QR}'),'{Temp.NumberDoc}');";
+                                                cmd.ExecuteNonQuery();
+                                            }
+
+                                            //Запись реестра
+                                            excel.WriteReg(Temp, j + 1, rowCnt, workbook, ws1);
+                                            j++;
+
+                                            //Вывод в компонент сообщения об удачном добавлении
+                                            Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} => Добавлен в базу отслеживания" + Environment.NewLine);
                                         }
-
-                                        //Запись реестра
-                                        excel.WriteReg(Temp, j + 1, rowCnt, workbook, ws1);
-                                        j++;
-
-                                        //Вывод в компонент сообщения об удачном добавлении
-                                        Status_TB.AppendText($"Номер заказа {Temp.Number} Марка: {Temp.Name} Лист: {Temp.List} => Добавлен в базу отслеживания" + Environment.NewLine);
+                                        else
+                                        {
+                                            Status_TB.AppendText($"QR {Dialog.Spisok_LB.Items[i]} существует => Добавление не произведено" + Environment.NewLine);
+                                        }
                                     }
                                     else
                                     {
-                                        Status_TB.AppendText($"QR {Dialog.Spisok_LB.Items[i]} существует => Добавление не произведено" + Environment.NewLine);
-                                    }    
+                                        using (var cmd = new NpgsqlCommand($"SELECT \"QR_Order\" FROM \"Orders\", \"StatusOrders\"" +
+                                                                            $"WHERE \"QR_Order\" = '{Dialog.Spisok_LB.Items[i]}' AND \"StatusOrders\".\"Status_Order\"='{SystemArgs.SearchStatus}' AND \"Orders\".\"id_Order\"=\"StatusOrders\".\"id_Order\"", connect))
+                                        {
+                                            using (var reader = cmd.ExecuteReader())
+                                            {
+                                                //Вывод в компонент
+                                                while (reader.Read())
+                                                {
+                                                    CheckUnigueQR.Add(reader.GetString(0));
+                                                }
+                                            }
+                                        }
+                                        if (CheckUnigueQR.Count == 1)
+                                        {  
+                                            using (var cmd = new NpgsqlCommand())
+                                            {
+                                                cmd.Connection = connect;
+                                                cmd.CommandText = $"UPDATE \"StatusOrders\" SET \"Status_Order\" = '{SystemArgs.Status}'" +
+                                                      $"WHERE((SELECT \"id_Order\" FROM \"Orders\" WHERE \"QR_Order\" = '{Dialog.Spisok_LB.Items[i] as String}') = \"id_Order\");";
+                                                cmd.ExecuteNonQuery();
+                                            }
+                                            Status_TB.AppendText($"У чертежа {Dialog.Spisok_LB.Items[i] as String} был изменен статус на {SystemArgs.Status}" + Environment.NewLine);
+                                        }
+                                        else
+                                        {
+                                            Status_TB.AppendText($"QR {Dialog.Spisok_LB.Items[i] as String} не существует => Изменение статуса не произведено" + Environment.NewLine);
+                                        }
+                                    }
                                 }
 
                                 //Закрытие потока
@@ -370,42 +402,87 @@ namespace Kuzbass_Project
             RefreshSpisok_B.Enabled = false;
             NumberDoc_TB.Enabled = false;
             Exit_B.Enabled = false;
+
             Operations_B.Enabled = false;
+
 
             Report_CB.Items.AddRange(new String[] { "Нет задано", "За текущий день", "За текущий месяц", "За предыдущий месяц"});
             Report_CB.SelectedIndex = 0;
 
-
             if (Mode == "Архивариус")
             {
                 //Блокироване и анлок кнопок
+                SystemArgs.AddedDocument = true;
                 Confirm_B.Enabled = false;
                 OpenDocument_B.Enabled = true;
                 RefreshSpisok_B.Enabled = true;
                 NumberDoc_TB.Enabled = false;
                 Exit_B.Enabled = true;
                 Operations_B.Enabled = true;
+                SystemArgs.SearchStatus = "";
             }
             else if (Mode == "Сотрудник ПДО")
             {
+                SystemArgs.AddedDocument = false;
+                OpenDocument_B.Text="Подтвердить чертежи";
                 //Блокироване и анлок кнопок
                 Confirm_B.Enabled = false;
                 RefreshSpisok_B.Enabled = true;
-                OpenDocument_B.Enabled = false;
+                OpenDocument_B.Enabled = true;
                 Exit_B.Enabled = true;
                 Operations_B.Enabled = true;
                 NumberDoc_TB.Enabled = false;
+                SystemArgs.SearchStatus = "Нет статуса";
+                SystemArgs.Status = "Передан в ПДО";
+                Recognize_B.Enabled = false;
             }
-            else
+            else if (Mode == "Разработка МК")
             {
+                SystemArgs.SearchStatus = "Выдан в работу";
+                SystemArgs.Status = "МК разработаны";
+                OpenDocument_B.Text = "Подтвердить чертежи";
+                SystemArgs.AddedDocument = false;
                 //Блокироване и анлок кнопок
                 OpenDocument_B.Enabled = false;
                 Confirm_B.Enabled = false;
                 RefreshSpisok_B.Enabled = true;
-                OpenDocument_B.Enabled = false;
+                OpenDocument_B.Enabled = true;
                 NumberDoc_TB.Enabled = false;
                 Exit_B.Enabled = true;
                 Operations_B.Enabled = true;
+                Recognize_B.Enabled = false;
+            }
+            else if (Mode == "Формирование сдельного наряда")
+            {
+                SystemArgs.SearchStatus = "МК разработаны";
+                SystemArgs.Status = "Сдельный наряд создан";
+                OpenDocument_B.Text = "Подтвердить чертежи";
+                SystemArgs.AddedDocument = false;
+                //Блокироване и анлок кнопок
+                OpenDocument_B.Enabled = false;
+                Confirm_B.Enabled = false;
+                RefreshSpisok_B.Enabled = true;
+                OpenDocument_B.Enabled = true;
+                NumberDoc_TB.Enabled = false;
+                Exit_B.Enabled = true;
+                Operations_B.Enabled = true;
+                Recognize_B.Enabled = false;
+            }
+            else if (Mode == "Раскрой")
+            {
+                SystemArgs.SearchStatus = "Сдельный наряд создан";
+                SystemArgs.Status = "Раскрой создан";
+                OpenDocument_B.Text = "Подтвердить чертежи";
+                SystemArgs.AddedDocument = false;
+                //Блокироване и анлок кнопок
+                OpenDocument_B.Enabled = false;
+                Confirm_B.Enabled = false;
+                RefreshSpisok_B.Enabled = true;
+                OpenDocument_B.Enabled = true;
+                NumberDoc_TB.Enabled = false;
+                Exit_B.Enabled = true;
+                Operations_B.Enabled = true;
+                Recognize_B.Enabled = false;
             }
 
             //Подгружаем параметры подключения
@@ -860,6 +937,12 @@ namespace Kuzbass_Project
                     Decode_tiff decode_Tiff = new Decode_tiff();
 
                     CurrentInfoDataMatrix = decode_Tiff.Decode(NameFile,i);
+                    if (CurrentInfoDataMatrix.Equals("error"))
+                    {
+                        Status_TB.AppendText($"Файл {NameFile} не может быть добавлен, используются некорректные символы" + Environment.NewLine);
+                        i++;
+                        continue;
+                    }
 
                     String[] Temp = CurrentInfoDataMatrix.Split('_');
 
@@ -867,7 +950,7 @@ namespace Kuzbass_Project
 
                     if (Temp.Length == 6)
                     {
-                        Status_TB.AppendText($"Файл {NameFile} сохранение файла, пожалуйста подождите..." + Environment.NewLine);
+                        Status_TB.AppendText($"Файл {NameFile} проверка QR, пожалуйста подождите..." + Environment.NewLine);
 
                         Int32 j = 0;
 
@@ -1014,7 +1097,7 @@ namespace Kuzbass_Project
                                             //Вывод в компонент сообщения об удачном добавлении
                                             Status_TB.AppendText($"Номер заказа {Temp2.Number} Марка: {Temp2.Name} Лист: {Temp2.List} => Добавлен в базу отслеживания" + Environment.NewLine);
 
-                                            Status_TB.AppendText($"Файл {NameFile} сохранение файла завершено" + Environment.NewLine);
+                                            Status_TB.AppendText($"Файл {NameFile} проверка QR завершена" + Environment.NewLine);
                                         }
                                         else
                                         {

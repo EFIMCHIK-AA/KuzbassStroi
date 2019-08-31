@@ -46,8 +46,8 @@ namespace Kuzbass_Project
                         var bytes = fromEncodind.GetBytes(cash);
                         var toEncoding = Encoding.GetEncoding(1251);//в какую кодировку
                         cash = toEncoding.GetString(bytes);
-                        while (cash.IndexOf("<FNC1>") != -1)
-                        cash = cash.Replace("<FNC1>", "");
+                        if (cash.IndexOf("<FNC1>") != -1)
+                            return "error";
                         cash = cash.Remove(cash.IndexOf('>'), cash.IndexOf('<') - cash.IndexOf('>')+1);
                         return cash;
                     }

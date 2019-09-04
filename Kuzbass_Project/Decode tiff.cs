@@ -27,6 +27,7 @@ namespace Kuzbass_Project
                         System.Drawing.Imaging.PixelFormat.DontCare);
             string path = @"Temp\" + index + ".tif";
             croppedBitmap.Save(path);
+            myImage.Dispose();
             try
             {
 
@@ -46,8 +47,8 @@ namespace Kuzbass_Project
                         var bytes = fromEncodind.GetBytes(cash);
                         var toEncoding = Encoding.GetEncoding(1251);//в какую кодировку
                         cash = toEncoding.GetString(bytes);
-                        if (cash.IndexOf("<FNC1>") != -1)
-                            return "error";
+                        while (cash.IndexOf("<FNC1>") != -1)
+                            cash = cash.Replace("<FNC1>", "и");
                         cash = cash.Remove(cash.IndexOf('>'), cash.IndexOf('<') - cash.IndexOf('>')+1);
                         return cash;
                     }

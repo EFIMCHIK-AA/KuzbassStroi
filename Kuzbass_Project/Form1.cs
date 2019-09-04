@@ -902,11 +902,12 @@ namespace Kuzbass_Project
 
         private void Recognize_B_Click(object sender, EventArgs e)
         {
+            string Text_Report = null;
             OpenFileDialog Opd = new OpenFileDialog
             {
                 Multiselect = true,
                 Title = "Выберите сканы чертежей",
-                Filter = "TIFF|*.tif|TIFF|*.tiff"
+                Filter = "TIF|*.tif|TIFF|*.tiff"
             };
 
             string date = DateTime.Now.ToString();
@@ -937,12 +938,6 @@ namespace Kuzbass_Project
                     Decode_tiff decode_Tiff = new Decode_tiff();
 
                     CurrentInfoDataMatrix = decode_Tiff.Decode(NameFile,i);
-                    if (CurrentInfoDataMatrix.Equals("error"))
-                    {
-                        Status_TB.AppendText($"Файл {NameFile} не может быть добавлен, используются некорректные символы" + Environment.NewLine);
-                        i++;
-                        continue;
-                    }
 
                     String[] Temp = CurrentInfoDataMatrix.Split('_');
 
@@ -1077,6 +1072,8 @@ namespace Kuzbass_Project
                                                 {
                                                     File.Copy(NameFile, $@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff");
                                                     Status_TB.AppendText($"Файл {TempName}.tiff помещен в директорию {CurrentDocument.Number}" + Environment.NewLine);
+                                                    Text_Report += $"Файл {TempName}.tiff помещен в директорию {CurrentDocument.Number}" + Environment.NewLine;
+                                                    
                                                 }
                                             }
                                             else
@@ -1087,6 +1084,7 @@ namespace Kuzbass_Project
                                                 {
                                                     File.Copy(NameFile, $@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff");
                                                     Status_TB.AppendText($"Директория {CurrentDocument.Number} создана. Файл {TempName}.tiff помещен в директорию" + Environment.NewLine);
+                                                    Text_Report += $"Директория {CurrentDocument.Number} создана. Файл {TempName}.tiff помещен в директорию" + Environment.NewLine;
                                                 }
                                             }
 
@@ -1102,6 +1100,7 @@ namespace Kuzbass_Project
                                         else
                                         {
                                             Status_TB.AppendText($"QR {CurrentDocument.QR} существует => Добавление не произведено" + Environment.NewLine);
+                                            Text_Report += $"QR {CurrentDocument.QR} существует => Добавление не произведено. Файл не был перемещен" + Environment.NewLine;
                                         }
 
                                         //Закрытие потока
@@ -1160,6 +1159,7 @@ namespace Kuzbass_Project
                     }
 
                     i++;
+                    File.Delete(NameFile);
                 }
                
                 System.IO.DirectoryInfo di = new DirectoryInfo("Temp");
@@ -1173,6 +1173,12 @@ namespace Kuzbass_Project
 
                 Status_TB.AppendText($"ОБРАБОТКА ЗАВЕРШЕНА!" + Environment.NewLine);
                 Status_TB.AppendText($"-------------------------------------------------------------------------------------------------------------------------->{i}|{CountFile}<-------------------------------------------------------------------------------------------------------------------------" + Environment.NewLine);
+                Report Dialog = new Report();
+                Dialog.Text_TB.Text = Text_Report;
+                if (Dialog.ShowDialog() == DialogResult.OK)
+                {
+
+                }
             }
         }
     }

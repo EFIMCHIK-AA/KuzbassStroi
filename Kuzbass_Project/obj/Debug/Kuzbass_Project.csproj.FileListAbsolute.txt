@@ -185,3 +185,4 @@ C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Pr
 C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.pdb
 C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.IsOKFiles_Form.resources
 C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.IsOKFiles_Form.resources
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.Report.resources

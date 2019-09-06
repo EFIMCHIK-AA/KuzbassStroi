@@ -32,19 +32,19 @@ namespace Kuzbass_Project
 
         private void AddDocument_Load(object sender, EventArgs e)
         {
-            //Блокируем кнопки
+
             OK_B.Enabled = true;
+
             if (SystemArgs.AddedDocument)
             {
                 OK_B.Text = "Добавить";
                 Create_B.Enabled = true;
             }
-            else
+            else 
             {
                 OK_B.Text = "Подтвердить";
                 Create_B.Enabled = false;
             }
-
 
             Status_TB.AppendText($"Получение хоста => Удачно" + Environment.NewLine);
             Status_TB.AppendText($"Получение порта => Удачно" + Environment.NewLine);
@@ -76,133 +76,184 @@ namespace Kuzbass_Project
 
         private void Server_DataReceived(object sender, SimpleTCP.Message e)
         {
-            long Temp = 0;
-            bool TempSession = true;
-
-            if(Session.Count != 0)
+            if(SystemArgs.AddedBlank)
             {
-                //Проверка на уникальность в сессии
-                foreach (String Item in Session)
+                String[] QR = e.MessageString.Split('_');
+
+                Int32 Count = QR.Length - 4;
+
+                Int32 Counter = 0;
+
+                for (Int32 i = 4; i < QR.Length; i++)
                 {
-                    if (Item == e.MessageString)
+                    ++Counter;
+
+                    try
                     {
-                        TempSession = false;
+                        String connString = $"Server = {Host_DB}; Port = {Port_DB}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+
+                        using (var connect = new NpgsqlConnection(connString))
+                        {
+                            connect.Open();
+
+                            if (SystemArgs.AddedDocument)
+                            {
+                                using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\" FROM \"Orders\", \"StatusOrders\"" +
+                                                                    $"WHERE(\"Orders\".\"Number_Order\" = '{QR[1]}' AND \"Orders\".\"List_Order\" = '{QR[i]}')" +
+                                                                    $"AND(\"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\" AND \"StatusOrders\".\"Status_Order\" = '{SystemArgs.Status}')", connect))
+                                {
+                                    using (var reader = cmd.ExecuteReader())
+                                    {
+                                        while (reader.Read())
+                                        {
+                                            String CurrentQR = reader.GetString(0);
+                                            Spisok_LB.Items.Add(CurrentQR);
+                                            SpisokCheck_LB.Items.Add($"[{Counter} из {Count}]");
+                                        }
+                                    }
+                                }
+                            }
+
+                            connect.Close();
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Ошибка при подключении к базе данных", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
                 }
             }
             else
             {
-                //добавляем в список сессии
-                Session.Add(e.MessageString);
-                TempSession = true;
-            }
+                long Temp = 0;
+                bool TempSession = true;
 
-            //Если уникален в сессии
-            if (TempSession)
-            {
-                Session.Add(e.MessageString);
-                string msg = e.MessageString;
-
-                try
+                if (Session.Count != 0)
                 {
-                    String connString = $"Server = {Host_DB}; Port = {Port_DB}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
-
-                    using (var connect = new NpgsqlConnection(connString))
+                    //Проверка на уникальность в сессии
+                    foreach (String Item in Session)
                     {
-                        connect.Open();
-                        if (SystemArgs.AddedDocument)
+                        if (Item == e.MessageString)
                         {
-                            using (var cmd = new NpgsqlCommand($"SELECT Count(\"Orders\".\"QR_Order\") FROM \"Orders\" WHERE \"QR_Order\" = '{msg}'", connect))
-                            {
-                                using (var reader = cmd.ExecuteReader())
-                                {
-                                    while (reader.Read())
-                                    {
-                                        Temp = reader.GetInt64(0);
-                                    }
-                                }
-                            }
+                            TempSession = false;
                         }
-                        else
-                        {
-                            using (var cmd = new NpgsqlCommand($"SELECT Count(\"Orders\".\"QR_Order\") FROM \"Orders\", \"StatusOrders\" WHERE \"QR_Order\" = '{msg}' AND \"StatusOrders\".\"Status_Order\"='{SystemArgs.SearchStatus}' AND \"Orders\".\"id_Order\"=\"StatusOrders\".\"id_Order\"", connect))
-                            {
-                                using (var reader = cmd.ExecuteReader())
-                                {
-                                    while (reader.Read())
-                                    {
-                                        Temp = reader.GetInt64(0);
-                                    }
-                                }
-                            }
-                        }
-
-                        connect.Close();
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("Ошибка при подключении к базе данных", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                //Если уникален в БД
-                if (SystemArgs.AddedDocument)
-                {
-                    if (Temp == 0)
-                    {
-                        Spisok_LB.Invoke((MethodInvoker)delegate ()
-                        {
-                            Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
-                            UnigueYES.Add(msg);
-                            Spisok_LB.Items.Add(msg);
-                            SpisokCheck_LB.Items.Add("Уникален").BackColor = Color.Green;
-                            System.Threading.Thread.Sleep(100);
-                            Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
-                        });
-                    }
-                    //Иначе
-                    else
-                    {
-                        Spisok_LB.Invoke((MethodInvoker)delegate ()
-                        {
-                            Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
-                            Spisok_LB.Items.Add(msg);
-                            UnigueNO.Add(msg);
-                            SpisokCheck_LB.Items.Add("Не уникален").BackColor = Color.Red;
-                            System.Threading.Thread.Sleep(100);
-                            Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
-                        });
                     }
                 }
                 else
                 {
-                    if (Temp == 1)
+                    //добавляем в список сессии
+                    Session.Add(e.MessageString);
+                    TempSession = true;
+                }
+
+                //Если уникален в сессии
+                if (TempSession)
+                {
+                    Session.Add(e.MessageString);
+                    string msg = e.MessageString;
+
+                    try
                     {
-                        Spisok_LB.Invoke((MethodInvoker)delegate ()
+                        String connString = $"Server = {Host_DB}; Port = {Port_DB}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+
+                        using (var connect = new NpgsqlConnection(connString))
                         {
-                            Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
-                            Spisok_LB.Items.Add(msg);
-                            SpisokCheck_LB.Items.Add("Найден").BackColor = Color.Green;
-                            System.Threading.Thread.Sleep(100);
-                            Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
-                        });
+                            connect.Open();
+                            if (SystemArgs.AddedDocument)
+                            {
+                                using (var cmd = new NpgsqlCommand($"SELECT Count(\"Orders\".\"QR_Order\") FROM \"Orders\" WHERE \"QR_Order\" = '{msg}'", connect))
+                                {
+                                    using (var reader = cmd.ExecuteReader())
+                                    {
+                                        while (reader.Read())
+                                        {
+                                            Temp = reader.GetInt64(0);
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                using (var cmd = new NpgsqlCommand($"SELECT Count(\"Orders\".\"QR_Order\") FROM \"Orders\", \"StatusOrders\" WHERE \"QR_Order\" = '{msg}' AND \"StatusOrders\".\"Status_Order\"='{SystemArgs.SearchStatus}' AND \"Orders\".\"id_Order\"=\"StatusOrders\".\"id_Order\"", connect))
+                                {
+                                    using (var reader = cmd.ExecuteReader())
+                                    {
+                                        while (reader.Read())
+                                        {
+                                            Temp = reader.GetInt64(0);
+                                        }
+                                    }
+                                }
+                            }
+
+                            connect.Close();
+                        }
                     }
-                    //Иначе
+                    catch
+                    {
+                        MessageBox.Show("Ошибка при подключении к базе данных", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    //Если уникален в БД
+                    if (SystemArgs.AddedDocument)
+                    {
+                        if (Temp == 0)
+                        {
+                            Spisok_LB.Invoke((MethodInvoker)delegate ()
+                            {
+                                Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
+                                UnigueYES.Add(msg);
+                                Spisok_LB.Items.Add(msg);
+                                SpisokCheck_LB.Items.Add("Уникален").BackColor = Color.Green;
+                                System.Threading.Thread.Sleep(100);
+                                Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                            });
+                        }
+                        //Иначе
+                        else
+                        {
+                            Spisok_LB.Invoke((MethodInvoker)delegate ()
+                            {
+                                Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
+                                Spisok_LB.Items.Add(msg);
+                                UnigueNO.Add(msg);
+                                SpisokCheck_LB.Items.Add("Не уникален").BackColor = Color.Red;
+                                System.Threading.Thread.Sleep(100);
+                                Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                            });
+                        }
+                    }
                     else
                     {
-                        
-                        Spisok_LB.Invoke((MethodInvoker)delegate ()
+                        if (Temp == 1)
                         {
-                            Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
-                            Spisok_LB.Items.Add(msg);
-                            SpisokCheck_LB.Items.Add("Не найден").BackColor = Color.Red;
-                            System.Threading.Thread.Sleep(100);
-                            Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
-                        });
+                            Spisok_LB.Invoke((MethodInvoker)delegate ()
+                            {
+                                Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
+                                Spisok_LB.Items.Add(msg);
+                                SpisokCheck_LB.Items.Add("Найден").BackColor = Color.Green;
+                                System.Threading.Thread.Sleep(100);
+                                Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                            });
+                        }
+                        //Иначе
+                        else
+                        {
+
+                            Spisok_LB.Invoke((MethodInvoker)delegate ()
+                            {
+                                Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
+                                Spisok_LB.Items.Add(msg);
+                                SpisokCheck_LB.Items.Add("Не найден").BackColor = Color.Red;
+                                System.Threading.Thread.Sleep(100);
+                                Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                            });
+                        }
                     }
                 }
-            }      
+            }               
         }
 
         private void Spisok_LB_SelectedIndexChanged(object sender, EventArgs e)

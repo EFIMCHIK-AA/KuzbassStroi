@@ -1185,5 +1185,109 @@ namespace Kuzbass_Project
                 }
             }
         }
+
+        private void Addnumber_B_Click(object sender, EventArgs e)
+        {
+            SystemArgs.AddedBlank = true;
+
+            String MyHost = Dns.GetHostName();
+            Host_server = Dns.GetHostByName(MyHost).AddressList[0].ToString();
+            Status_TB.Clear();
+            Documents.Clear();
+
+
+            if (File.Exists(@"Connect\Port.txt"))
+            {
+                //Считываем порт из файла
+                String strPort = null;
+
+                //Считываем стандартный порт
+                try
+                {
+                    using (StreamReader sr = new StreamReader(File.Open(@"Connect\Port.txt", FileMode.Open)))
+                    {
+                        strPort = sr.ReadLine();
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("При считывании порта произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                //Проверяем доступен ли порт
+                Int32 port_server = Convert.ToInt32(strPort);
+
+                String PathRegistry = null;
+
+                if (File.Exists(@"SavePath\Registry.txt"))
+                {
+
+                    try
+                    {
+                        using (StreamReader sr = new StreamReader(File.Open(@"SavePath\Registry.txt", FileMode.Open)))
+                        {
+                            PathRegistry = sr.ReadLine();
+                        }
+
+                    }
+                    catch
+                    {
+                        MessageBox.Show("При считывании места реестра произошла ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Отсутствует файл Registry.txt. Введите порт в соответствующее поле и подтвердите сохранение, - файл Registry.txt будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                //Вызываем форму
+                AddDocument Dialog = new AddDocument(port_server, Host_server, Host_BD, Port_BD.ToString());
+
+                if (Dialog.ShowDialog() == DialogResult.OK)
+                {
+                    if (Dialog.Spisok_LB.Items.Count == 0)
+                    {
+                        MessageBox.Show("Данные для добавления не обнаружены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    //Строка подлючения
+                    String connString = $"Server = {Host_BD}; Port = {Port_BD}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
+
+                    using (var connect = new NpgsqlConnection(connString))
+                    {
+                        //Открытие потока
+                        connect.Open();
+
+                        for (Int32 i = 0; i < Dialog.Spisok_LB.Items.Count; i++)
+                        {
+                            //Присваивание номера запрос БД
+                            using (var cmd = new NpgsqlCommand())
+                            {
+                                cmd.Connection = connect;
+                                cmd.CommandText = $"UPDATE \"NumberDocOrders\" SET \"NumberDoc\" = '{Dialog.Spisok_LB.Items[i]}'" +
+                                                  $"WHERE \"NumberDocOrders\".\"id_Order\" = (SELECT \"id_Order\" FROM \"Orders\" WHERE \"Orders\".\"QR_Order\" = '{Dialog.Spisok_LB.Items[i]}');" +
+                                                  $"UPDATE \"StatusOrders\" SET \"Status_Order\" = 'Выдан в работу'" +
+                                                  $"WHERE \"StatusOrders\".\"id_Order\" = (SELECT \"id_Order\" FROM \"Orders\" WHERE \"Orders\".\"QR_Order\" = '{Dialog.Spisok_LB.Items[i]}')";
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        //Закрытие потока
+                        connect.Close();
+                    }
+
+                    //Обновляем данные
+                    RefreshSpisok_B.PerformClick();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Отсутствует файл Port.txt. Введите порт в соответствующее поле и подтвердите сохранение, - файл Port.txt будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }

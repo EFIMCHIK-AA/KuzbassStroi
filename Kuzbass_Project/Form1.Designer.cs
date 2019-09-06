@@ -50,6 +50,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.Report_CB = new System.Windows.Forms.ComboBox();
             this.CreateReport_B = new System.Windows.Forms.Button();
+            this.Addnumber_B = new System.Windows.Forms.Button();
             this.Spisok_GB.SuspendLayout();
             this.Operation_GB.SuspendLayout();
             this.Status_GB.SuspendLayout();
@@ -105,6 +106,7 @@
             // 
             // Operation_GB
             // 
+            this.Operation_GB.Controls.Add(this.Addnumber_B);
             this.Operation_GB.Controls.Add(this.NumberDoc_TB);
             this.Operation_GB.Controls.Add(this.label2);
             this.Operation_GB.Controls.Add(this.OpenDocument_B);
@@ -113,7 +115,7 @@
             this.Operation_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Operation_GB.Name = "Operation_GB";
             this.Operation_GB.Padding = new System.Windows.Forms.Padding(2);
-            this.Operation_GB.Size = new System.Drawing.Size(248, 98);
+            this.Operation_GB.Size = new System.Drawing.Size(248, 127);
             this.Operation_GB.TabIndex = 6;
             this.Operation_GB.TabStop = false;
             this.Operation_GB.Text = "Модификация файлов";
@@ -173,7 +175,7 @@
             // Status_GB
             // 
             this.Status_GB.Controls.Add(this.Status_TB);
-            this.Status_GB.Location = new System.Drawing.Point(10, 355);
+            this.Status_GB.Location = new System.Drawing.Point(13, 411);
             this.Status_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Status_GB.Name = "Status_GB";
             this.Status_GB.Padding = new System.Windows.Forms.Padding(2);
@@ -225,7 +227,7 @@
             // 
             this.groupBox2.Controls.Add(this.ChangeUser_B);
             this.groupBox2.Controls.Add(this.Exit_B);
-            this.groupBox2.Location = new System.Drawing.Point(545, 277);
+            this.groupBox2.Location = new System.Drawing.Point(545, 331);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
@@ -250,7 +252,7 @@
             // 
             this.groupBox3.Controls.Add(this.Report_CB);
             this.groupBox3.Controls.Add(this.CreateReport_B);
-            this.groupBox3.Location = new System.Drawing.Point(544, 189);
+            this.groupBox3.Location = new System.Drawing.Point(544, 240);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
@@ -281,11 +283,22 @@
             this.CreateReport_B.UseVisualStyleBackColor = true;
             this.CreateReport_B.Click += new System.EventHandler(this.CreateReport_B_Click);
             // 
+            // Addnumber_B
+            // 
+            this.Addnumber_B.Location = new System.Drawing.Point(4, 97);
+            this.Addnumber_B.Margin = new System.Windows.Forms.Padding(2);
+            this.Addnumber_B.Name = "Addnumber_B";
+            this.Addnumber_B.Size = new System.Drawing.Size(240, 24);
+            this.Addnumber_B.TabIndex = 12;
+            this.Addnumber_B.Text = "Добавить номер бланка";
+            this.Addnumber_B.UseVisualStyleBackColor = true;
+            this.Addnumber_B.Click += new System.EventHandler(this.Addnumber_B_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 571);
+            this.ClientSize = new System.Drawing.Size(804, 668);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -336,6 +349,7 @@
         private System.Windows.Forms.Button CreateReport_B;
         private System.Windows.Forms.Button Recognize_B;
         public System.Windows.Forms.TextBox Status_TB;
+        private System.Windows.Forms.Button Addnumber_B;
     }
 }
 

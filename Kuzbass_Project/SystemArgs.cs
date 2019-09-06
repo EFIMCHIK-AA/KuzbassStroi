@@ -8,6 +8,7 @@ namespace Kuzbass_Project
 {
     public static class SystemArgs
     {
+        public static bool AddedBlank; 
         public static bool AddedDocument;
         public static string SearchStatus;
         public static string Status;

@@ -186,3 +186,15 @@ C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Pr
 C:\Users\vipef\OneDrive\Рабочий стол\СЗМК\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.IsOKFiles_Form.resources
 C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.IsOKFiles_Form.resources
 C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.Report.resources
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\SixLabors.Core.dll
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\SixLabors.ImageSharp.dll
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Buffers.dll
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Memory.dll
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\SixLabors.Core.xml
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\SixLabors.ImageSharp.xml
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Buffers.xml
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Memory.xml
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Tom\Desktop\Work\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml

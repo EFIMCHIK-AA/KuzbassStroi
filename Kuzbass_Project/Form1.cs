@@ -943,14 +943,14 @@ namespace Kuzbass_Project
 
                     Status_TB.AppendText($"Файл {NameFile} обработка завершена" + Environment.NewLine);
 
+                    
+
                     if (Temp.Length == 6)
                     {
                         Status_TB.AppendText($"Файл {NameFile} проверка QR, пожалуйста подождите..." + Environment.NewLine);
 
                         Int32 j = 0;
-
                         Document CurrentDocument = new Document(Temp[2], Temp[0], "Нет статуса", CurrentInfoDataMatrix, Temp[4], Temp[5], Temp[1], Temp[3], DateTime.Now, "Нет номера");
-
                         String MyHost = Dns.GetHostName();
                         Host_server = Dns.GetHostByName(MyHost).AddressList[0].ToString();
 
@@ -1073,7 +1073,8 @@ namespace Kuzbass_Project
                                                     File.Copy(NameFile, $@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff");
                                                     Status_TB.AppendText($"Файл {TempName}.tiff помещен в директорию {CurrentDocument.Number}" + Environment.NewLine);
                                                     Text_Report += $"Файл {TempName}.tiff помещен в директорию {CurrentDocument.Number}" + Environment.NewLine;
-                                                    
+                                                    File.Delete(NameFile);
+
                                                 }
                                             }
                                             else
@@ -1085,6 +1086,7 @@ namespace Kuzbass_Project
                                                     File.Copy(NameFile, $@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff");
                                                     Status_TB.AppendText($"Директория {CurrentDocument.Number} создана. Файл {TempName}.tiff помещен в директорию" + Environment.NewLine);
                                                     Text_Report += $"Директория {CurrentDocument.Number} создана. Файл {TempName}.tiff помещен в директорию" + Environment.NewLine;
+                                                    File.Delete(NameFile);
                                                 }
                                             }
 
@@ -1155,11 +1157,13 @@ namespace Kuzbass_Project
                     {
                         MessageBox.Show("Обнаружен DataMatrix неправильного формата", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Status_TB.AppendText($"Файл {NameFile} обнаружен некорректный формат DataMatrix" + Environment.NewLine);
+                        Text_Report += $"QR {CurrentInfoDataMatrix} неправильного формата => Добавление не произведено. Файл не был перемещен" + Environment.NewLine;
+                        i++;
                         continue;
                     }
 
                     i++;
-                    File.Delete(NameFile);
+                    
                 }
                
                 System.IO.DirectoryInfo di = new DirectoryInfo("Temp");

@@ -18,15 +18,11 @@ namespace Kuzbass_Project
         public String Decode(string temp,int index)
         {
             Image myImage = Image.FromFile(temp);
-            Bitmap croppedBitmap = new Bitmap(myImage);
-            croppedBitmap = croppedBitmap.Clone(
-                        new Rectangle(
-                            myImage.Width/2, myImage.Height/2,
-                            myImage.Width - myImage.Width / 2,
-                            myImage.Height - myImage.Height/2),
-                        System.Drawing.Imaging.PixelFormat.DontCare);
+            Bitmap source = new Bitmap(myImage);
+            Bitmap CroppedImage = source.Clone(new System.Drawing.Rectangle(source.Width/2, source.Height/2, source.Width / 2, source.Height / 2), source.PixelFormat);
             string path = @"Temp\" + index + ".tif";
-            croppedBitmap.Save(path);
+            CroppedImage = new Bitmap(CroppedImage, new Size(1105,783));
+            CroppedImage.Save(path);
             myImage.Dispose();
             try
             {

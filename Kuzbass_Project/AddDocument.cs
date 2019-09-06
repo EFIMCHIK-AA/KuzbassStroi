@@ -96,8 +96,6 @@ namespace Kuzbass_Project
                         {
                             connect.Open();
 
-                            if (SystemArgs.AddedDocument)
-                            {
                                 using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\" FROM \"Orders\", \"StatusOrders\"" +
                                                                     $"WHERE(\"Orders\".\"Number_Order\" = '{QR[1]}' AND \"Orders\".\"List_Order\" = '{QR[i]}')" +
                                                                     $"AND(\"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\" AND \"StatusOrders\".\"Status_Order\" = '{SystemArgs.Status}')", connect))
@@ -107,12 +105,16 @@ namespace Kuzbass_Project
                                         while (reader.Read())
                                         {
                                             String CurrentQR = reader.GetString(0);
-                                            Spisok_LB.Items.Add(CurrentQR);
-                                            SpisokCheck_LB.Items.Add($"[{Counter} из {Count}]");
+                                            Spisok_LB.Invoke((MethodInvoker)delegate ()
+                                            {
+                                                Spisok_LB.Items.Add(CurrentQR);
+                                                SpisokCheck_LB.Items.Add($"[{Counter} из {Count}]").BackColor = Color.Green;
+                                                System.Threading.Thread.Sleep(100);
+                                            });
                                         }
                                     }
                                 }
-                            }
+
 
                             connect.Close();
                         }

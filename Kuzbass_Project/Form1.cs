@@ -1268,7 +1268,7 @@ namespace Kuzbass_Project
                             using (var cmd = new NpgsqlCommand())
                             {
                                 cmd.Connection = connect;
-                                cmd.CommandText = $"UPDATE \"NumberDocOrders\" SET \"NumberDoc\" = '{Dialog.Spisok_LB.Items[i]}'" +
+                                cmd.CommandText = $"UPDATE \"NumberDocOrders\" SET \"NumberDoc\" = '{SystemArgs.TempQRNodeOrder}'" +
                                                   $"WHERE \"NumberDocOrders\".\"id_Order\" = (SELECT \"id_Order\" FROM \"Orders\" WHERE \"Orders\".\"QR_Order\" = '{Dialog.Spisok_LB.Items[i]}');" +
                                                   $"UPDATE \"StatusOrders\" SET \"Status_Order\" = 'Выдан в работу'" +
                                                   $"WHERE \"StatusOrders\".\"id_Order\" = (SELECT \"id_Order\" FROM \"Orders\" WHERE \"Orders\".\"QR_Order\" = '{Dialog.Spisok_LB.Items[i]}')";

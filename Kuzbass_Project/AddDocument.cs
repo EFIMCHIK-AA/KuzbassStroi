@@ -73,16 +73,20 @@ namespace Kuzbass_Project
         List<String> UnigueNO = new List<String>();
         List<String> Session = new List<String>();
 
+        Int32 Count;
+        Int32 Counter;
 
         private void Server_DataReceived(object sender, SimpleTCP.Message e)
         {
             if(SystemArgs.AddedBlank)
             {
+                SystemArgs.TempQRNodeOrder = e.MessageString;
+
                 String[] QR = e.MessageString.Split('_');
 
-                Int32 Count = QR.Length - 4;
+                Count = QR.Length - 4;
 
-                Int32 Counter = 0;
+                Counter = 0;
 
                 for (Int32 i = 4; i < QR.Length; i++)
                 {
@@ -96,27 +100,43 @@ namespace Kuzbass_Project
                         {
                             connect.Open();
 
-                                using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\" FROM \"Orders\", \"StatusOrders\"" +
-                                                                    $"WHERE(\"Orders\".\"Number_Order\" = '{QR[1]}' AND \"Orders\".\"List_Order\" = '{QR[i]}')" +
-                                                                    $"AND(\"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\" AND \"StatusOrders\".\"Status_Order\" = '{SystemArgs.Status}')", connect))
+                            using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\" FROM \"Orders\", \"StatusOrders\"" +
+                                                                $"WHERE(\"Orders\".\"Number_Order\" = '{QR[1]}' AND \"Orders\".\"List_Order\" = '{QR[i]}')" +
+                                                                $"AND(\"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\" AND \"StatusOrders\".\"Status_Order\" = '{SystemArgs.Status}')", connect))
+                            {
+                                using (var reader = cmd.ExecuteReader())
                                 {
-                                    using (var reader = cmd.ExecuteReader())
+                                    while (reader.Read())
                                     {
-                                        while (reader.Read())
+                                        String CurrentQR = reader.GetString(0);
+
+                                        Spisok_LB.Invoke((MethodInvoker)delegate ()
                                         {
-                                            String CurrentQR = reader.GetString(0);
-                                            Spisok_LB.Invoke((MethodInvoker)delegate ()
+                                            if (reader.GetString(0) != "")
                                             {
-                                                Spisok_LB.Items.Add(CurrentQR);
-                                                SpisokCheck_LB.Items.Add($"[{Counter} из {Count}]").BackColor = Color.Green;
-                                                System.Threading.Thread.Sleep(100);
-                                            });
-                                        }
+                                                Spisok_LB.Items.Add($"Лист {QR[i]}");
+                                                SpisokCheck_LB.Items.Add($"Найден").BackColor = Color.Green;
+                                            }
+                                            else
+                                            {
+                                                Spisok_LB.Items.Add($"Лист {QR[i]}");
+                                                SpisokCheck_LB.Items.Add($"Не найден").BackColor = Color.Red;
+                                            }
+
+                                            System.Threading.Thread.Sleep(100);
+                                        });
                                     }
                                 }
-
+                            }
 
                             connect.Close();
+                        }
+
+                        if (Count != Counter)
+                        {
+                            MessageBox.Show($"Найдено [{Counter} из {Count}] чертежей. Добавление невозможно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            OK_B.Enabled = true;
                         }
                     }
                     catch

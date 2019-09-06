@@ -12,7 +12,7 @@ namespace Kuzbass_Project
         public static bool AddedDocument;
         public static string SearchStatus;
         public static string Status;
-
+        public static string TempNumberOrder;
         public static string TempQRNodeOrder;
     }
 }

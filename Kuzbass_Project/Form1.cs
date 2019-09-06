@@ -1264,14 +1264,15 @@ namespace Kuzbass_Project
 
                         for (Int32 i = 0; i < Dialog.Spisok_LB.Items.Count; i++)
                         {
+                            string list = Dialog.Spisok_LB.Items[i].ToString().Replace(SystemArgs.TempNumberOrder,"").Replace("Заказ  Лист ", "");
                             //Присваивание номера запрос БД
                             using (var cmd = new NpgsqlCommand())
                             {
                                 cmd.Connection = connect;
                                 cmd.CommandText = $"UPDATE \"NumberDocOrders\" SET \"NumberDoc\" = '{SystemArgs.TempQRNodeOrder}'" +
-                                                  $"WHERE \"NumberDocOrders\".\"id_Order\" = (SELECT \"id_Order\" FROM \"Orders\" WHERE \"Orders\".\"QR_Order\" = '{Dialog.Spisok_LB.Items[i]}');" +
+                                                  $"WHERE((SELECT \"id_Order\" FROM \"Orders\" WHERE \"Number_Order\" = '{SystemArgs.TempNumberOrder}' AND \"List_Order\" = '{list}') = \"NumberDocOrders\".\"id_Order\");" +
                                                   $"UPDATE \"StatusOrders\" SET \"Status_Order\" = 'Выдан в работу'" +
-                                                  $"WHERE \"StatusOrders\".\"id_Order\" = (SELECT \"id_Order\" FROM \"Orders\" WHERE \"Orders\".\"QR_Order\" = '{Dialog.Spisok_LB.Items[i]}')";
+                                                  $"WHERE((SELECT \"id_Order\" FROM \"Orders\" WHERE \"Number_Order\" = '{SystemArgs.TempNumberOrder}' AND \"List_Order\" = '{list}') = \"StatusOrders\".\"id_Order\");";
                                 cmd.ExecuteNonQuery();
                             }
                         }
@@ -1282,6 +1283,10 @@ namespace Kuzbass_Project
 
                     //Обновляем данные
                     RefreshSpisok_B.PerformClick();
+                }
+                else
+                {
+                    Status_TB.AppendText("Номер бланка не был добавлен");
                 }
             }
             else

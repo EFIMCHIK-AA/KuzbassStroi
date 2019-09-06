@@ -83,6 +83,7 @@ namespace Kuzbass_Project
                 SystemArgs.TempQRNodeOrder = e.MessageString;
 
                 String[] QR = e.MessageString.Split('_');
+                SystemArgs.TempNumberOrder = QR[1];
 
                 Count = QR.Length - 4;
 
@@ -90,7 +91,6 @@ namespace Kuzbass_Project
 
                 for (Int32 i = 4; i < QR.Length; i++)
                 {
-                    ++Counter;
 
                     try
                     {
@@ -106,22 +106,26 @@ namespace Kuzbass_Project
                             {
                                 using (var reader = cmd.ExecuteReader())
                                 {
+                                    bool check = true;
                                     while (reader.Read())
                                     {
                                         String CurrentQR = reader.GetString(0);
 
                                         Spisok_LB.Invoke((MethodInvoker)delegate ()
                                         {
-                                            if (reader.GetString(0) != "")
-                                            {
-                                                Spisok_LB.Items.Add($"Лист {QR[i]}");
-                                                SpisokCheck_LB.Items.Add($"Найден").BackColor = Color.Green;
-                                            }
-                                            else
-                                            {
-                                                Spisok_LB.Items.Add($"Лист {QR[i]}");
-                                                SpisokCheck_LB.Items.Add($"Не найден").BackColor = Color.Red;
-                                            }
+                                            ++Counter;
+                                            Spisok_LB.Items.Add($"Заказ {QR[1]} Лист {QR[i]}");
+                                            SpisokCheck_LB.Items.Add($"Найден").BackColor = Color.Green;
+                                            System.Threading.Thread.Sleep(100);
+                                            check = false;
+                                        });
+                                    }
+                                    if (check)
+                                    {
+                                        Spisok_LB.Invoke((MethodInvoker)delegate ()
+                                        {
+                                            Spisok_LB.Items.Add($"Заказ {QR[1]} Лист {QR[i]}");
+                                            SpisokCheck_LB.Items.Add($"Не найден").BackColor = Color.Red;
 
                                             System.Threading.Thread.Sleep(100);
                                         });
@@ -131,20 +135,25 @@ namespace Kuzbass_Project
 
                             connect.Close();
                         }
-
-                        if (Count != Counter)
-                        {
-                            MessageBox.Show($"Найдено [{Counter} из {Count}] чертежей. Добавление невозможно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                            OK_B.Enabled = true;
-                        }
                     }
                     catch
                     {
                         MessageBox.Show("Ошибка при подключении к базе данных", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+
                 }
+
+                    if (Count != Counter)
+                    {
+                        MessageBox.Show($"Найдено [{Counter} из {Count}] чертежей. Добавление невозможно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        OK_B.Invoke((MethodInvoker)delegate ()
+                        {
+                            OK_B.Enabled = false;
+                        });
+                    }
+
+
             }
             else
             {

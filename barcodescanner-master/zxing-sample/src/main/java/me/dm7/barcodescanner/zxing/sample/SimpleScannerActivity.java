@@ -125,32 +125,18 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
                 }
 
             }
-            boolean enter = false;
-            if (msg.indexOf("\u001D") == -1)
-                enter = true;
+            if (msg.indexOf("\u001D") != -1)
+                msg=msg.replaceAll("\u001D","и");
             Integer check = protect.length;
             if (scan) {
-                if (check == 6 && endofgame && enter) {
+                if (check == 6 && endofgame) {
                     sendMessage();
                     Toast toast = Toast.makeText(getApplicationContext(),
                             msg, Toast.LENGTH_LONG);
                     toast.show();
                     mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
                 } else {
-                    if (!enter) {
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setTitle("Ошибка штрихкода");
-                        builder.setPositiveButton("Пропустить", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
-
-                            }
-                        }).setMessage(msg + "\nСуществуют недопустимые знаки");
-                        AlertDialog alert1 = builder.create();
-                        alert1.setCanceledOnTouchOutside(false);
-                        alert1.show();
-                    } else if (endofgame) {
+                     if (endofgame) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.setTitle("Ошибка штрихкода");
                         builder.setPositiveButton("Пропустить", new DialogInterface.OnClickListener() {
@@ -182,7 +168,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
             }
             else {
 
-                if (check > 3 && endofgame && enter) {
+                if (check > 3 && endofgame) {
                     sendMessage();
                     Toast toast = Toast.makeText(getApplicationContext(),
                             msg, Toast.LENGTH_LONG);
@@ -190,20 +176,7 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
                     mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
 
                 } else {
-                    if (!enter) {
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setTitle("Ошибка штрихкода");
-                        builder.setPositiveButton("Пропустить", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
-
-                            }
-                        }).setMessage(msg + "\nСуществуют недопустимые знаки");
-                        AlertDialog alert1 = builder.create();
-                        alert1.setCanceledOnTouchOutside(false);
-                        alert1.show();
-                    } else if (endofgame) {
+                    if (endofgame) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.setTitle("Ошибка штрихкода");
                         builder.setPositiveButton("Пропустить", new DialogInterface.OnClickListener() {

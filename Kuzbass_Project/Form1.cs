@@ -413,7 +413,10 @@ namespace Kuzbass_Project
             {
                 //Блокироване и анлок кнопок
                 SystemArgs.AddedDocument = true;
+                SystemArgs.NewStatusDocument = false;
+                Addnumber_B.Enabled = false;
                 Confirm_B.Enabled = false;
+                SystemArgs.AddedBlank = false;
                 OpenDocument_B.Enabled = true;
                 RefreshSpisok_B.Enabled = true;
                 NumberDoc_TB.Enabled = false;
@@ -427,6 +430,8 @@ namespace Kuzbass_Project
                 OpenDocument_B.Text="Подтвердить чертежи";
                 //Блокироване и анлок кнопок
                 Confirm_B.Enabled = false;
+                SystemArgs.AddedBlank = false;
+                SystemArgs.NewStatusDocument = false;
                 RefreshSpisok_B.Enabled = true;
                 OpenDocument_B.Enabled = true;
                 Exit_B.Enabled = true;
@@ -441,9 +446,12 @@ namespace Kuzbass_Project
                 SystemArgs.SearchStatus = "Выдан в работу";
                 SystemArgs.Status = "МК разработаны";
                 OpenDocument_B.Text = "Подтвердить чертежи";
+                Addnumber_B.Enabled = false;
                 SystemArgs.AddedDocument = false;
                 //Блокироване и анлок кнопок
                 OpenDocument_B.Enabled = false;
+                SystemArgs.NewStatusDocument = true;
+                SystemArgs.AddedBlank = false;
                 Confirm_B.Enabled = false;
                 RefreshSpisok_B.Enabled = true;
                 OpenDocument_B.Enabled = true;
@@ -458,9 +466,12 @@ namespace Kuzbass_Project
                 SystemArgs.Status = "Сдельный наряд создан";
                 OpenDocument_B.Text = "Подтвердить чертежи";
                 SystemArgs.AddedDocument = false;
+                Addnumber_B.Enabled = false;
                 //Блокироване и анлок кнопок
                 OpenDocument_B.Enabled = false;
                 Confirm_B.Enabled = false;
+                SystemArgs.NewStatusDocument = true;
+                SystemArgs.AddedBlank = false;
                 RefreshSpisok_B.Enabled = true;
                 OpenDocument_B.Enabled = true;
                 NumberDoc_TB.Enabled = false;
@@ -474,9 +485,12 @@ namespace Kuzbass_Project
                 SystemArgs.Status = "Раскрой создан";
                 OpenDocument_B.Text = "Подтвердить чертежи";
                 SystemArgs.AddedDocument = false;
+                Addnumber_B.Enabled = false;
                 //Блокироване и анлок кнопок
                 OpenDocument_B.Enabled = false;
                 Confirm_B.Enabled = false;
+                SystemArgs.NewStatusDocument = true;
+                SystemArgs.AddedBlank = false;
                 RefreshSpisok_B.Enabled = true;
                 OpenDocument_B.Enabled = true;
                 NumberDoc_TB.Enabled = false;
@@ -1293,6 +1307,7 @@ namespace Kuzbass_Project
             {
                 MessageBox.Show("Отсутствует файл Port.txt. Введите порт в соответствующее поле и подтвердите сохранение, - файл Port.txt будет автоматически создан", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            SystemArgs.AddedBlank = false;
         }
     }
 }

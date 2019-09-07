@@ -10,6 +10,7 @@ namespace Kuzbass_Project
     {
         public static bool AddedBlank; 
         public static bool AddedDocument;
+        public static bool NewStatusDocument;
         public static string SearchStatus;
         public static string Status;
         public static string TempNumberOrder;

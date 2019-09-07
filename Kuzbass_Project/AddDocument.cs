@@ -33,7 +33,7 @@ namespace Kuzbass_Project
         private void AddDocument_Load(object sender, EventArgs e)
         {
 
-            OK_B.Enabled = true;
+            OK_B.Enabled = false;
 
             if (SystemArgs.AddedDocument)
             {
@@ -144,14 +144,21 @@ namespace Kuzbass_Project
 
                 }
 
-                    if (Count != Counter)
+                if (Count != Counter)
+                {
+                    MessageBox.Show($"Найдено [{Counter} из {Count}] чертежей. Добавление невозможно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    OK_B.Invoke((MethodInvoker)delegate ()
                     {
-                        MessageBox.Show($"Найдено [{Counter} из {Count}] чертежей. Добавление невозможно", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        OK_B.Invoke((MethodInvoker)delegate ()
-                        {
-                            OK_B.Enabled = false;
-                        });
-                    }
+                        OK_B.Enabled = false;
+                    });
+                }
+                else
+                {
+                    OK_B.Invoke((MethodInvoker)delegate ()
+                    {
+                        OK_B.Enabled = true;
+                    });
+                }
 
 
             }
@@ -183,7 +190,7 @@ namespace Kuzbass_Project
                 {
                     Session.Add(e.MessageString);
                     string msg = e.MessageString;
-
+                    List<String> TempQR = new List<string>();
                     try
                     {
                         String connString = $"Server = {Host_DB}; Port = {Port_DB}; User Id = postgres; Password = exxttazz1; Database = DocumentFlow_DB;";
@@ -200,6 +207,20 @@ namespace Kuzbass_Project
                                         while (reader.Read())
                                         {
                                             Temp = reader.GetInt64(0);
+                                        }
+                                    }
+                                }
+                            }
+                            else if(SystemArgs.NewStatusDocument)
+                            {
+
+                                using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\" FROM \"Orders\", \"StatusOrders\", \"NumberDocOrders\" WHERE(\"Orders\".\"id_Order\" = \"NumberDocOrders\".\"id_Order\") AND (\"NumberDocOrders\".\"NumberDoc\" = '{msg}') AND (\"StatusOrders\".\"Status_Order\" = '{SystemArgs.SearchStatus}') AND (\"NumberDocOrders\".\"id_Order\" = \"StatusOrders\".\"id_Order\")", connect))
+                                {
+                                    using (var reader = cmd.ExecuteReader())
+                                    {
+                                        while (reader.Read())
+                                        {
+                                            TempQR.Add(reader.GetString(0));
                                         }
                                     }
                                 }
@@ -226,9 +247,12 @@ namespace Kuzbass_Project
                         MessageBox.Show("Ошибка при подключении к базе данных", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
-                    //Если уникален в БД
-                    if (SystemArgs.AddedDocument)
+                    OK_B.Invoke((MethodInvoker)delegate ()
+                    {
+                        OK_B.Enabled = true;
+                    });
+                        //Если уникален в БД
+                        if (SystemArgs.AddedDocument)
                     {
                         if (Temp == 0)
                         {
@@ -253,6 +277,40 @@ namespace Kuzbass_Project
                                 SpisokCheck_LB.Items.Add("Не уникален").BackColor = Color.Red;
                                 System.Threading.Thread.Sleep(100);
                                 Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                            });
+                        }
+                    }
+                    else if(SystemArgs.NewStatusDocument)
+                    {
+                        if (TempQR.Count!=0)
+                        {
+                            Spisok_LB.Invoke((MethodInvoker)delegate ()
+                            {
+
+                                Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
+                                System.Threading.Thread.Sleep(100);
+                                Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                            });
+                            for (int i = 0; i < TempQR.Count; i++)
+                            {
+                                Spisok_LB.Invoke((MethodInvoker)delegate ()
+                                {
+                                    Spisok_LB.Items.Add(TempQR[i]);
+                                    SpisokCheck_LB.Items.Add("Найден").BackColor = Color.Green;
+                                    System.Threading.Thread.Sleep(100);
+                                });
+                            }
+                            OK_B.Enabled = true;
+                        }
+                        //Иначе
+                        else
+                        {
+                            Spisok_LB.Invoke((MethodInvoker)delegate ()
+                            {
+                                Status_TB.AppendText($"Получение QR..." + Environment.NewLine);
+                                System.Threading.Thread.Sleep(100);
+                                Status_TB.AppendText($"QR {msg} => Получен" + Environment.NewLine);
+                                Status_TB.AppendText($"Не найден ни один чертеж" + Environment.NewLine);
                             });
                         }
                     }

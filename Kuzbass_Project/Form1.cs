@@ -945,7 +945,7 @@ namespace Kuzbass_Project
                 {
                     Status_TB.AppendText($"Файл {NameFile} обрабатывается, пожалуйста подождите..." + Environment.NewLine);
 
-                    Status_TB.AppendText($"------------------------------------------------------------------------------------------------------------------------->{i + 1}|{CountFile}<--------------------------------------------------------------------------------------------------------------------------" + Environment.NewLine);
+                    Status_TB.AppendText($">{i + 1}|{CountFile}<" + Environment.NewLine);
 
                     String CurrentInfoDataMatrix = "";
 
@@ -1190,7 +1190,7 @@ namespace Kuzbass_Project
                 Directory.Delete("Temp");
 
                 Status_TB.AppendText($"ОБРАБОТКА ЗАВЕРШЕНА!" + Environment.NewLine);
-                Status_TB.AppendText($"-------------------------------------------------------------------------------------------------------------------------->{i}|{CountFile}<-------------------------------------------------------------------------------------------------------------------------" + Environment.NewLine);
+                Status_TB.AppendText($">{i}|{CountFile}<" + Environment.NewLine);
                 Report Dialog = new Report();
                 Dialog.Text_TB.Text = Text_Report;
                 if (Dialog.ShowDialog() == DialogResult.OK)

@@ -20,8 +20,8 @@ namespace Kuzbass_Project
             Image myImage = Image.FromFile(temp);
             Bitmap source = new Bitmap(myImage);
             Bitmap CroppedImage = source.Clone(new System.Drawing.Rectangle(source.Width/2, source.Height/2, source.Width / 2, source.Height / 2), source.PixelFormat);
-            string path = @"Temp\" + index + ".tif";
-            CroppedImage = new Bitmap(CroppedImage, new Size(1105,783));
+            string path = @"Temp\" + index + ".jpg";
+            CroppedImage = new Bitmap(CroppedImage, new Size(source.Width / 4, source.Height / 4));
             CroppedImage.Save(path);
             myImage.Dispose();
             try

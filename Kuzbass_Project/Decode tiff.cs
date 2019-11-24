@@ -21,7 +21,7 @@ namespace Kuzbass_Project
             Bitmap source = new Bitmap(myImage);
             Bitmap CroppedImage = source.Clone(new System.Drawing.Rectangle(source.Width/2, source.Height/2, source.Width / 2, source.Height / 2), source.PixelFormat);
             string path = @"Temp\" + index + ".jpg";
-            CroppedImage = new Bitmap(CroppedImage, new Size(source.Width / 4, source.Height / 4));
+            CroppedImage = new Bitmap(CroppedImage, new Size(source.Width / 5, source.Height / 5));
             CroppedImage.Save(path);
             myImage.Dispose();
             try

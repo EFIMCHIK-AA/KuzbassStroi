@@ -1079,7 +1079,7 @@ namespace Kuzbass_Project
                                             String TempName = $"{CurrentDocument.Number}_{CurrentDocument.List}_{CurrentDocument.Name}_{CurrentDocument.DateCreate.ToString().Replace(" ", "T").Replace(":", "")}";
 
                                             Path.GetPathArchive();
-
+                                        
                                             if (Directory.Exists($@"{Path.PathArchive}\{CurrentDocument.Number}"))
                                             {
                                                 if (!File.Exists($@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff"))
@@ -1087,7 +1087,15 @@ namespace Kuzbass_Project
                                                     File.Copy(NameFile, $@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff");
                                                     Status_TB.AppendText($"Файл {TempName}.tiff помещен в директорию {CurrentDocument.Number}" + Environment.NewLine);
                                                     Text_Report += $"Файл {TempName}.tiff помещен в директорию {CurrentDocument.Number}" + Environment.NewLine;
+                                                try
+                                                {
                                                     File.Delete(NameFile);
+                                                }
+                                                catch
+                                                {
+                                                    MessageBox.Show("Ошибка доступа к файлу по пути " + NameFile,"Ошибка", MessageBoxButtons.OK,MessageBoxIcon.Error);
+
+                                                }
 
                                                 }
                                             }
@@ -1100,8 +1108,16 @@ namespace Kuzbass_Project
                                                     File.Copy(NameFile, $@"{Path.PathArchive}\{CurrentDocument.Number}\{TempName}.tiff");
                                                     Status_TB.AppendText($"Директория {CurrentDocument.Number} создана. Файл {TempName}.tiff помещен в директорию" + Environment.NewLine);
                                                     Text_Report += $"Директория {CurrentDocument.Number} создана. Файл {TempName}.tiff помещен в директорию" + Environment.NewLine;
+                                                try
+                                                {
                                                     File.Delete(NameFile);
                                                 }
+                                                catch
+                                                {
+                                                    MessageBox.Show("Ошибка доступа к файлу по пути " + NameFile, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                                                }
+                                            }
                                             }
 
                                             //Запись реестра
@@ -1125,12 +1141,12 @@ namespace Kuzbass_Project
 
                                     //Обновляем данные
                                     RefreshSpisok_B.PerformClick();
-                                }
-                                catch (Exception)
-                                {
-                                    MessageBox.Show("Перед добавлением чертежей, закройте все книги Excel", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                }
                             }
+                                catch (Exception)
+                            {
+                                MessageBox.Show("Перед добавлением чертежей, закройте все книги Excel", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
                             else
                             {
                                 if (File.Exists(@"Шаблоны\ШаблонРеестр.xlsx"))

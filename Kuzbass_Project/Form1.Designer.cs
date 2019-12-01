@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Spisok_LB = new System.Windows.Forms.ListBox();
-            this.Confirm_B = new System.Windows.Forms.Button();
             this.Spisok_GB = new System.Windows.Forms.GroupBox();
             this.RefreshSpisok_B = new System.Windows.Forms.Button();
             this.Operation_GB = new System.Windows.Forms.GroupBox();
+            this.Addnumber_B = new System.Windows.Forms.Button();
             this.NumberDoc_TB = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.OpenDocument_B = new System.Windows.Forms.Button();
@@ -50,7 +50,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.Report_CB = new System.Windows.Forms.ComboBox();
             this.CreateReport_B = new System.Windows.Forms.Button();
-            this.Addnumber_B = new System.Windows.Forms.Button();
             this.Spisok_GB.SuspendLayout();
             this.Operation_GB.SuspendLayout();
             this.Status_GB.SuspendLayout();
@@ -68,17 +67,6 @@
             this.Spisok_LB.Size = new System.Drawing.Size(522, 290);
             this.Spisok_LB.TabIndex = 2;
             this.Spisok_LB.SelectedIndexChanged += new System.EventHandler(this.Spisok_LB_SelectedIndexChanged);
-            // 
-            // Confirm_B
-            // 
-            this.Confirm_B.Location = new System.Drawing.Point(4, 17);
-            this.Confirm_B.Margin = new System.Windows.Forms.Padding(2);
-            this.Confirm_B.Name = "Confirm_B";
-            this.Confirm_B.Size = new System.Drawing.Size(240, 24);
-            this.Confirm_B.TabIndex = 3;
-            this.Confirm_B.Text = "&Подтвердить";
-            this.Confirm_B.UseVisualStyleBackColor = true;
-            this.Confirm_B.Click += new System.EventHandler(this.Confirm_B_Click);
             // 
             // Spisok_GB
             // 
@@ -111,7 +99,7 @@
             this.Operation_GB.Controls.Add(this.label2);
             this.Operation_GB.Controls.Add(this.OpenDocument_B);
             this.Operation_GB.Controls.Add(this.Operations_B);
-            this.Operation_GB.Location = new System.Drawing.Point(544, 87);
+            this.Operation_GB.Location = new System.Drawing.Point(545, 61);
             this.Operation_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Operation_GB.Name = "Operation_GB";
             this.Operation_GB.Padding = new System.Windows.Forms.Padding(2);
@@ -119,6 +107,17 @@
             this.Operation_GB.TabIndex = 6;
             this.Operation_GB.TabStop = false;
             this.Operation_GB.Text = "Модификация файлов";
+            // 
+            // Addnumber_B
+            // 
+            this.Addnumber_B.Location = new System.Drawing.Point(4, 97);
+            this.Addnumber_B.Margin = new System.Windows.Forms.Padding(2);
+            this.Addnumber_B.Name = "Addnumber_B";
+            this.Addnumber_B.Size = new System.Drawing.Size(240, 24);
+            this.Addnumber_B.TabIndex = 12;
+            this.Addnumber_B.Text = "Добавить номер бланка";
+            this.Addnumber_B.UseVisualStyleBackColor = true;
+            this.Addnumber_B.Click += new System.EventHandler(this.Addnumber_B_Click);
             // 
             // NumberDoc_TB
             // 
@@ -175,11 +174,11 @@
             // Status_GB
             // 
             this.Status_GB.Controls.Add(this.Status_TB);
-            this.Status_GB.Location = new System.Drawing.Point(13, 411);
+            this.Status_GB.Location = new System.Drawing.Point(9, 363);
             this.Status_GB.Margin = new System.Windows.Forms.Padding(2);
             this.Status_GB.Name = "Status_GB";
             this.Status_GB.Padding = new System.Windows.Forms.Padding(2);
-            this.Status_GB.Size = new System.Drawing.Size(783, 207);
+            this.Status_GB.Size = new System.Drawing.Size(787, 207);
             this.Status_GB.TabIndex = 8;
             this.Status_GB.TabStop = false;
             this.Status_GB.Text = "Статус операции";
@@ -191,19 +190,18 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.Recognize_B);
-            this.groupBox1.Controls.Add(this.Confirm_B);
             this.groupBox1.Location = new System.Drawing.Point(545, 11);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(248, 72);
+            this.groupBox1.Size = new System.Drawing.Size(248, 46);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Операции с файлом из списка";
             // 
             // Recognize_B
             // 
-            this.Recognize_B.Location = new System.Drawing.Point(4, 44);
+            this.Recognize_B.Location = new System.Drawing.Point(4, 17);
             this.Recognize_B.Margin = new System.Windows.Forms.Padding(2);
             this.Recognize_B.Name = "Recognize_B";
             this.Recognize_B.Size = new System.Drawing.Size(240, 24);
@@ -227,7 +225,7 @@
             // 
             this.groupBox2.Controls.Add(this.ChangeUser_B);
             this.groupBox2.Controls.Add(this.Exit_B);
-            this.groupBox2.Location = new System.Drawing.Point(545, 331);
+            this.groupBox2.Location = new System.Drawing.Point(545, 283);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
@@ -252,7 +250,7 @@
             // 
             this.groupBox3.Controls.Add(this.Report_CB);
             this.groupBox3.Controls.Add(this.CreateReport_B);
-            this.groupBox3.Location = new System.Drawing.Point(544, 240);
+            this.groupBox3.Location = new System.Drawing.Point(545, 192);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
@@ -283,22 +281,11 @@
             this.CreateReport_B.UseVisualStyleBackColor = true;
             this.CreateReport_B.Click += new System.EventHandler(this.CreateReport_B_Click);
             // 
-            // Addnumber_B
-            // 
-            this.Addnumber_B.Location = new System.Drawing.Point(4, 97);
-            this.Addnumber_B.Margin = new System.Windows.Forms.Padding(2);
-            this.Addnumber_B.Name = "Addnumber_B";
-            this.Addnumber_B.Size = new System.Drawing.Size(240, 24);
-            this.Addnumber_B.TabIndex = 12;
-            this.Addnumber_B.Text = "Добавить номер бланка";
-            this.Addnumber_B.UseVisualStyleBackColor = true;
-            this.Addnumber_B.Click += new System.EventHandler(this.Addnumber_B_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 668);
+            this.ClientSize = new System.Drawing.Size(802, 584);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -329,7 +316,6 @@
         #endregion
 
         private System.Windows.Forms.ListBox Spisok_LB;
-        private System.Windows.Forms.Button Confirm_B;
         private System.Windows.Forms.GroupBox Spisok_GB;
         private System.Windows.Forms.Button RefreshSpisok_B;
         private System.Windows.Forms.GroupBox Operation_GB;

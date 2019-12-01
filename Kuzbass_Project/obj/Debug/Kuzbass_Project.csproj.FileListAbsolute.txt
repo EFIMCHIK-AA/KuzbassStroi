@@ -274,7 +274,6 @@ C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Memor
 C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\bin\Debug\Zen.Barcode.Core.dll
-C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\bin\Debug\Bytescout.BarCodeReader.xml
 C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\bin\Debug\EPPlus.xml
 C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\bin\Debug\itextsharp.xml
 C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\bin\Debug\PdfSharp.xml
@@ -303,3 +302,4 @@ C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Proj
 C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.csproj.CopyComplete
 C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.exe
 C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\obj\Debug\Kuzbass_Project.pdb
+C:\Users\thedr\Desktop\Works\KuzbassStroi\Kuzbass_Project\bin\Debug\Bytescout.BarCodeReader.dll

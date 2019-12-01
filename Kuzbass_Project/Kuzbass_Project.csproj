@@ -36,9 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bytescout.BarCodeReader, Version=10.5.2.1922, Culture=neutral, PublicKeyToken=f7dd1bd9d40a50eb, processorArchitecture=MSIL">
+    <Reference Include="Bytescout.BarCodeReader, Version=10.5.1.1913, Culture=neutral, PublicKeyToken=f7dd1bd9d40a50eb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\asd\Bytescout.BarCodeReader.dll</HintPath>
+      <HintPath>..\packages\Bytescout.BarCodeReader\Bytescout.BarCodeReader.dll</HintPath>
     </Reference>
     <Reference Include="DevOne.Security.Cryptography.BCrypt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BCrypt.1.0.0.0\lib\DevOne.Security.Cryptography.BCrypt.dll</HintPath>

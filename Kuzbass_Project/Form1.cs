@@ -398,7 +398,6 @@ namespace Kuzbass_Project
         {
             //Блокирование всех компонентов
             OpenDocument_B.Enabled = false;
-            Confirm_B.Enabled = false;
             RefreshSpisok_B.Enabled = false;
             NumberDoc_TB.Enabled = false;
             Exit_B.Enabled = false;
@@ -415,7 +414,6 @@ namespace Kuzbass_Project
                 SystemArgs.AddedDocument = true;
                 SystemArgs.NewStatusDocument = false;
                 Addnumber_B.Enabled = false;
-                Confirm_B.Enabled = false;
                 SystemArgs.AddedBlank = false;
                 OpenDocument_B.Enabled = true;
                 RefreshSpisok_B.Enabled = true;
@@ -429,7 +427,6 @@ namespace Kuzbass_Project
                 SystemArgs.AddedDocument = false;
                 OpenDocument_B.Text="Подтвердить чертежи";
                 //Блокироване и анлок кнопок
-                Confirm_B.Enabled = false;
                 SystemArgs.AddedBlank = false;
                 SystemArgs.NewStatusDocument = false;
                 RefreshSpisok_B.Enabled = true;
@@ -452,7 +449,6 @@ namespace Kuzbass_Project
                 OpenDocument_B.Enabled = false;
                 SystemArgs.NewStatusDocument = true;
                 SystemArgs.AddedBlank = false;
-                Confirm_B.Enabled = false;
                 RefreshSpisok_B.Enabled = true;
                 OpenDocument_B.Enabled = true;
                 NumberDoc_TB.Enabled = false;
@@ -469,7 +465,6 @@ namespace Kuzbass_Project
                 Addnumber_B.Enabled = false;
                 //Блокироване и анлок кнопок
                 OpenDocument_B.Enabled = false;
-                Confirm_B.Enabled = false;
                 SystemArgs.NewStatusDocument = true;
                 SystemArgs.AddedBlank = false;
                 RefreshSpisok_B.Enabled = true;
@@ -488,7 +483,6 @@ namespace Kuzbass_Project
                 Addnumber_B.Enabled = false;
                 //Блокироване и анлок кнопок
                 OpenDocument_B.Enabled = false;
-                Confirm_B.Enabled = false;
                 SystemArgs.NewStatusDocument = true;
                 SystemArgs.AddedBlank = false;
                 RefreshSpisok_B.Enabled = true;
@@ -664,7 +658,6 @@ namespace Kuzbass_Project
                 else
                 {
                     Status_TB.AppendText("Документы для подтвердения не обнаружены" + Environment.NewLine);
-                    Confirm_B.Enabled = false; //Блокируем кнопку
                 }
             }
             catch (Exception Npgsql)
@@ -695,7 +688,6 @@ namespace Kuzbass_Project
         {
             if(Spisok_LB.SelectedIndex >= 0)
             {
-                Confirm_B.Enabled = true;
                 if(Mode == "Сотрудник ПДО")
                 {
                     NumberDoc_TB.Enabled = true;
@@ -703,7 +695,6 @@ namespace Kuzbass_Project
             }
             else
             {
-                Confirm_B.Enabled = false;
                 NumberDoc_TB.Enabled = false;
                 NumberDoc_TB.Clear();
             }

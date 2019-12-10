@@ -430,12 +430,12 @@ namespace Kuzbass_Project
                 SystemArgs.AddedBlank = false;
                 SystemArgs.NewStatusDocument = false;
                 RefreshSpisok_B.Enabled = true;
-                OpenDocument_B.Enabled = true;
+                OpenDocument_B.Enabled = false;
                 Exit_B.Enabled = true;
                 Operations_B.Enabled = true;
                 NumberDoc_TB.Enabled = false;
                 SystemArgs.SearchStatus = "Нет статуса";
-                SystemArgs.Status = "Передан в ПДО";
+                SystemArgs.Status = "Выдан в работу";
                 Recognize_B.Enabled = false;
             }
             else if (Mode == "Разработка МК")

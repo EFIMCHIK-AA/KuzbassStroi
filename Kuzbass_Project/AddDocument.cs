@@ -102,7 +102,7 @@ namespace Kuzbass_Project
 
                             using (var cmd = new NpgsqlCommand($"SELECT \"Orders\".\"QR_Order\" FROM \"Orders\", \"StatusOrders\"" +
                                                                 $"WHERE(\"Orders\".\"Number_Order\" = '{QR[1]}' AND \"Orders\".\"List_Order\" = '{QR[i]}')" +
-                                                                $"AND(\"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\" AND \"StatusOrders\".\"Status_Order\" = '{SystemArgs.Status}')", connect))
+                                                                $"AND(\"Orders\".\"id_Order\" = \"StatusOrders\".\"id_Order\" AND \"StatusOrders\".\"Status_Order\" = '{SystemArgs.SearchStatus}')", connect))
                             {
                                 using (var reader = cmd.ExecuteReader())
                                 {
